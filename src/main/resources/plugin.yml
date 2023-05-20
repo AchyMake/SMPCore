@@ -1,0 +1,532 @@
+name: SMPCore
+version: '${project.version}'
+main: net.achymake.smpcore.SMPCore
+api-version: 1.19
+load: STARTUP
+author: AchyMake
+prefix: '${project.name}'
+description: '${project.description}'
+softdepend:
+  - Vault
+  - PlaceholderAPI
+commands:
+  announcement:
+    description: announce server
+    permission: smpcore.command.announcement
+    usage: /announcement message
+    permission-message: You do not have the permission to execute the command
+  back:
+    description: teleport back to death or recent location
+    permission: smpcore.command.back
+    usage: /back
+    permission-message: You do not have the permission to execute the command
+  balance:
+    description: check balance of sender or other players
+    permission: smpcore.command.balance
+    usage: /balance player
+    permission-message: You do not have the permission to execute the command
+    aliases:
+      - bal
+  color:
+    description: check color codes
+    permission: smpcore.command.color
+    usage: /color
+    permission-message: You do not have the permission to execute the command
+  delhome:
+    description: delete home
+    permission: smpcore.command.delhome
+    usage: /delhome home
+    permission-message: You do not have the permission to execute the command
+  delwarp:
+    description: delete warp
+    permission: smpcore.command.delwarp
+    usage: /delwarp warpName
+    permission-message: You do not have the permission to execute the command
+  eco:
+    description: change players economy
+    permission: smpcore.command.eco
+    usage: /eco add player amount
+    permission-message: You do not have the permission to execute the command
+  enchant:
+    description: enchant held item
+    permission: smpcore.command.enchant
+    usage: /enchant enchantment amount
+    permission-message: You do not have the permission to execute the command
+  enderchest:
+    description: open enderchest by command
+    permission: smpcore.command.enderchest
+    usage: /enderchest player
+    permission-message: You do not have the permission to execute the command
+  feed:
+    description: satisfy starvation by command
+    permission: smpcore.command.feed
+    usage: /feed player
+    permission-message: You do not have the permission to execute the command
+  fly:
+    description: fly around the worlds
+    permission: smpcore.command.fly
+    usage: /fly player
+    permission-message: You do not have the permission to execute the command
+  freeze:
+    description: freeze players
+    permission: smpcore.command.freeze
+    usage: /freeze player
+    permission-message: You do not have the permission to execute the command
+  gamemode:
+    description: change gamemode
+    permission: smpcore.command.gamemode
+    usage: /gamemode gamemode
+    permission-message: You do not have the permission to execute the command
+  gma:
+    description: change gamemode to adventure
+    permission: smpcore.command.gamemode.adventure
+    usage: /gma player
+    permission-message: You do not have the permission to execute the command
+  gmc:
+    description: change gamemode to creative
+    permission: smpcore.command.gamemode.creative
+    usage: /gmc player
+    permission-message: You do not have the permission to execute the command
+  gms:
+    description: change gamemode to survival
+    permission: smpcore.command.gamemode.survival
+    usage: /gms player
+    permission-message: You do not have the permission to execute the command
+  gmsp:
+    description: change gamemode to spectator
+    permission: smpcore.command.gamemode.spectator
+    usage: /gmsp player
+    permission-message: You do not have the permission to execute the command
+  heal:
+    description: satisfy health by command
+    permission: smpcore.command.heal
+    usage: /heal player
+    permission-message: You do not have the permission to execute the command
+  help:
+    description: check player help
+    permission: smpcore.command.help
+    usage: /help
+    permission-message: You do not have the permission to execute the command
+  home:
+    description: teleport home
+    permission: smpcore.command.home
+    usage: /home
+    permission-message: You do not have the permission to execute the command
+  homes:
+    description: check homes
+    permission: smpcore.command.homes
+    usage: /homes
+    permission-message: You do not have the permission to execute the command
+  inventory:
+    description: check players inventory
+    permission: smpcore.command.inventory
+    usage: /inventory player
+    permission-message: You do not have the permission to execute the command
+  jail:
+    description: jail player
+    permission: smpcore.command.jail
+    usage: /jail player
+    permission-message: You do not have the permission to execute the command
+  kit:
+    description: receive kits by command
+    permission: smpcore.command.kit
+    usage: /kit kitName
+    permission-message: You do not have the permission to execute the command
+  motd:
+    description: message of the days
+    permission: smpcore.command.motd
+    usage: /motd welcome
+    permission-message: You do not have the permission to execute the command
+  mute:
+    description: mute player
+    permission: smpcore.command.mute
+    usage: /mute player
+    permission-message: You do not have the permission to execute the command
+  pay:
+    description: pay player
+    permission: smpcore.command.pay
+    usage: /pay player amount
+    permission-message: You do not have the permission to execute the command
+  players:
+    description: players command
+    permission: smpcore.command.reload
+    usage: /players reload
+    permission-message: You do not have the permission to execute the command
+  pvp:
+    description: toggle pvp
+    permission: smpcore.command.pvp
+    usage: /pvp player
+    permission-message: You do not have the permission to execute the command
+  repair:
+    description: repair held item
+    permission: smpcore.command.repair
+    usage: /repair
+    permission-message: You do not have the permission to execute the command
+  respond:
+    description: respond to last whisper
+    permission: smpcore.command.respond
+    usage: /respond message
+    permission-message: You do not have the permission to execute the command
+    aliases:
+      - r
+  rules:
+    description: check player rules
+    permission: smpcore.command.rules
+    usage: /rules
+    permission-message: You do not have the permission to execute the command
+  sethome:
+    description: set home
+    permission: smpcore.command.sethome
+    usage: /sethome home
+    permission-message: You do not have the permission to execute the command
+  setjail:
+    description: set jail
+    permission: smpcore.command.setjail
+    usage: /setjail
+    permission-message: You do not have the permission to execute the command
+  setspawn:
+    description: set spawn
+    permission: smpcore.command.setspawn
+    usage: /setspawn
+    permission-message: You do not have the permission to execute the command
+  setwarp:
+    description: set warp
+    permission: smpcore.command.setwarp
+    usage: /setwarp warpName
+    permission-message: You do not have the permission to execute the command
+  skull:
+    description: receive skull
+    permission: smpcore.command.skull
+    usage: /skull player
+    permission-message: You do not have the permission to execute the command
+  spawn:
+    description: teleport to spawn
+    permission: smpcore.command.spawn
+    usage: /spawn
+    permission-message: You do not have the permission to execute the command
+  tpaccept:
+    description: accept tpa request
+    permission: smpcore.command.tpaccept
+    usage: /tpaccept
+    permission-message: You do not have the permission to execute the command
+  tpa:
+    description: send tpa request
+    permission: smpcore.command.tpa
+    usage: /tpa player
+    permission-message: You do not have the permission to execute the command
+  tpcancel:
+    description: cancel tpa request
+    permission: smpcore.command.tpcancel
+    usage: /tpcancel
+    permission-message: You do not have the permission to execute the command
+  tp:
+    description: teleport to player
+    permission: smpcore.command.tp
+    usage: /tp player
+    permission-message: You do not have the permission to execute the command
+  tpdeny:
+    description: denies tpa request
+    permission: smpcore.command.tpdeny
+    usage: /tpdeny
+    permission-message: You do not have the permission to execute the command
+  tphere:
+    description: teleport player to you
+    permission: smpcore.command.tphere
+    usage: /tphere player
+    permission-message: You do not have the permission to execute the command
+  vanish:
+    description: toggle vanish
+    permission: smpcore.command.vanish
+    usage: /vanish
+    permission-message: You do not have the permission to execute the command
+  warp:
+    description: teleport warp
+    permission: smpcore.command.warp
+    usage: /warp warpName
+    permission-message: You do not have the permission to execute the command
+  whisper:
+    description: whispers
+    permission: smpcore.command.whisper
+    usage: /whisper player
+    permission-message: You do not have the permission to execute the command
+  workbench:
+    description: open crafting table by command
+    permission: smpcore.command.workbench
+    usage: /workbench
+    permission-message: You do not have the permission to execute the command
+permissions:
+  smpcore.command.announcement:
+    description: announce the server
+    default: op
+  smpcore.command.back:
+    description: allows to use back command
+    default: op
+  smpcore.command.back.death:
+    description: allows to teleport back to death location
+    default: op
+  smpcore.command.back.others:
+    description: allows to use back command
+    default: op
+  smpcore.command.balance:
+    description: check balance
+    default: op
+  smpcore.command.balance.others:
+    description: check others balance
+    default: op
+  smpcore.command.color:
+    description: color codes
+    default: op
+  smpcore.command.color.others:
+    description: color codes
+    default: op
+  smpcore.command.delhome:
+    description: delete home
+    default: op
+  smpcore.command.delwarp:
+    description: delete warp
+    default: op
+  smpcore.command.eco:
+    description: change economy of players
+    default: op
+    children:
+      - smpcore.command.eco.add
+      - smpcore.command.eco.remove
+      - smpcore.command.eco.reset
+      - smpcore.command.eco.set
+  smpcore.command.eco.add:
+    description: change economy of players
+    default: op
+  smpcore.command.eco.remove:
+    description: change economy of players
+    default: op
+  smpcore.command.eco.reset:
+    description: change economy of players
+    default: op
+  smpcore.command.eco.set:
+    description: change economy of players
+    default: op
+  smpcore.command.enchant:
+    description: enchant held item
+    default: op
+  smpcore.command.enderchest:
+    description: open enderchest by command
+    default: op
+  smpcore.command.enderchest.others:
+    description: open others enderchest
+    default: op
+  smpcore.command.enderchest.exempt:
+    description: denies opening enderchest from others
+    default: false
+  smpcore.command.feed:
+    description: satisfy starvation by command
+    default: op
+  smpcore.command.feed.others:
+    description: satisfy others starvation
+    default: op
+  smpcore.command.fly:
+    description: fly around the worlds
+    default: op
+  smpcore.command.fly.others:
+    description: fly others
+    default: op
+  smpcore.command.fly.exempt:
+    description: denies toggle fly from others
+    default: false
+  smpcore.command.freeze:
+    description: freeze players
+    default: op
+  smpcore.command.freeze.exempt:
+    description: denies freeze from others
+    default: false
+  smpcore.command.gamemode:
+    description: change gamemode
+    default: op
+  smpcore.command.gamemode.others:
+    description: change gamemode of others
+    default: op
+  smpcore.command.gamemode.adventure:
+    description: change gamemode to adventure
+    default: op
+  smpcore.command.gamemode.creative:
+    description: change gamemode to creative
+    default: op
+  smpcore.command.gamemode.survival:
+    description: change gamemode to survival
+    default: op
+  smpcore.command.gamemode.spectator:
+    description: change gamemode to spectator
+    default: op
+  smpcore.command.gamemode.exempt:
+    description: denies changing gamemode from others
+    default: false
+  smpcore.command.heal:
+    description: satisfy health by command
+    default: op
+  smpcore.command.heal.others:
+    description: satisfy health by command
+    default: op
+  smpcore.command.help:
+    description: check player help
+    default: op
+  smpcore.command.help.others:
+    description: check player help
+    default: op
+  smpcore.command.home:
+    description: teleport home
+    default: op
+  smpcore.command.homes:
+    description: check homes
+    default: op
+  smpcore.command.homes.delete:
+    description: delete others home
+    default: op
+  smpcore.command.homes.teleport:
+    description: teleport to others home
+    default: op
+  smpcore.command.inventory:
+    description: check inventory
+    default: op
+  smpcore.command.inventory.exempt:
+    description: denies checking inventory from others
+    default: false
+  smpcore.command.jail:
+    description: jail players
+    default: op
+  smpcore.command.jail.exempt:
+    description: jail players
+    default: false
+  smpcore.command.kit:
+    description: drops kit by command
+    default: op
+  smpcore.command.kit.others:
+    description: drops kit by command
+    default: op
+  smpcore.command.kit.[kitName]:
+    description: kit permission
+    default: op
+  smpcore.command.kit.cooldown-exempt:
+    description: exempt cooldown
+    default: op
+  smpcore.command.motd:
+    description: message of the days
+    default: op
+  smpcore.command.mute:
+    description: mute players
+    default: op
+  smpcore.command.mute.exempt:
+    description: denies mute from others
+    default: false
+  smpcore.command.pay:
+    description: pay player
+    default: op
+  smpcore.command.reload:
+    description: reload files
+    default: op
+  smpcore.command.pvp:
+    description: toggle pvp
+    default: op
+  smpcore.command.pvp.others:
+    description: toggle others pvp
+    default: op
+  smpcore.command.pvp.exempt:
+    description: denies toggle pvp from others
+    default: false
+  smpcore.command.repair:
+    description: repair held item
+    default: op
+  smpcore.command.repair.force:
+    description: ignores cooldown
+    default: op
+  smpcore.command.respond:
+    description: respond to last whisper
+    default: op
+  smpcore.command.rules:
+    description: check player rules
+    default: op
+  smpcore.command.sethome:
+    description: sets home
+    default: op
+  smpcore.command.setjail:
+    description: sets jail
+    default: op
+  smpcore.command.setspawn:
+    description: sets spawn
+    default: op
+  smpcore.command.setwarp:
+    description: sets warp
+    default: op
+  smpcore.command.skull:
+    description: drops skull
+    default: op
+  smpcore.command.spawn:
+    description: teleport to spawn
+    default: op
+  smpcore.command.spawn.signs:
+    description: teleport to spawn using signs
+    default: op
+  smpcore.command.tpaccept:
+    description: accepts tpa request
+    default: op
+  smpcore.command.tpa:
+    description: send tpa request
+    default: op
+  smpcore.command.tpcancel:
+    description: cancel tpa request
+    default: op
+  smpcore.command.tp:
+    description: teleport to player
+    default: op
+  smpcore.command.tpdeny:
+    description: denies tpa request
+    default: op
+  smpcore.command.tphere:
+    description: teleport player to you
+    default: op
+  smpcore.command.vanish:
+    description: toggle vanish
+    default: op
+  smpcore.command.vanish.others:
+    description: toggle others vanish
+    default: op
+  smpcore.command.vanish.exempt:
+    description: denies toggle vanish from others
+    default: false
+  smpcore.command.warp:
+    description: teleport warp
+    default: op
+  smpcore.command.warp.[warpName]:
+    description: allows to use warp
+    default: op
+  smpcore.command.warp.signs:
+    description: teleport warp
+    default: op
+  smpcore.command.whisper:
+    description: whispers
+    default: op
+  smpcore.command.workbench:
+    description: open crafting table by command
+    default: op
+  smpcore.command.workbench.others:
+    description: open crafting table by command
+    default: op
+  smpcore.command.workbench.signs:
+    description: open crafting table by command
+    default: op
+  smpcore.notify.block-break:
+    description: notifies block breaks
+    default: op
+  smpcore.notify.bucket-empty:
+    description: notifies bucket empty
+    default: op
+  smpcore.notify.block-place:
+    description: notifies block place
+    default: op
+  smpcore.exempt.commands:
+    description: allows to use disabled commands
+    default: false
+  smpcore.death-location:
+    description: receive death location after death
+    default: op
+  smpcore.join-full-server:
+    description: allows to join full server
+    default: op

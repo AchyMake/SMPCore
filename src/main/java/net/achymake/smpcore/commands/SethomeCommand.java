@@ -1,0 +1,68 @@
+package net.achymake.smpcore.commands;
+
+import net.achymake.smpcore.SMPCore;
+import net.achymake.smpcore.files.Message;
+import net.achymake.smpcore.files.PlayerConfig;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SethomeCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (args.length == 0) {
+                if (playerConfig.locationExist(player, "homes.home")) {
+                    playerConfig.setLocation(player, "homes.home");
+                    Message.send(player, MessageFormat.format("{0}&6 has been set", "home"));
+                } else if (playerConfig.get(player).getInt("max-homes") > playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
+                    playerConfig.setLocation(player, "homes.home");
+                    Message.send(player, MessageFormat.format("{0}&6 has been set", "home"));
+                } else {
+                    Message.send(player, MessageFormat.format("&cYou have reach your limit of&f {0}&c homes", playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()));
+                }
+            }
+            if (args.length == 1) {
+                String homeName = args[0];
+                if (homeName.equalsIgnoreCase("buy")){
+                    Message.send(player, MessageFormat.format("&cYou can't set home for&f {0}", homeName));
+
+                } else if (homeName.equalsIgnoreCase("bed")) {
+                    Message.send(player, MessageFormat.format("&cYou can't set home for&f {0}", homeName));
+                } else {
+                    if (playerConfig.locationExist(player, "homes." + homeName)) {
+                        playerConfig.setLocation(player, "homes." + homeName);
+                        Message.send(player, MessageFormat.format("{0}&6 has been set", homeName));
+                    } else if (playerConfig.get(player).getInt("max-homes") > playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
+                        playerConfig.setLocation(player,"homes." + homeName);
+                        Message.send(player, MessageFormat.format("{0}&6 has been set", homeName));
+                    } else {
+                        Message.send(player, MessageFormat.format("&cYou have reach your limit of&f {0}&c homes", playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()));
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        List<String> commands = new ArrayList<>();
+        if (args.length == 1) {
+            if (sender instanceof Player){
+                for (String homes : playerConfig.getHomes((Player) sender)){
+                    commands.add(homes);
+                }
+            }
+        }
+        return commands;
+    }
+}
