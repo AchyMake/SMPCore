@@ -33,11 +33,11 @@ public final class SMPCore extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        message = new Message(this);
         setupVault();
         setupPlaceholderAPI();
         jailConfig = new JailConfig(this);
         kitConfig = new KitConfig(this);
-        message = new Message(this);
         motdConfig = new MotdConfig(this);
         playerConfig = new PlayerConfig(this);
         playerData = new PlayerData(this);
