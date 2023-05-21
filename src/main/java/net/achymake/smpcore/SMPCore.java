@@ -6,7 +6,10 @@ import net.achymake.smpcore.files.*;
 import net.achymake.smpcore.listeners.Events;
 import net.achymake.smpcore.version.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,7 +41,7 @@ public final class SMPCore extends JavaPlugin {
         playerData = new PlayerData(this);
         spawnConfig = new SpawnConfig(this);
         warpConfig = new WarpConfig(this);
-        Files.setup();
+        reload();
         setupCommands();
         Events.setup();
         Message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
@@ -151,6 +154,31 @@ public final class SMPCore extends JavaPlugin {
         return playerConfig.getVanished();
     }
     public void reload() {
+        if (jailConfig.exist()) {
+            jailConfig.reload();
+        } else {
+            jailConfig.setup();
+        }
+        if (kitConfig.exist()) {
+            kitConfig.reload();
+        } else {
+            kitConfig.setup();
+        }
+        if (motdConfig.exist()) {
+            motdConfig.reload();
+        } else {
+            motdConfig.setup();
+        }
+        if (spawnConfig.exist()) {
+            spawnConfig.reload();
+        } else {
+            spawnConfig.setup();
+        }
+        if (warpConfig.exist()) {
+            warpConfig.reload();
+        } else {
+            warpConfig.setup();
+        }
         if (file.exists()) {
             try {
                 getConfig().load(file);
@@ -162,6 +190,19 @@ public final class SMPCore extends JavaPlugin {
         } else {
             getConfig().options().copyDefaults(true);
             saveConfig();
+        }
+        for (OfflinePlayer offlinePlayer : getServer().getOfflinePlayers()) {
+            File file = new File(getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
+            if (file.exists()) {
+                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+                try {
+                    config.load(file);
+                    config.options().copyDefaults(true);
+                    config.save(file);
+                } catch (IOException | InvalidConfigurationException e) {
+                    Message.sendLog(e.getMessage());
+                }
+            }
         }
     }
     public static SMPCore getInstance() {

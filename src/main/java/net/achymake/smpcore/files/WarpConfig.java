@@ -17,6 +17,9 @@ public class WarpConfig {
     }
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "warps.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    public boolean exist() {
+        return file.exists();
+    }
     public void setup() {
         if (!file.exists()) {
             config.options().copyDefaults(true);

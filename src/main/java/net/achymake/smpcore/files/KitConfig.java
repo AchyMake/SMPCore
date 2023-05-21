@@ -23,6 +23,9 @@ public class KitConfig {
     private final PlayerConfig playerConfig = SMPCore.getInstance().getPlayerConfig();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "kits.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    public boolean exist() {
+        return file.exists();
+    }
     public void setup() {
         if (!file.exists()) {
             List<String> lore = new ArrayList<>();

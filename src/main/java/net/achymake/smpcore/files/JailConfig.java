@@ -15,6 +15,9 @@ public class JailConfig {
     }
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "jail.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    public boolean exist() {
+        return file.exists();
+    }
     public void setup() {
         if (!file.exists()) {
             config.options().copyDefaults(true);
