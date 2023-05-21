@@ -61,17 +61,21 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 boolean value = Boolean.valueOf(args[1]);
                 if (value) {
                     if (target != null) {
-                        playerConfig.setVanish(target, true);
-                        message.send(target, player.getName() + "&6 made you vanish");
-                        message.send(player, target.getName() + "&6 is now vanished");
+                        if (!playerConfig.isVanished(target)) {
+                            playerConfig.setVanish(target, true);
+                            message.send(target, player.getName() + "&6 made you vanish");
+                            message.send(player, target.getName() + "&6 is now vanished");
+                        }
                     } else {
                         OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
                         if (playerConfig.exist(offlinePlayer)) {
-                            playerConfig.setVanish(offlinePlayer, true);
-                            if (playerConfig.isVanished(offlinePlayer)) {
-                                message.send(player, offlinePlayer.getName() + "&6 is now vanished");
-                            } else {
-                                message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                            if (!playerConfig.isVanished(offlinePlayer)) {
+                                playerConfig.setVanish(offlinePlayer, true);
+                                if (playerConfig.isVanished(offlinePlayer)) {
+                                    message.send(player, offlinePlayer.getName() + "&6 is now vanished");
+                                } else {
+                                    message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                                }
                             }
                         } else {
                             message.send(sender, offlinePlayer.getName() + "&c has never joined");
@@ -79,17 +83,21 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                     }
                 } else {
                     if (target != null) {
-                        playerConfig.setVanish(target, false);
-                        message.send(target, player.getName() + "&6 made you no longer vanish");
-                        message.send(player, target.getName() + "&6 is no longer vanished");
+                        if (playerConfig.isVanished(target)) {
+                            playerConfig.setVanish(target, false);
+                            message.send(target, player.getName() + "&6 made you no longer vanish");
+                            message.send(player, target.getName() + "&6 is no longer vanished");
+                        }
                     } else {
                         OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
                         if (playerConfig.exist(offlinePlayer)) {
-                            playerConfig.setVanish(offlinePlayer, false);
                             if (playerConfig.isVanished(offlinePlayer)) {
-                                message.send(player, offlinePlayer.getName() + "&6 is now vanished");
-                            } else {
-                                message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                                playerConfig.setVanish(offlinePlayer, false);
+                                if (playerConfig.isVanished(offlinePlayer)) {
+                                    message.send(player, offlinePlayer.getName() + "&6 is now vanished");
+                                } else {
+                                    message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                                }
                             }
                         } else {
                             message.send(sender, offlinePlayer.getName() + "&c has never joined");
@@ -131,17 +139,21 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 boolean value = Boolean.valueOf(args[1]);
                 if (value) {
                     if (target != null) {
-                        playerConfig.setVanish(target, true);
-                        message.send(target,"&6You are now vanished");
-                        message.send(sender, target.getName() + " is now vanished");
+                        if (!playerConfig.isVanished(target)) {
+                            playerConfig.setVanish(target, true);
+                            message.send(target,"&6You are now vanished");
+                            message.send(sender, target.getName() + " is now vanished");
+                        }
                     } else {
                         OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
                         if (playerConfig.exist(offlinePlayer)) {
-                            playerConfig.setVanish(offlinePlayer, true);
-                            if (playerConfig.isVanished(offlinePlayer)) {
-                                message.send(sender, offlinePlayer.getName() + " is now vanished");
-                            } else {
-                                message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                            if (!playerConfig.isVanished(offlinePlayer)) {
+                                playerConfig.setVanish(offlinePlayer, true);
+                                if (playerConfig.isVanished(offlinePlayer)) {
+                                    message.send(sender, offlinePlayer.getName() + " is now vanished");
+                                } else {
+                                    message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                                }
                             }
                         } else {
                             message.send(sender, offlinePlayer.getName() + " has never joined");
@@ -149,17 +161,22 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                     }
                 } else {
                     if (target != null) {
+                        if (playerConfig.isVanished(target)) {
+
+                        }
                         playerConfig.setVanish(target, false);
                         message.send(target,"&6You are no longer vanished");
                         message.send(sender, target.getName() + " is no longer vanished");
                     } else {
                         OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
                         if (playerConfig.exist(offlinePlayer)) {
-                            playerConfig.setVanish(offlinePlayer, false);
                             if (playerConfig.isVanished(offlinePlayer)) {
-                                message.send(sender, offlinePlayer.getName() + " is now vanished");
-                            } else {
-                                message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                                playerConfig.setVanish(offlinePlayer, false);
+                                if (playerConfig.isVanished(offlinePlayer)) {
+                                    message.send(sender, offlinePlayer.getName() + " is now vanished");
+                                } else {
+                                    message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                                }
                             }
                         } else {
                             message.send(sender, offlinePlayer.getName() + " has never joined");
