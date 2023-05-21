@@ -104,7 +104,6 @@ public final class SMPCore extends JavaPlugin {
         getCommand("motd").setExecutor(new MotdCommand());
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("pay").setExecutor(new PayCommand());
-        getCommand("players").setExecutor(new PlayersCommand());
         getCommand("pvp").setExecutor(new PVPCommand());
         getCommand("repair").setExecutor(new RepairCommand());
         getCommand("respond").setExecutor(new RespondCommand());
@@ -114,6 +113,7 @@ public final class SMPCore extends JavaPlugin {
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("setwarp").setExecutor(new SetWarpCommand());
         getCommand("skull").setExecutor(new SkullCommand());
+        getCommand("smpcore").setExecutor(new SMPCoreCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("tpaccept").setExecutor(new TPAcceptCommand());
         getCommand("tpa").setExecutor(new TPACommand());

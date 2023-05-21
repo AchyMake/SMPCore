@@ -147,11 +147,6 @@ commands:
     permission: smpcore.command.pay
     usage: /pay player amount
     permission-message: You do not have the permission to execute the command
-  players:
-    description: players command
-    permission: smpcore.command.reload
-    usage: /players reload
-    permission-message: You do not have the permission to execute the command
   pvp:
     description: toggle pvp
     permission: smpcore.command.pvp
@@ -198,6 +193,11 @@ commands:
     description: receive skull
     permission: smpcore.command.skull
     usage: /skull player
+    permission-message: You do not have the permission to execute the command
+  smpcore:
+    description: players command
+    permission: smpcore.command.reload
+    usage: /smpcore reload
     permission-message: You do not have the permission to execute the command
   spawn:
     description: teleport to spawn
@@ -356,9 +356,6 @@ permissions:
   smpcore.command.gamemode.spectator:
     description: change gamemode to spectator
     default: op
-  smpcore.command.gamemode.exempt:
-    description: denies changing gamemode from others
-    default: false
   smpcore.command.heal:
     description: satisfy health by command
     default: op
@@ -419,9 +416,6 @@ permissions:
   smpcore.command.pay:
     description: pay player
     default: op
-  smpcore.command.reload:
-    description: reload files
-    default: op
   smpcore.command.pvp:
     description: toggle pvp
     default: op
@@ -457,6 +451,9 @@ permissions:
     default: op
   smpcore.command.skull:
     description: drops skull
+    default: op
+  smpcore.command.reload:
+    description: reload files
     default: op
   smpcore.command.spawn:
     description: teleport to spawn

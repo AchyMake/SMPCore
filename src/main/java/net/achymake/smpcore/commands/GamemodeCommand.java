@@ -147,16 +147,16 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.gamemode.adventure")){
+            if (sender.hasPermission("smpcore.command.gamemode.adventure")) {
                 commands.add("adventure");
             }
-            if (sender.hasPermission("smpcore.command.gamemode.creative")){
+            if (sender.hasPermission("smpcore.command.gamemode.creative")) {
                 commands.add("creative");
             }
-            if (sender.hasPermission("smpcore.command.gamemode.survival")){
+            if (sender.hasPermission("smpcore.command.gamemode.survival")) {
                 commands.add("survival");
             }
-            if (sender.hasPermission("smpcore.command.gamemode.spectator")){
+            if (sender.hasPermission("smpcore.command.gamemode.spectator")) {
                 commands.add("spectator");
             }
         }

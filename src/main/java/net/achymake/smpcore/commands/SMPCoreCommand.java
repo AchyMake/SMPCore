@@ -10,14 +10,14 @@ import org.bukkit.command.TabCompleter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayersCommand implements CommandExecutor, TabCompleter {
+public class SMPCoreCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("smpcore.command.reload")) {
                     SMPCore.getInstance().reload();
-                    Message.send(sender,"&6Players reloaded");
+                    Message.send(sender,"&6SMPCore reloaded");
                 }
             }
         }
