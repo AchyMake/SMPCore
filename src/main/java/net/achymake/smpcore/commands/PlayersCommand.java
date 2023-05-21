@@ -1,6 +1,6 @@
 package net.achymake.smpcore.commands;
 
-import net.achymake.smpcore.files.Files;
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +16,7 @@ public class PlayersCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("smpcore.command.reload")) {
-                    Files.reload();
+                    SMPCore.getInstance().reload();
                     Message.send(sender,"&6Players reloaded");
                 }
             }
