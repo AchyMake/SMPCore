@@ -16,21 +16,22 @@ public class BalanceCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final EconomyProvider economyProvider = smpCore.getEconomyProvider();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 0) {
                 Player player = (Player) sender;
-                Message.send(player, "&6Balance:&a " + economyProvider.currencyNameSingular() + economyProvider.format(playerConfig.getEconomy(player)));
+                message.send(player, "&6Balance:&a " + economyProvider.currencyNameSingular() + economyProvider.format(playerConfig.getEconomy(player)));
             }
             if (args.length == 1) {
                 Player player = (Player) sender;
                 if (player.hasPermission("smpcore.command.balance.others")) {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
                     if (playerConfig.exist(offlinePlayer)) {
-                        Message.send(player, offlinePlayer.getName() + " &6balance:&a " + economyProvider.currencyNameSingular() + economyProvider.format(playerConfig.getEconomy(offlinePlayer)));
+                        message.send(player, offlinePlayer.getName() + " &6balance:&a " + economyProvider.currencyNameSingular() + economyProvider.format(playerConfig.getEconomy(offlinePlayer)));
                     } else {
-                        Message.send(player, offlinePlayer.getName() + "&c has never joined");
+                        message.send(player, offlinePlayer.getName() + "&c has never joined");
                     }
                 }
             }
@@ -40,9 +41,9 @@ public class BalanceCommand implements CommandExecutor, TabCompleter {
                 if (sender.hasPermission("smpcore.command.balance.others")) {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
                     if (playerConfig.exist(offlinePlayer)) {
-                        Message.send(sender, offlinePlayer.getName() + " balance: " + economyProvider.currencyNameSingular() + economyProvider.format(playerConfig.getEconomy(offlinePlayer)));
+                        message.send(sender, offlinePlayer.getName() + " balance: " + economyProvider.currencyNameSingular() + economyProvider.format(playerConfig.getEconomy(offlinePlayer)));
                     } else {
-                        Message.send(sender, offlinePlayer.getName() + " has never joined");
+                        message.send(sender, offlinePlayer.getName() + " has never joined");
                     }
                 }
             }

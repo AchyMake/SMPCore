@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnderchestCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -25,7 +28,7 @@ public class EnderchestCommand implements CommandExecutor, TabCompleter {
                     if (target != null) {
                         if (!target.hasPermission("smpcore.command.enderchest.exempt")) {
                             player.openInventory(target.getEnderChest());
-                            Message.send(sender, "&6Opened enderchest of "+target.getName());
+                            message.send(sender, "&6Opened enderchest of&f " + target.getName());
                         }
                     }
                 }

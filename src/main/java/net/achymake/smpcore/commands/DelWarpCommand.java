@@ -14,13 +14,13 @@ import java.util.List;
 public class DelWarpCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final WarpConfig warpConfig = smpCore.getWarpConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            String warpName = args[0];
-            if (warpConfig.warpExist(warpName)) {
-                warpConfig.delWarp(warpName);
-                Message.send(sender, warpName + "&6 has been deleted");
+            if (warpConfig.warpExist(args[0])) {
+                warpConfig.delWarp(args[0]);
+                message.send(sender, args[0] + "&6 has been deleted");
             }
         }
         return true;

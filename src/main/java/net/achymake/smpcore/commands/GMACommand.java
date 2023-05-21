@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GMACommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -16,7 +19,7 @@ public class GMACommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (!player.getGameMode().equals(GameMode.ADVENTURE)) {
                     player.setGameMode(GameMode.ADVENTURE);
-                    Message.send(player, "&6You changed gamemode to&f adventure");
+                    message.send(player, "&6You changed gamemode to&f adventure");
                 }
             }
             if (args.length == 1) {
@@ -26,15 +29,17 @@ public class GMACommand implements CommandExecutor, TabCompleter {
                     if (target == sender) {
                         if (!target.getGameMode().equals(GameMode.ADVENTURE)) {
                             target.setGameMode(GameMode.ADVENTURE);
-                            Message.send(target, player.getName() + "&6 changed your gamemode to&f adventure");
-                            Message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f adventure");
+                            message.send(target, player.getName() + "&6 changed your gamemode to&f adventure");
+                            message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f adventure");
                         }
                     } else {
                         if (target != null) {
-                            if (!target.getGameMode().equals(GameMode.ADVENTURE)) {
-                                target.setGameMode(GameMode.ADVENTURE);
-                                Message.send(target, player.getName() + "&6 changed your gamemode to&f adventure");
-                                Message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f adventure");
+                            if (!target.hasPermission("smpcore.command.gamemode.others")) {
+                                if (!target.getGameMode().equals(GameMode.ADVENTURE)) {
+                                    target.setGameMode(GameMode.ADVENTURE);
+                                    message.send(target, player.getName() + "&6 changed your gamemode to&f adventure");
+                                    message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f adventure");
+                                }
                             }
                         }
                     }
@@ -47,8 +52,8 @@ public class GMACommand implements CommandExecutor, TabCompleter {
                 if (target != null) {
                     if (!target.getGameMode().equals(GameMode.ADVENTURE)) {
                         target.setGameMode(GameMode.ADVENTURE);
-                        Message.send(target, sender.getName() + "&6 changed your gamemode to&f adventure");
-                        Message.send(sender, "You changed " + target.getName() + " gamemode to adventure");
+                        message.send(target, sender.getName() + "&6 changed your gamemode to&f adventure");
+                        message.send(sender, "You changed " + target.getName() + " gamemode to adventure");
                     }
                 }
             }

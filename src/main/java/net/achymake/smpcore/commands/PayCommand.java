@@ -19,6 +19,7 @@ public class PayCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final EconomyProvider economyProvider = smpCore.getEconomyProvider();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -28,11 +29,12 @@ public class PayCommand implements CommandExecutor, TabCompleter {
                     if (economyProvider.has((OfflinePlayer) sender, Double.parseDouble(args[1]))) {
                         economyProvider.withdrawPlayer((OfflinePlayer) sender, Double.parseDouble(args[1]));
                         economyProvider.depositPlayer(offlinePlayer, Double.parseDouble(args[1]));
+                        message.send(sender, "&6You paid&f " + offlinePlayer.getName() + "&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[1])));
                     } else {
-                        Message.send(sender, "&cYou don't have&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[1])) + "&c to pay&f " + offlinePlayer.getName());
+                        message.send(sender, "&cYou don't have&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[1])) + "&c to pay&f " + offlinePlayer.getName());
                     }
                 } else {
-                    Message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                    message.send(sender, offlinePlayer.getName() + "&c has never joined");
                 }
             }
         }

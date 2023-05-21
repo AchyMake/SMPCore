@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
@@ -21,7 +24,7 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
                     if (target != player) {
                         if (!target.hasPermission("smpcore.command.inventory.exempt")) {
                             player.openInventory(target.getInventory());
-                            Message.send(sender, "&6Opened inventory of "+target.getName());
+                            message.send(sender, "&6Opened inventory of " + target.getName());
                         }
                     }
                 }

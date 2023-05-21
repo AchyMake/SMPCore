@@ -16,6 +16,7 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final EconomyProvider economyProvider = smpCore.getEconomyProvider();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -25,9 +26,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.resetEconomy(offlinePlayer);
-                            Message.send(sender, "&6You reset&f " + offlinePlayer.getName() + "&6 account to&a " + economyProvider.currencyNameSingular() + economyProvider.format(smpCore.getConfig().getDouble("economy.starting-balance")));
+                            message.send(sender, "&6You reset&f " + offlinePlayer.getName() + "&6 account to&a " + economyProvider.currencyNameSingular() + economyProvider.format(smpCore.getConfig().getDouble("economy.starting-balance")));
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
                         }
                     }
                 }
@@ -38,9 +39,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.addEconomy(offlinePlayer, Double.parseDouble(args[2]));
-                            Message.send(sender, "&6You added&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + "&6 to&f " + offlinePlayer.getName() + "&6 account");
+                            message.send(sender, "&6You added&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + "&6 to&f " + offlinePlayer.getName() + "&6 account");
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
                         }
                     }
                 }
@@ -49,9 +50,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.removeEconomy(offlinePlayer, Double.parseDouble(args[2]));
-                            Message.send(sender, "&6You removed&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + "&6 from&f " + offlinePlayer.getName() + "&6 account");
+                            message.send(sender, "&6You removed&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + "&6 from&f " + offlinePlayer.getName() + "&6 account");
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
                         }
                     }
                 }
@@ -60,9 +61,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.setEconomy(offlinePlayer, Double.parseDouble(args[2]));
-                            Message.send(sender, "&6You set&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + "&6 to&f " + offlinePlayer.getName() + "&6 account");
+                            message.send(sender, "&6You set&a " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + "&6 to&f " + offlinePlayer.getName() + "&6 account");
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
                         }
                     }
                 }
@@ -75,9 +76,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.resetEconomy(offlinePlayer);
-                            Message.send(sender, "You reset " + offlinePlayer.getName() + " account to " + economyProvider.currencyNameSingular() + economyProvider.format(smpCore.getConfig().getDouble("economy.starting-balance")));
+                            message.send(sender, "You reset " + offlinePlayer.getName() + " account to " + economyProvider.currencyNameSingular() + economyProvider.format(smpCore.getConfig().getDouble("economy.starting-balance")));
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + " has never joined");
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
                         }
                     }
                 }
@@ -88,9 +89,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.addEconomy(offlinePlayer, Double.parseDouble(args[2]));
-                            Message.send(sender, "You added " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + " to " + offlinePlayer.getName() + " account");
+                            message.send(sender, "You added " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + " to " + offlinePlayer.getName() + " account");
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + " has never joined");
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
                         }
                     }
                 }
@@ -99,9 +100,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.removeEconomy(offlinePlayer, Double.parseDouble(args[2]));
-                            Message.send(sender, "You removed " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + " from " + offlinePlayer.getName() + " account");
+                            message.send(sender, "You removed " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + " from " + offlinePlayer.getName() + " account");
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + " has never joined");
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
                         }
                     }
                 }
@@ -110,9 +111,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.setEconomy(offlinePlayer, Double.parseDouble(args[2]));
-                            Message.send(sender, "You set " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + " to " + offlinePlayer.getName() + " account");
+                            message.send(sender, "You set " + economyProvider.currencyNameSingular() + economyProvider.format(Double.parseDouble(args[2])) + " to " + offlinePlayer.getName() + " account");
                         } else {
-                            Message.send(sender, offlinePlayer.getName() + " has never joined");
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
                         }
                     }
                 }

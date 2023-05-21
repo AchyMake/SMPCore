@@ -3,47 +3,168 @@ package net.achymake.smpcore.commands;
 import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import net.achymake.smpcore.files.PlayerConfig;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VanishCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            if (sender instanceof Player) {
+        if (sender instanceof Player) {
+            if (args.length == 0) {
                 Player player = (Player) sender;
                 playerConfig.setVanish(player, !playerConfig.isVanished(player));
                 if (playerConfig.isVanished(player)) {
-                    Message.send(player,"&6You are now vanished");
+                    message.send(player,"&6You are now vanished");
                 } else {
-                    Message.send(player, "&6You are no longer vanished");
-                    Message.sendActionBar(player, "&6&lVanish:&c Disabled");
+                    message.send(player, "&6You are no longer vanished");
+                    message.sendActionBar(player, "&6&lVanish:&c Disabled");
+                }
+            }
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.vanish.others")) {
+                    Player target = player.getServer().getPlayerExact(args[0]);
+                    if (target != null) {
+                        playerConfig.setVanish(target, !playerConfig.isVanished(target));
+                        if (playerConfig.isVanished(target)) {
+                            message.send(target, player.getName() + "&6 made you vanish");
+                            message.send(player, target.getName() + "&6 is now vanished");
+                        } else {
+                            message.send(target, player.getName() + "&6 made you no longer vanish");
+                            message.send(player, target.getName() + "&6 is no longer vanished");
+                        }
+                    } else {
+                        OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setVanish(offlinePlayer, !playerConfig.isVanished(offlinePlayer));
+                            if (playerConfig.isVanished(offlinePlayer)) {
+                                message.send(player, offlinePlayer.getName() + "&6 is now vanished");
+                            } else {
+                                message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                            }
+                        } else {
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                        }
+                    }
+                }
+            }
+            if (args.length == 2) {
+                Player player = (Player) sender;
+                Player target = player.getServer().getPlayerExact(args[0]);
+                boolean value = Boolean.valueOf(args[1]);
+                if (value) {
+                    if (target != null) {
+                        playerConfig.setVanish(target, true);
+                        message.send(target, player.getName() + "&6 made you vanish");
+                        message.send(player, target.getName() + "&6 is now vanished");
+                    } else {
+                        OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setVanish(offlinePlayer, true);
+                            if (playerConfig.isVanished(offlinePlayer)) {
+                                message.send(player, offlinePlayer.getName() + "&6 is now vanished");
+                            } else {
+                                message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                            }
+                        } else {
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                        }
+                    }
+                } else {
+                    if (target != null) {
+                        playerConfig.setVanish(target, false);
+                        message.send(target, player.getName() + "&6 made you no longer vanish");
+                        message.send(player, target.getName() + "&6 is no longer vanished");
+                    } else {
+                        OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setVanish(offlinePlayer, false);
+                            if (playerConfig.isVanished(offlinePlayer)) {
+                                message.send(player, offlinePlayer.getName() + "&6 is now vanished");
+                            } else {
+                                message.send(player, offlinePlayer.getName() + "&6 is no longer vanished");
+                            }
+                        } else {
+                            message.send(sender, offlinePlayer.getName() + "&c has never joined");
+                        }
+                    }
                 }
             }
         }
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.vanish.others")) {
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
-                if (playerConfig.exist(offlinePlayer)) {
-                    playerConfig.setVanish(offlinePlayer, !playerConfig.isVanished(offlinePlayer));
-                    if (playerConfig.isVanished(offlinePlayer)) {
-                        Message.send(sender, offlinePlayer.getName() + "&6 are now vanished");
+        if (sender instanceof ConsoleCommandSender) {
+            if (args.length == 1) {
+                if (sender.hasPermission("smpcore.command.vanish.others")) {
+                    Player target = sender.getServer().getPlayerExact(args[0]);
+                    if (target != null) {
+                        playerConfig.setVanish(target, !playerConfig.isVanished(target));
+                        if (playerConfig.isVanished(target)) {
+                            message.send(target,"&6You are now vanished");
+                            message.send(sender, target.getName() + " is now vanished");
+                        } else {
+                            message.send(target,"&6You are no longer vanished");
+                            message.send(sender, target.getName() + " is no longer vanished");
+                        }
                     } else {
-                        Message.send(sender, offlinePlayer.getName() + "&6 are no longer vanished");
+                        OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setVanish(offlinePlayer, !playerConfig.isVanished(offlinePlayer));
+                            if (playerConfig.isVanished(offlinePlayer)) {
+                                message.send(sender, offlinePlayer.getName() + " is now vanished");
+                            } else {
+                                message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                            }
+                        } else {
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
+                        }
+                    }
+                }
+            }
+            if (args.length == 2) {
+                Player target = sender.getServer().getPlayerExact(args[0]);
+                boolean value = Boolean.valueOf(args[1]);
+                if (value) {
+                    if (target != null) {
+                        playerConfig.setVanish(target, true);
+                        message.send(target,"&6You are now vanished");
+                        message.send(sender, target.getName() + " is now vanished");
+                    } else {
+                        OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setVanish(offlinePlayer, true);
+                            if (playerConfig.isVanished(offlinePlayer)) {
+                                message.send(sender, offlinePlayer.getName() + " is now vanished");
+                            } else {
+                                message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                            }
+                        } else {
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
+                        }
                     }
                 } else {
-                    Message.send(sender, MessageFormat.format("{0}&c has never joined", offlinePlayer.getName()));
+                    if (target != null) {
+                        playerConfig.setVanish(target, false);
+                        message.send(target,"&6You are no longer vanished");
+                        message.send(sender, target.getName() + " is no longer vanished");
+                    } else {
+                        OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setVanish(offlinePlayer, false);
+                            if (playerConfig.isVanished(offlinePlayer)) {
+                                message.send(sender, offlinePlayer.getName() + " is now vanished");
+                            } else {
+                                message.send(sender, offlinePlayer.getName() + " is no longer vanished");
+                            }
+                        } else {
+                            message.send(sender, offlinePlayer.getName() + " has never joined");
+                        }
+                    }
                 }
             }
         }
@@ -57,6 +178,12 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 for (OfflinePlayer offlinePlayer : sender.getServer().getOfflinePlayers()) {
                     commands.add(offlinePlayer.getName());
                 }
+            }
+        }
+        if (args.length == 2) {
+            if (sender.hasPermission("smpcore.command.vanish.others")) {
+                commands.add("true");
+                commands.add("false");
             }
         }
         return commands;

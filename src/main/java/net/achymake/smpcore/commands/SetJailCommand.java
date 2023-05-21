@@ -15,6 +15,7 @@ import java.util.List;
 public class SetJailCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final JailConfig jailConfig = smpCore.getJailConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -22,10 +23,10 @@ public class SetJailCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (jailConfig.jailExist()) {
                     jailConfig.setJail(player.getLocation());
-                    Message.send(sender, "&6Jail relocated");
+                    message.send(sender, "&6Jail relocated");
                 } else {
                     jailConfig.setJail(player.getLocation());
-                    Message.send(sender, "&6Jail has been set");
+                    message.send(sender, "&6Jail has been set");
                 }
             }
         }

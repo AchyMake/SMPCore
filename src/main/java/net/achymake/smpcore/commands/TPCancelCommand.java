@@ -16,6 +16,7 @@ import java.util.UUID;
 public class TPCancelCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerData playerData = smpCore.getPlayerData();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -26,15 +27,15 @@ public class TPCancelCommand implements CommandExecutor, TabCompleter {
                     if (target != null) {
                         if (player.getServer().getScheduler().isQueued(playerData.getInt(player, "task.tpa"))) {
                             player.getServer().getScheduler().cancelTask(playerData.getInt(player, "task.tpa"));
-                            Message.send(target, player.getName() + "&6 cancelled tpa request");
-                            Message.send(player, "&6You cancelled tpa request");
+                            message.send(target, player.getName() + "&6 cancelled tpa request");
+                            message.send(player, "&6You cancelled tpa request");
                             playerData.removeData(target, "tpa.from");
                             playerData.removeData(player, "tpa.sent");
                             playerData.removeData(player, "task.tpa");
                         }
                     }
                 } else {
-                    Message.send(player, "&cYou haven't sent any tpa request");
+                    message.send(player, "&cYou haven't sent any tpa request");
                 }
             }
         }

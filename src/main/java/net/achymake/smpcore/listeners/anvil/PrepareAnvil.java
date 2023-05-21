@@ -10,8 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class PrepareAnvil implements Listener {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     public PrepareAnvil() {
-        SMPCore smpCore = SMPCore.getInstance();
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
@@ -21,7 +22,7 @@ public class PrepareAnvil implements Listener {
         if (itemStack == null)return;
         if (!itemStack.hasItemMeta())return;
         ItemMeta resultMeta = itemStack.getItemMeta();
-        resultMeta.setDisplayName(Message.color(event.getInventory().getRenameText()));
+        resultMeta.setDisplayName(message.color(event.getInventory().getRenameText()));
         itemStack.setItemMeta(resultMeta);
     }
 }

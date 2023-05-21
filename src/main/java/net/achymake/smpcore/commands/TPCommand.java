@@ -1,5 +1,7 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
+import net.achymake.smpcore.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TPCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -18,6 +22,7 @@ public class TPCommand implements CommandExecutor, TabCompleter {
                 Player target = player.getServer().getPlayerExact(args[0]);
                 if (target != null) {
                     player.teleport(target.getLocation());
+                    message.send(player, "&6Teleporting to&f " + target.getName());
                 }
             }
         }

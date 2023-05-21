@@ -1,7 +1,6 @@
 package net.achymake.smpcore.version;
 
 import net.achymake.smpcore.SMPCore;
-import net.achymake.smpcore.files.Message;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -11,14 +10,14 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class UpdateChecker {
-    private final SMPCore plugin;
+    private final SMPCore smpCore;
     private final int resourceId;
-    public UpdateChecker(SMPCore plugin, int resourceId) {
-        this.plugin = plugin;
+    public UpdateChecker(SMPCore smpCore, int resourceId) {
+        this.smpCore = smpCore;
         this.resourceId = resourceId;
     }
     public void getVersion(Consumer<String> consumer) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+        smpCore.getServer().getScheduler().runTaskAsynchronously(smpCore, () -> {
             try {
                 InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId)).openStream();
                 Scanner scanner = new Scanner(inputStream);
@@ -30,28 +29,28 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                smpCore.getMessage().sendLog(e.getMessage());
             }
         });
     }
     public void getUpdate() {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
-                if (plugin.getDescription().getVersion().equals(latest)) {
-                    Message.sendLog("You are using the latest version");
+        if (smpCore.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(smpCore, resourceId)).getVersion((latest) -> {
+                if (smpCore.getDescription().getVersion().equals(latest)) {
+                    smpCore.getMessage().sendLog("You are using the latest version");
                 } else {
-                    Message.sendLog("New Update: " + latest);
-                    Message.sendLog("Current Version: " + plugin.getDescription().getVersion());
+                    smpCore.getMessage().sendLog("New Update: " + latest);
+                    smpCore.getMessage().sendLog("Current Version: " + smpCore.getDescription().getVersion());
                 }
             });
         }
     }
     public void sendMessage(Player player) {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
-                if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Message.send(player,"&6" + plugin.getName() + " Update:&f "+ latest);
-                    Message.send(player,"&6Current Version: &f" + plugin.getDescription().getVersion());
+        if (smpCore.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(smpCore, resourceId)).getVersion((latest) -> {
+                if (!smpCore.getDescription().getVersion().equalsIgnoreCase(latest)) {
+                    smpCore.getMessage().send(player,"&6" + smpCore.getName() + " Update:&f "+ latest);
+                    smpCore.getMessage().send(player,"&6Current Version: &f" + smpCore.getDescription().getVersion());
                 }
             });
         }

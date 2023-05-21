@@ -15,6 +15,7 @@ public class DamagePlayer implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final FileConfiguration config = smpCore.getConfig();
+    private final Message message = smpCore.getMessage();
     public DamagePlayer() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -28,11 +29,11 @@ public class DamagePlayer implements Listener {
         if (!playerConfig.isPVP(player)) {
             if (config.getBoolean("pvp." + target.getWorld().getName()))return;
             event.setCancelled(true);
-            Message.send(player,"&cYour pvp is false");
+            message.send(player,"&cYour pvp is false");
         } else if (!playerConfig.isPVP(target)) {
             if (config.getBoolean("pvp." + target.getWorld().getName()))return;
             event.setCancelled(true);
-            Message.send(player, target.getName() + "&c pvp is false");
+            message.send(player, target.getName() + "&c pvp is false");
         }
     }
 }

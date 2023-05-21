@@ -15,6 +15,7 @@ import java.util.List;
 public class SetWarpCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final WarpConfig warpConfig = smpCore.getWarpConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -23,10 +24,10 @@ public class SetWarpCommand implements CommandExecutor, TabCompleter {
                 String warpName = args[0];
                 if (warpConfig.warpExist(warpName)) {
                     warpConfig.setWarp(player.getLocation(), warpName);
-                    Message.send(sender, warpName+"&6 has been relocated");
+                    message.send(sender, warpName + "&6 has been relocated");
                 } else {
                     warpConfig.setWarp(player.getLocation(), warpName);
-                    Message.send(sender, warpName + "&6 has been set");
+                    message.send(sender, warpName + "&6 has been set");
                 }
             }
         }

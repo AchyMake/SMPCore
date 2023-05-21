@@ -15,6 +15,7 @@ import java.util.List;
 public class SetSpawnCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final SpawnConfig spawnConfig = smpCore.getSpawnConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -22,10 +23,10 @@ public class SetSpawnCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (spawnConfig.spawnExist()) {
                     spawnConfig.setSpawn(player.getLocation());
-                    Message.send(sender, "&6Spawn relocated");
+                    message.send(sender, "&6Spawn relocated");
                 } else {
                     spawnConfig.setSpawn(player.getLocation());
-                    Message.send(sender, "&6Spawn has been set");
+                    message.send(sender, "&6Spawn has been set");
                 }
             }
         }

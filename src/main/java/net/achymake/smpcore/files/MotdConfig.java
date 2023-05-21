@@ -16,6 +16,7 @@ public class MotdConfig {
     public MotdConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
+    private final Message message = SMPCore.getInstance().getMessage();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "motd.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
@@ -44,7 +45,7 @@ public class MotdConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         }
     }
@@ -56,7 +57,7 @@ public class MotdConfig {
     }
     public void sendMotd(CommandSender sender, String motd) {
         for (String messages: config.getStringList(motd)) {
-            Message.send(sender, MessageFormat.format(messages, sender.getName()));
+            message.send(sender, MessageFormat.format(messages, sender.getName()));
         }
     }
     public void reload() {
@@ -64,7 +65,7 @@ public class MotdConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
 }

@@ -13,6 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class AsyncPlayerChat implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     public AsyncPlayerChat() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -22,9 +23,9 @@ public class AsyncPlayerChat implements Listener {
             event.setCancelled(true);
         } else {
             if (event.getPlayer().hasPermission("players.chatcolor.chat")) {
-                event.setMessage(Message.color(event.getMessage()));
+                event.setMessage(message.color(event.getMessage()));
             }
-            event.setFormat(Message.color(prefix(event.getPlayer()) + event.getPlayer().getName() + "&r"  + suffix(event.getPlayer()) + "&r") + ": " + event.getMessage());
+            event.setFormat(message.color(prefix(event.getPlayer()) + event.getPlayer().getName() + "&r"  + suffix(event.getPlayer()) + "&r") + ": " + event.getMessage());
         }
     }
     private String prefix(Player player) {

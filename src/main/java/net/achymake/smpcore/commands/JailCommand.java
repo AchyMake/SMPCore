@@ -4,6 +4,7 @@ import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.JailConfig;
 import net.achymake.smpcore.files.Message;
 import net.achymake.smpcore.files.PlayerConfig;
+import net.achymake.smpcore.files.PlayerData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,9 @@ import java.util.List;
 public class JailCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final PlayerData playerData = smpCore.getPlayerData();
     private final JailConfig jailConfig = smpCore.getJailConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -38,19 +41,19 @@ public class JailCommand implements CommandExecutor, TabCompleter {
     }
     private void execute(CommandSender sender, Player target) {
         if (playerConfig.isJailed(target)) {
-            playerConfig.getLocation(target, "jail-location").getChunk().load();
-            target.teleport(playerConfig.getLocation(target, "jail-location"));
-            playerConfig.setString(target, "jail-location", null);
+            playerData.getLocation(target, "jail").getChunk().load();
+            target.teleport(playerData.getLocation(target, "jail"));
             playerConfig.setBoolean(target, "is-Jailed", false);
-            Message.send(target, "&cYou got free by&f " + sender.getName());
-            Message.send(sender, "&6You freed&f " + target.getName());
+            message.send(target, "&cYou got free by&f " + sender.getName());
+            message.send(sender, "&6You freed&f " + target.getName());
+            playerData.removeLocation(target, "jail");
         } else {
             jailConfig.getJail().getChunk().load();
-            playerConfig.setLocation(target, "jail-location");
+            playerData.setLocation(target, "jail");
             target.teleport(jailConfig.getJail());
             playerConfig.setBoolean(target, "is-Jailed", true);
-            Message.send(target, "&cYou got jailed by&f " + sender.getName());
-            Message.send(sender, "&6You jailed&f " + target.getName());
+            message.send(target, "&cYou got jailed by&f " + sender.getName());
+            message.send(sender, "&6You jailed&f " + target.getName());
         }
     }
     @Override

@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GMCCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -16,7 +19,7 @@ public class GMCCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (!player.getGameMode().equals(GameMode.CREATIVE)) {
                     player.setGameMode(GameMode.CREATIVE);
-                    Message.send(player, "&6You changed gamemode to&f creative");
+                    message.send(player, "&6You changed gamemode to&f creative");
                 }
             }
             if (args.length == 1) {
@@ -26,15 +29,17 @@ public class GMCCommand implements CommandExecutor, TabCompleter {
                     if (target == sender) {
                         if (!target.getGameMode().equals(GameMode.CREATIVE)) {
                             target.setGameMode(GameMode.CREATIVE);
-                            Message.send(target, player.getName() + "&6 changed your gamemode to&f creative");
-                            Message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f creative");
+                            message.send(target, player.getName() + "&6 changed your gamemode to&f creative");
+                            message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f creative");
                         }
                     } else {
                         if (target != null) {
-                            if (!target.getGameMode().equals(GameMode.CREATIVE)) {
-                                target.setGameMode(GameMode.CREATIVE);
-                                Message.send(target, player.getName() + "&6 changed your gamemode to&f creative");
-                                Message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f creative");
+                            if (!target.hasPermission("smpcore.command.gamemode.others")) {
+                                if (!target.getGameMode().equals(GameMode.CREATIVE)) {
+                                    target.setGameMode(GameMode.CREATIVE);
+                                    message.send(target, player.getName() + "&6 changed your gamemode to&f creative");
+                                    message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f creative");
+                                }
                             }
                         }
                     }
@@ -47,8 +52,8 @@ public class GMCCommand implements CommandExecutor, TabCompleter {
                 if (target != null) {
                     if (!target.getGameMode().equals(GameMode.CREATIVE)) {
                         target.setGameMode(GameMode.CREATIVE);
-                        Message.send(target, sender.getName() + "&6 changed your gamemode to&f creative");
-                        Message.send(sender, "You changed " + target.getName() + " gamemode to creative");
+                        message.send(target, sender.getName() + "&6 changed your gamemode to&f creative");
+                        message.send(sender, "You changed " + target.getName() + " gamemode to creative");
                     }
                 }
             }

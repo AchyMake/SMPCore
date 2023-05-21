@@ -356,6 +356,9 @@ permissions:
   smpcore.command.gamemode.spectator:
     description: change gamemode to spectator
     default: op
+  smpcore.command.gamemode.exempt:
+    description: denies changing gamemode from other players
+    default: false
   smpcore.command.heal:
     description: satisfy health by command
     default: op

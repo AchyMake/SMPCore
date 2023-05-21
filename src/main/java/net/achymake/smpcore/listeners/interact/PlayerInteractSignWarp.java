@@ -2,7 +2,6 @@ package net.achymake.smpcore.listeners.interact;
 
 import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
-import net.achymake.smpcore.files.SpawnConfig;
 import net.achymake.smpcore.files.WarpConfig;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
@@ -15,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class PlayerInteractSignWarp implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final WarpConfig warpConfig = smpCore.getWarpConfig();
+    private final Message message = smpCore.getMessage();
     public PlayerInteractSignWarp() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -31,7 +31,7 @@ public class PlayerInteractSignWarp implements Listener {
             if (!event.getPlayer().hasPermission("players.command.warp." + warpName))return;
             warpConfig.getWarp(warpName).getChunk().load();
             event.getPlayer().teleport(warpConfig.getWarp(warpName));
-            Message.send(event.getPlayer(), "&6Teleporting to&f "+warpName);
+            message.send(event.getPlayer(), "&6Teleporting to&f "+warpName);
         }
     }
 }

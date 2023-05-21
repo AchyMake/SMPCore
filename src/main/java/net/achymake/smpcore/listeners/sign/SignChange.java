@@ -8,16 +8,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 public class SignChange implements Listener {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     public SignChange() {
-        SMPCore smpCore = SMPCore.getInstance();
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSignChange(SignChangeEvent event) {
         for (int i = 0; i < event.getLines().length; i++) {
             if (!event.getLine(i).contains("&"))return;
-            if (!event.getPlayer().hasPermission("players.chatcolor.sign"))return;
-            event.setLine(i, Message.color(event.getLine(i)));
+            if (!event.getPlayer().hasPermission("smpcore.chatcolor.sign"))return;
+            event.setLine(i, message.color(event.getLine(i)));
         }
     }
 }

@@ -20,6 +20,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final EconomyProvider economyProvider = smpCore.getEconomyProvider();
     private final FileConfiguration config = smpCore.getConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -28,53 +29,50 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 return false;
             } else {
                 if (args.length == 0) {
-                    String homeName = "home";
-                    if (playerConfig.locationExist(player, "homes." + homeName)) {
-                        playerConfig.getLocation(player, "homes." + homeName).getChunk().load();
-                        player.teleport(playerConfig.getLocation(player, "homes." + homeName));
-                        Message.send(player, "&6Teleporting to&f " + homeName);
+                    if (playerConfig.locationExist(player, "homes.home")) {
+                        playerConfig.getLocation(player, "homes.home").getChunk().load();
+                        player.teleport(playerConfig.getLocation(player, "homes.home"));
+                        message.send(player, "&6Teleporting to&f home");
                     } else {
-                        Message.send(player, homeName + "&c does not exist");
+                        message.send(player, "home&c does not exist");
                     }
                 }
                 if (args.length == 1) {
-                    String homeName = args[0];
-                    if (homeName.equalsIgnoreCase("bed")) {
+                    if (args[0].equalsIgnoreCase("bed")) {
                         if (player.getBedSpawnLocation() != null){
                             if (player.hasPermission("smpcore.command.home.bed")) {
                                 Location location = player.getBedSpawnLocation();
                                 location.setPitch(player.getLocation().getPitch());
                                 location.setYaw(player.getLocation().getYaw());
                                 player.getBedSpawnLocation().getChunk().load();
-                                Message.send(player, "&6Teleporting to&f " + homeName);
+                                message.send(player, "&6Teleporting to&f " + args[0]);
                                 player.teleport(location);
                             }
                         } else {
-                            Message.send(player, homeName + "&c does not exist");
+                            message.send(player, args[0] + "&c does not exist");
                         }
-                    } else if (homeName.equalsIgnoreCase("buy")) {
-                        Message.send(player, "&6Homes costs&a " + economyProvider.format(config.getDouble("homes.cost")));
+                    } else if (args[0].equalsIgnoreCase("buy")) {
+                        message.send(player, "&6Homes costs&a " + economyProvider.format(config.getDouble("homes.cost")));
                     } else {
-                        if (playerConfig.locationExist(player, "homes." + homeName)) {
-                            playerConfig.getLocation(player, "homes." + homeName).getChunk().load();
-                            player.teleport(playerConfig.getLocation(player, "homes." + homeName));
-                            Message.send(player, "&6Teleporting to&f " + homeName);
+                        if (playerConfig.locationExist(player, "homes." + args[0])) {
+                            playerConfig.getLocation(player, "homes." + args[0]).getChunk().load();
+                            player.teleport(playerConfig.getLocation(player, "homes." + args[0]));
+                            message.send(player, "&6Teleporting to&f " + args[0]);
                         } else {
-                            Message.send(player, homeName + "&c does not exist");
+                            message.send(player, args[0] + "&c does not exist");
                         }
                     }
                 }
                 if (args.length == 2) {
-                    String homeName = args[0];
                     int amount = Integer.parseInt(args[1]);
-                    if (homeName.equalsIgnoreCase("buy")) {
+                    if (args[0].equalsIgnoreCase("buy")) {
                         if (player.hasPermission("smpcore.command.home.buy")) {
                             if (playerConfig.getEconomy(player) >= config.getDouble("homes.cost") * amount) {
                                 playerConfig.setInt(player, "max-homes", amount);
                                 playerConfig.removeEconomy(player, config.getDouble("homes.cost") * amount);
-                                Message.send(player, "&6You bought " + amount + " homes for&a " + economyProvider.format(config.getDouble("homes.cost") * amount));
+                                message.send(player, "&6You bought " + amount + " homes for&a " + economyProvider.format(config.getDouble("homes.cost") * amount));
                             } else {
-                                Message.send(player, "&cYou don't have&a " + economyProvider.format(config.getDouble("homes.cost") * amount) + "&c to buy&f " + amount + "&c homes");
+                                message.send(player, "&cYou don't have&a " + economyProvider.format(config.getDouble("homes.cost") * amount) + "&c to buy&f " + amount + "&c homes");
                             }
                         }
                     }

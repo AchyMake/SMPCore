@@ -10,6 +10,7 @@
     <packaging>jar</packaging>
 
     <name>SMPCore</name>
+    <description>a simple smp plugin</description>
 
     <properties>
         <java.version>1.8</java.version>

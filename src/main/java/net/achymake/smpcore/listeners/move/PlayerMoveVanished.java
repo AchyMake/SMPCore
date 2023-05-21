@@ -11,12 +11,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class PlayerMoveVanished implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     public PlayerMoveVanished() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onMoveWhileVanished(PlayerMoveEvent event) {
         if (!playerConfig.get(event.getPlayer()).getBoolean("is-Vanished"))return;
-        Message.sendActionBar(event.getPlayer(),"&6&lVanish:&a Enabled");
+        message.sendActionBar(event.getPlayer(),"&6&lVanish:&a Enabled");
     }
 }

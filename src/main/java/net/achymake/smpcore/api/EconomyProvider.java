@@ -39,7 +39,7 @@ public class EconomyProvider implements Economy {
         if (smpCore.getPlayerConfig().exist(offlinePlayer)){
             return true;
         }else{
-            smpCore.getPlayerConfig().create(offlinePlayer);
+            smpCore.getPlayerConfig().setup(offlinePlayer);
         }
         return true;
     }
@@ -47,7 +47,7 @@ public class EconomyProvider implements Economy {
         if (smpCore.getPlayerConfig().exist(smpCore.getServer().getOfflinePlayer(playerName))){
             return true;
         }else{
-            smpCore.getPlayerConfig().create(smpCore.getServer().getOfflinePlayer(playerName));
+            smpCore.getPlayerConfig().setup(smpCore.getServer().getOfflinePlayer(playerName));
         }
         return true;
     }
@@ -141,11 +141,11 @@ public class EconomyProvider implements Economy {
         return this.depositPlayer(player, amount);
     }
     public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
-        smpCore.getPlayerConfig().create(offlinePlayer);
+        smpCore.getPlayerConfig().setup(offlinePlayer);
         return true;
     }
     public boolean createPlayerAccount(String playerName) {
-        smpCore.getPlayerConfig().create(smpCore.getServer().getOfflinePlayer(playerName));
+        smpCore.getPlayerConfig().setup(smpCore.getServer().getOfflinePlayer(playerName));
         return true;
     }
     public boolean createPlayerAccount(String playerName, String worldName) {

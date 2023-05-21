@@ -17,6 +17,7 @@ import java.util.List;
 public class FreezeCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
@@ -39,9 +40,9 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
     private void execute(CommandSender sender, OfflinePlayer target){
         playerConfig.setBoolean(target, "is-Frozen", !playerConfig.isFrozen(target));
         if (playerConfig.isFrozen(target)) {
-            Message.send(sender, "&6You froze&f " + target.getName());
+            message.send(sender, "&6You froze&f " + target.getName());
         } else {
-            Message.send(sender, "&6You unfroze&f " + target.getName());
+            message.send(sender, "&6You unfroze&f " + target.getName());
         }
     }
     @Override

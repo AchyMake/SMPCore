@@ -16,6 +16,7 @@ import java.util.UUID;
 public class TPDenyCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerData playerData = smpCore.getPlayerData();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -26,15 +27,15 @@ public class TPDenyCommand implements CommandExecutor, TabCompleter {
                     if (target != null) {
                         if (player.getServer().getScheduler().isQueued(playerData.getInt(target, "task.tpa"))) {
                             player.getServer().getScheduler().cancelTask(playerData.getInt(target, "task.tpa"));
-                            Message.send(target, player.getName() + "&6 denied tpa request");
-                            Message.send(player, "&6You denied tpa request");
+                            message.send(target, player.getName() + "&6 denied tpa request");
+                            message.send(player, "&6You denied tpa request");
                             playerData.removeData(target, "tpa.sent");
                             playerData.removeData(target, "task.tpa");
                             playerData.removeData(player, "tpa.from");
                         }
                     }
                 } else {
-                    Message.send(player, "&cYou haven't have any tpa request");
+                    message.send(player, "&cYou haven't have any tpa request");
                 }
             }
         }

@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class PlayerRespawn implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     public PlayerRespawn() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -25,8 +26,8 @@ public class PlayerRespawn implements Listener {
             int x = location.getBlockX();
             int y = location.getBlockY();
             int z = location.getBlockZ();
-            Message.send(event.getPlayer(), "&6Death location:");
-            Message.send(event.getPlayer(), "&6World:&f " + world + "&6 X:&f " + x + "&6 Y:&f " + y + "&6 Z:&f " + z);
+            message.send(event.getPlayer(), "&6Death location:");
+            message.send(event.getPlayer(), "&6World:&f " + world + "&6 X:&f " + x + "&6 Y:&f " + y + "&6 Z:&f " + z);
         }
     }
 }

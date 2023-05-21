@@ -13,6 +13,7 @@ public class JailConfig {
     public JailConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
+    private final Message message = SMPCore.getInstance().getMessage();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "jail.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
@@ -24,9 +25,12 @@ public class JailConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         }
+    }
+    public FileConfiguration get() {
+        return config;
     }
     public void setJail(Location location) {
         config.set("jail.world",location.getWorld().getName());
@@ -38,7 +42,7 @@ public class JailConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public boolean jailExist() {
@@ -58,7 +62,7 @@ public class JailConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
 }

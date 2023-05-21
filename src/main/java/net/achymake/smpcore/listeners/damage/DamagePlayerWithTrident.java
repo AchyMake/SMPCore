@@ -16,6 +16,7 @@ public class DamagePlayerWithTrident implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final FileConfiguration config = smpCore.getConfig();
+    private final Message message = smpCore.getMessage();
     public DamagePlayerWithTrident() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -31,12 +32,12 @@ public class DamagePlayerWithTrident implements Listener {
                 if (config.getBoolean("pvp." + target.getWorld().getName()))return;
                 event.setCancelled(true);
                 if (damager.getShooter() == null)return;
-                Message.send((Player) damager.getShooter(),"&cYour pvp is false");
+                message.send((Player) damager.getShooter(),"&cYour pvp is false");
             } else if (!playerConfig.isPVP(target)) {
                 if (config.getBoolean("pvp." + target.getWorld().getName()))return;
                 event.setCancelled(true);
                 if (damager.getShooter() == null)return;
-                Message.send((Player) damager.getShooter(), target.getName() + "&c pvp is false");
+                message.send((Player) damager.getShooter(), target.getName() + "&c pvp is false");
             }
         }
     }

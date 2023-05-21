@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class AnnouncementCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length > 0) {
@@ -19,9 +22,9 @@ public class AnnouncementCommand implements CommandExecutor, TabCompleter {
                 stringBuilder.append(words);
                 stringBuilder.append(" ");
             }
-            Message.sendAnnouncement(stringBuilder.toString());
+            message.sendAnnouncement(stringBuilder.toString());
             for (Player players : sender.getServer().getOnlinePlayers()) {
-                Message.send(players, "&6Server:&f "+ stringBuilder);
+                message.send(players, "&6Server:&f "+ stringBuilder);
             }
         }
         return true;

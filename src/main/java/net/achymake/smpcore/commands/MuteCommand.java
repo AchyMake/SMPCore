@@ -17,6 +17,7 @@ import java.util.List;
 public class MuteCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
@@ -27,17 +28,17 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
                     if (!target.hasPermission("smpcore.command.mute.exempt")) {
                         playerConfig.setBoolean(offlinePlayer, "is-Muted", !playerConfig.isMuted(offlinePlayer));
                         if (playerConfig.isMuted(offlinePlayer)) {
-                            Message.send(sender, "&6You muted&f "+offlinePlayer.getName());
+                            message.send(sender, "&6You muted&f "+offlinePlayer.getName());
                         } else {
-                            Message.send(sender, "&6You unmuted&f "+offlinePlayer.getName());
+                            message.send(sender, "&6You unmuted&f "+offlinePlayer.getName());
                         }
                     }
                 } else {
                     playerConfig.setBoolean(offlinePlayer, "is-Muted", !playerConfig.isMuted(offlinePlayer));
                     if (playerConfig.isMuted(offlinePlayer)) {
-                        Message.send(sender, "&6You muted&f "+offlinePlayer.getName());
+                        message.send(sender, "&6You muted&f "+offlinePlayer.getName());
                     } else {
-                        Message.send(sender, "&6You unmuted&f "+offlinePlayer.getName());
+                        message.send(sender, "&6You unmuted&f "+offlinePlayer.getName());
                     }
                 }
             }

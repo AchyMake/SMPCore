@@ -17,18 +17,19 @@ import java.util.List;
 public class HomesCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 0) {
                 Player player = (Player) sender;
                 if (playerConfig.getHomes(player).size() > 0) {
-                    Message.send(player, "&6Homes:");
+                    message.send(player, "&6Homes:");
                     for (String listedHomes : playerConfig.getHomes(player)) {
-                        Message.send(player, "- " + listedHomes);
+                        message.send(player, "- " + listedHomes);
                     }
                 } else {
-                    Message.send(player, "&cYou havent set any homes yet");
+                    message.send(player, "&cYou havent set any homes yet");
                 }
             }
             if (args.length == 3) {
@@ -39,12 +40,12 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
                         if (playerConfig.exist(offlinePlayer)) {
                             if (playerConfig.getHomes(offlinePlayer).contains(args[2])) {
                                 playerConfig.setString(offlinePlayer, "homes." + args[2], null);
-                                Message.send(player, "&6Deleted&f " + args[2] + "&6 of&f " + args[1]);
+                                message.send(player, "&6Deleted&f " + args[2] + "&6 of&f " + args[1]);
                             } else {
-                                Message.send(player, args[1] + "&c doesn't have&f " + args[2]);
+                                message.send(player, args[1] + "&c doesn't have&f " + args[2]);
                             }
                         } else {
-                            Message.send(player, args[1] + "&c has never joined");
+                            message.send(player, args[1] + "&c has never joined");
                         }
                     }
                 }
@@ -55,19 +56,19 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
                             if (args[2].equalsIgnoreCase("bed")) {
                                 if (offlinePlayer.getBedSpawnLocation() != null){
                                     player.teleport(offlinePlayer.getBedSpawnLocation());
-                                    Message.send(player, "&6Teleporting&f " + args[2] + "&6 of&f " + args[1]);
+                                    message.send(player, "&6Teleporting&f " + args[2] + "&6 of&f " + args[1]);
                                 }
                             } else {
                                 if (playerConfig.getHomes(offlinePlayer).contains(args[2])) {
                                     playerConfig.getLocation(offlinePlayer,"homes." + args[2]).getChunk().load();
                                     player.teleport(playerConfig.getLocation(offlinePlayer,"homes." + args[2]));
-                                    Message.send(player, "&6Teleporting&f " + args[2] + "&6 of&f " + args[1]);
+                                    message.send(player, "&6Teleporting&f " + args[2] + "&6 of&f " + args[1]);
                                 } else {
-                                    Message.send(player, args[1] + "&c doesn't have&f " + args[2]);
+                                    message.send(player, args[1] + "&c doesn't have&f " + args[2]);
                                 }
                             }
                         } else {
-                            Message.send(player, args[1] + "&c has never joined");
+                            message.send(player, args[1] + "&c has never joined");
                         }
                     }
                 }

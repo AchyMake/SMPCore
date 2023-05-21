@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SMPCoreCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("smpcore.command.reload")) {
-                    SMPCore.getInstance().reload();
-                    Message.send(sender,"&6SMPCore reloaded");
+                    smpCore.reload();
+                    message.send(sender,"&6SMPCore reloaded");
                 }
             }
         }

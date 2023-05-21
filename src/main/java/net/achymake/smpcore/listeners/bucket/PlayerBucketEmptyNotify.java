@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 public class PlayerBucketEmptyNotify implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final FileConfiguration config = smpCore.getConfig();
+    private final Message message = smpCore.getMessage();
     public PlayerBucketEmptyNotify() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -24,7 +25,7 @@ public class PlayerBucketEmptyNotify implements Listener {
         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
             if (players.hasPermission("players.notify.bucket-empty")) {
                 for (String messages : config.getStringList("notification.message")) {
-                    players.sendMessage(Message.color(MessageFormat.format(messages, event.getPlayer().getName(), event.getBucket().toString(), event.getBlock().getWorld().getName(), event.getBlock().getLocation().getBlockX(), event.getBlock().getLocation().getBlockY(), event.getBlock().getLocation().getBlockZ())));
+                    players.sendMessage(message.color(MessageFormat.format(messages, event.getPlayer().getName(), event.getBucket().toString(), event.getBlock().getWorld().getName(), event.getBlock().getLocation().getBlockX(), event.getBlock().getLocation().getBlockY(), event.getBlock().getLocation().getBlockZ())));
                 }
             }
         }

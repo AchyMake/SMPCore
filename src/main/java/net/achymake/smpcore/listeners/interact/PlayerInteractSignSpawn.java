@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class PlayerInteractSignSpawn implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final SpawnConfig spawnConfig = smpCore.getSpawnConfig();
+    private final Message message = smpCore.getMessage();
     public PlayerInteractSignSpawn() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -29,6 +30,6 @@ public class PlayerInteractSignSpawn implements Listener {
         if (!event.getPlayer().hasPermission("players.command.spawn"))return;
         spawnConfig.getSpawn().getChunk().load();
         event.getPlayer().teleport(spawnConfig.getSpawn());
-        Message.send(event.getPlayer(), "&6Teleporting to&f spawn");
+        message.send(event.getPlayer(), "&6Teleporting to&f spawn");
     }
 }

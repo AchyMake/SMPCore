@@ -18,16 +18,13 @@ public class PlayerConfig {
     public PlayerConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
+    private final Message message = SMPCore.getInstance().getMessage();
     private static final HashMap<String, Long> commandCooldown = new HashMap<>();
     private final List<Player> vanished = new ArrayList<>();
-    public FileConfiguration get(OfflinePlayer offlinePlayer) {
-        File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
-        return YamlConfiguration.loadConfiguration(file);
-    }
     public boolean exist(OfflinePlayer offlinePlayer) {
         return new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml").exists();
     }
-    public void create(OfflinePlayer offlinePlayer) {
+    public void setup(OfflinePlayer offlinePlayer) {
         File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         if (file.exists()) {
@@ -36,7 +33,7 @@ public class PlayerConfig {
                 try {
                     config.save(file);
                 } catch (IOException e) {
-                    Message.sendLog(e.getMessage());
+                    message.sendLog(e.getMessage());
                 }
             }
         } else {
@@ -49,9 +46,13 @@ public class PlayerConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         }
+    }
+    public FileConfiguration get(OfflinePlayer offlinePlayer) {
+        File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
+        return YamlConfiguration.loadConfiguration(file);
     }
     public void setInt(OfflinePlayer offlinePlayer, String path, int amount) {
         File file = new File(smpCore.getDataFolder(),"userdata/" + offlinePlayer.getUniqueId() + ".yml");
@@ -60,7 +61,7 @@ public class PlayerConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public void setDouble(OfflinePlayer offlinePlayer, String path, double amount) {
@@ -70,7 +71,7 @@ public class PlayerConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public void setFloat(OfflinePlayer offlinePlayer, String path, float amount) {
@@ -80,7 +81,7 @@ public class PlayerConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public void setString(OfflinePlayer offlinePlayer, String path, String value) {
@@ -90,7 +91,7 @@ public class PlayerConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public void setBoolean(OfflinePlayer offlinePlayer, String path, boolean value) {
@@ -100,7 +101,7 @@ public class PlayerConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public boolean locationExist(OfflinePlayer offlinePlayer, String locationName) {
@@ -108,9 +109,6 @@ public class PlayerConfig {
     }
     public List<String> getHomes(OfflinePlayer offlinePlayer) {
         return new ArrayList<>(get(offlinePlayer).getConfigurationSection("homes").getKeys(false));
-    }
-    public List<String> getTasks(OfflinePlayer offlinePlayer) {
-        return new ArrayList<>(get(offlinePlayer).getConfigurationSection("tasks").getKeys(false));
     }
     public void setLocation(Player player, String locationName) {
         setString(player, locationName + ".world", player.getWorld().getName());

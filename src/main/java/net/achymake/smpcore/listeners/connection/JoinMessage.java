@@ -18,6 +18,7 @@ public class JoinMessage implements Listener {
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final MotdConfig motdConfig = smpCore.getMotdConfig();
     private final FileConfiguration config = smpCore.getConfig();
+    private final Message message = smpCore.getMessage();
     public JoinMessage() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -26,11 +27,11 @@ public class JoinMessage implements Listener {
         if (playerConfig.isVanished(event.getPlayer())) {
             playerConfig.setVanish(event.getPlayer(), true);
             event.setJoinMessage(null);
-            Message.send(event.getPlayer(), "&6You joined back vanished");
+            message.send(event.getPlayer(), "&6You joined back vanished");
         } else {
             playerConfig.hideVanished(event.getPlayer());
             if (config.getBoolean("connection.join.enable")) {
-                event.setJoinMessage(Message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
+                event.setJoinMessage(message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
                 sendMotd(event.getPlayer());
                 for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
                     players.playSound(players, Sound.valueOf(config.getString("connection.join.sound.type")), Float.valueOf(config.getString("connection.join.sound.volume")), Float.valueOf(config.getString("connection.join.sound.pitch")));
@@ -38,7 +39,7 @@ public class JoinMessage implements Listener {
             } else {
                 if (event.getPlayer().hasPermission("players.join-message")) {
                     if (config.getBoolean("connection.join.sound.enable")) {
-                        event.setJoinMessage(Message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
+                        event.setJoinMessage(message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
                         sendMotd(event.getPlayer());
                         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
                             players.playSound(players, Sound.valueOf(config.getString("connection.join.sound.type")), Float.valueOf(config.getString("connection.join.sound.volume")), Float.valueOf(config.getString("connection.join.sound.pitch")));

@@ -15,6 +15,7 @@ public class WarpConfig {
     public WarpConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
+    private final Message message = SMPCore.getInstance().getMessage();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "warps.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
@@ -26,9 +27,12 @@ public class WarpConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         }
+    }
+    public FileConfiguration get() {
+        return config;
     }
     public boolean warpExist(String warpName) {
         return config.isConfigurationSection(warpName);
@@ -46,7 +50,7 @@ public class WarpConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public void delWarp(String warpName) {
@@ -54,7 +58,7 @@ public class WarpConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public Location getWarp(String warpName) {
@@ -71,7 +75,7 @@ public class WarpConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
 }

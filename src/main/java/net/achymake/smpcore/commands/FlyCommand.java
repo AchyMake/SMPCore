@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,16 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlyCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            if (sender instanceof Player){
+            if (sender instanceof Player) {
                 Player player = (Player) sender;
                 player.setAllowFlight(!player.getAllowFlight());
                 if (player.getAllowFlight()){
-                    Message.send(sender, "&6Enabled fly");
+                    message.send(sender, "&6Enabled fly");
                 } else {
-                    Message.send(sender, "&6Disabled fly");
+                    message.send(sender, "&6Disabled fly");
                 }
             }
         }
@@ -31,11 +34,11 @@ public class FlyCommand implements CommandExecutor, TabCompleter {
                     if (!target.hasPermission("smpcore.command.fly.exempt")) {
                         target.setAllowFlight(!target.getAllowFlight());
                         if (target.getAllowFlight()){
-                            Message.send(target, "&6Enabled fly");
-                            Message.send(sender, "&6You enabled fly for "+ target.getName());
+                            message.send(target, "&6Enabled fly");
+                            message.send(sender, "&6You enabled fly for "+ target.getName());
                         } else {
-                            Message.send(target, "&6Disabled fly");
-                            Message.send(sender, "&6You disabled fly for "+ target.getName());
+                            message.send(target, "&6Disabled fly");
+                            message.send(sender, "&6You disabled fly for "+ target.getName());
                         }
                     }
                 }

@@ -3,6 +3,7 @@ package net.achymake.smpcore.commands;
 import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import net.achymake.smpcore.files.PlayerConfig;
+import net.achymake.smpcore.files.PlayerData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +16,8 @@ import java.util.List;
 public class BackCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final PlayerData playerData = smpCore.getPlayerData();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
@@ -27,10 +30,7 @@ public class BackCommand implements CommandExecutor, TabCompleter {
                         if (player.getLastDeathLocation() == null) {
                             back(player);
                         } else {
-                            player.getLastDeathLocation().getChunk().load();
-                            Message.send(player, "&6Teleporting to&f death location");
-                            player.teleport(player.getLastDeathLocation());
-                            player.setLastDeathLocation(null);
+                            death(player);
                         }
                     } else {
                         back(player);
@@ -49,10 +49,7 @@ public class BackCommand implements CommandExecutor, TabCompleter {
                             if (target.getLastDeathLocation() == null) {
                                 back(target);
                             } else {
-                                target.getLastDeathLocation().getChunk().load();
-                                Message.send(target, "&6Teleporting to&f death location");
-                                target.teleport(target.getLastDeathLocation());
-                                target.setLastDeathLocation(null);
+                                death(target);
                             }
                         } else {
                             back(target);
@@ -63,14 +60,20 @@ public class BackCommand implements CommandExecutor, TabCompleter {
         }
         return true;
     }
-    private void back(Player player){
-        if (playerConfig.locationExist(player,"last-location")) {
-            playerConfig.getLocation(player,"last-location").getChunk().load();
-            Message.send(player, "&6Teleporting to&f recent location");
-            player.teleport(playerConfig.getLocation(player,"last-location"));
+    private void back(Player player) {
+        if (playerData.hasString(player,"recent.location.world")) {
+            playerData.getLocation(player, "recent").getChunk().load();
+            message.send(player, "&6Teleporting to&f recent location");
+            player.teleport(playerData.getLocation(player, "recent"));
         } else {
-            Message.send(player, "&cRecent location either removed or has never been set");
+            message.send(player, "&cRecent location either removed or has never been set");
         }
+    }
+    private void death(Player player) {
+        player.getLastDeathLocation().getChunk().load();
+        message.send(player, "&6Teleporting to&f death location");
+        player.teleport(player.getLastDeathLocation());
+        player.setLastDeathLocation(null);
     }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {

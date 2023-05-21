@@ -13,6 +13,7 @@ public class SpawnConfig {
     public SpawnConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
+    private final Message message = SMPCore.getInstance().getMessage();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "spawn.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
@@ -24,9 +25,12 @@ public class SpawnConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         }
+    }
+    public FileConfiguration get() {
+        return config;
     }
     public void setSpawn(Location location) {
         config.set("spawn.world",location.getWorld().getName());
@@ -38,7 +42,7 @@ public class SpawnConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
     public boolean spawnExist() {
@@ -58,7 +62,7 @@ public class SpawnConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            Message.sendLog(e.getMessage());
+            message.sendLog(e.getMessage());
         }
     }
 }

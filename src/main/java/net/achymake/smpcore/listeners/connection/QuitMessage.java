@@ -20,6 +20,7 @@ public class QuitMessage implements Listener {
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final PlayerData playerData = smpCore.getPlayerData();
     private final FileConfiguration config = smpCore.getConfig();
+    private final Message message = smpCore.getMessage();
     public QuitMessage() {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
@@ -32,7 +33,7 @@ public class QuitMessage implements Listener {
             event.setQuitMessage(null);
         } else {
             if (config.getBoolean("connection.quit.enable")) {
-                event.setQuitMessage(Message.color(MessageFormat.format(config.getString("connection.quit.message"), event.getPlayer().getName())));
+                event.setQuitMessage(message.color(MessageFormat.format(config.getString("connection.quit.message"), event.getPlayer().getName())));
                 if (config.getBoolean("connection.quit.sound.enable")) {
                     for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
                         players.playSound(players, Sound.valueOf(config.getString("connection.quit.sound.type")), Float.valueOf(config.getString("connection.quit.sound.volume")), Float.valueOf(config.getString("connection.quit.sound.pitch")));
@@ -40,7 +41,7 @@ public class QuitMessage implements Listener {
                 }
             } else {
                 if (event.getPlayer().hasPermission("players.quit-message")) {
-                    event.setQuitMessage(Message.color(MessageFormat.format(config.getString("connection.quit.message"), event.getPlayer().getName())));
+                    event.setQuitMessage(message.color(MessageFormat.format(config.getString("connection.quit.message"), event.getPlayer().getName())));
                     if (config.getBoolean("connection.quit.sound.enable")) {
                         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
                             players.playSound(players, Sound.valueOf(config.getString("connection.quit.sound.type")), Float.valueOf(config.getString("connection.quit.sound.volume")), Float.valueOf(config.getString("connection.quit.sound.pitch")));

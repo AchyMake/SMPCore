@@ -16,6 +16,7 @@ import java.util.UUID;
 public class TPAcceptCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerData playerData = smpCore.getPlayerData();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -27,15 +28,15 @@ public class TPAcceptCommand implements CommandExecutor, TabCompleter {
                         if (player.getServer().getScheduler().isQueued(playerData.getInt(target, "task.tpa"))) {
                             player.getServer().getScheduler().cancelTask(playerData.getInt(target, "task.tpa"));
                             target.teleport(player);
-                            Message.send(target, "&6Teleporting to&f " + player.getName());
-                            Message.send(player, "&6You accepted&f " + target.getName() + "&6 tpa request");
+                            message.send(target, "&6Teleporting to&f " + player.getName());
+                            message.send(player, "&6You accepted&f " + target.getName() + "&6 tpa request");
                             playerData.removeData(target, "tpa.sent");
                             playerData.removeData(player, "tpa.from");
                             playerData.removeData(target, "task.tpa");
                         }
                     }
                 } else {
-                    Message.send(player, "&cYou haven't any tpa request");
+                    message.send(player, "&cYou haven't any tpa request");
                 }
             }
         }

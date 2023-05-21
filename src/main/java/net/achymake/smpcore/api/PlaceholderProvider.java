@@ -2,7 +2,6 @@ package net.achymake.smpcore.api;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.achymake.smpcore.SMPCore;
-import net.achymake.smpcore.files.Message;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,9 +39,9 @@ public class PlaceholderProvider extends PlaceholderExpansion {
         }
         if (params.equals("name")) {
             if (SMPCore.getInstance().getPlayerConfig().get(player).getKeys(false).contains("display-name")){
-                return Message.color(SMPCore.getInstance().getPlayerConfig().get(player).getString("display-name"));
+                return SMPCore.getInstance().getMessage().color(SMPCore.getInstance().getPlayerConfig().get(player).getString("display-name"));
             }else{
-                return Message.color(SMPCore.getInstance().getPlayerConfig().get(player).getString("name"));
+                return SMPCore.getInstance().getMessage().color(SMPCore.getInstance().getPlayerConfig().get(player).getString("name"));
             }
         }
         if (params.equals("vanished")) {

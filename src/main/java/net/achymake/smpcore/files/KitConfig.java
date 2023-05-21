@@ -20,6 +20,7 @@ public class KitConfig {
     public KitConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
+    private final Message message = SMPCore.getInstance().getMessage();
     private final PlayerConfig playerConfig = SMPCore.getInstance().getPlayerConfig();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "kits.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -66,7 +67,7 @@ public class KitConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         }
     }
@@ -76,11 +77,11 @@ public class KitConfig {
     public void giveKit(Player player, String kitName) {
         if (player.hasPermission("players.command.kit.cooldown-exempt")) {
             dropKit(player,kitName);
-            Message.send(player, "&6You received &f" + kitName + "&6 kit");
+            message.send(player, "&6You received &f" + kitName + "&6 kit");
         } else if (!playerConfig.getCommandCooldown().containsKey(kitName + "-" + player.getUniqueId())) {
             playerConfig.getCommandCooldown().put(kitName + "-" + player.getUniqueId(),System.currentTimeMillis());
             dropKit(player,kitName);
-            Message.send(player, "&6You received &f" + kitName + "&6 kit");
+            message.send(player, "&6You received &f" + kitName + "&6 kit");
         } else {
             Long timeElapsed = System.currentTimeMillis() - playerConfig.getCommandCooldown().get(kitName + "-" + player.getUniqueId());
             String cooldownTimer = config.getString(kitName+".cooldown");
@@ -88,10 +89,10 @@ public class KitConfig {
             if (timeElapsed > integer) {
                 playerConfig.getCommandCooldown().put(kitName + "-" + player.getUniqueId(),System.currentTimeMillis());
                 dropKit(player, kitName);
-                Message.send(player, "&6You received &f" + kitName + "&6 kit");
+                message.send(player, "&6You received &f" + kitName + "&6 kit");
             } else {
                 long timer = (integer-timeElapsed);
-                Message.sendActionBar(player, "&cYou have to wait&f "+String.valueOf(timer).substring(0,String.valueOf(timer).length()-3) + "&c seconds");
+                message.sendActionBar(player, "&cYou have to wait&f "+String.valueOf(timer).substring(0,String.valueOf(timer).length()-3) + "&c seconds");
             }
         }
     }
@@ -101,12 +102,12 @@ public class KitConfig {
             ItemStack item = new ItemStack(Material.valueOf(config.getString(kitName + ".materials." + items + ".type")), config.getInt(kitName + ".materials." + items + ".amount"));
             ItemMeta itemMeta = item.getItemMeta();
             if (config.getKeys(true).contains(kitName+".materials." + items + ".name")) {
-                itemMeta.setDisplayName(Message.color(config.getString(kitName + ".materials." + items + ".name")));
+                itemMeta.setDisplayName(message.color(config.getString(kitName + ".materials." + items + ".name")));
             }
             if (config.getKeys(true).contains(kitName+".materials." + items + ".lore")) {
                 List<String> lore = new ArrayList<>();
-                for (String message : config.getStringList(kitName + ".materials." + items + ".lore")) {
-                    lore.add(Message.color(message));
+                for (String listedLore : config.getStringList(kitName + ".materials." + items + ".lore")) {
+                    lore.add(message.color(listedLore));
                 }
                 itemMeta.setLore(lore);
             }

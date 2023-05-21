@@ -17,6 +17,7 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
     private final SMPCore smpCore = SMPCore.getInstance();
     private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
     private final PlayerData playerData = smpCore.getPlayerData();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -32,10 +33,10 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
                             stringBuilder.append(args[i]);
                             stringBuilder.append(" ");
                         }
-                        Message.send(player, "&7You > " + target.getName() + ": " + stringBuilder);
-                        Message.send(target, "&7" + player.getName() + " > You: " + stringBuilder);
+                        message.send(player, "&7You > " + target.getName() + ": " + stringBuilder);
+                        message.send(target, "&7" + player.getName() + " > You: " + stringBuilder);
                         playerData.setString(player, "last-whisper", target.getUniqueId().toString());
-                        player.getServer().broadcast(Message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder),"players.notify.whisper");
+                        player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder),"players.notify.whisper");
                     }
                 }
             }

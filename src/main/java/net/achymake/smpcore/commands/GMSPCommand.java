@@ -1,5 +1,6 @@
 package net.achymake.smpcore.commands;
 
+import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GMSPCommand implements CommandExecutor, TabCompleter {
+    private final SMPCore smpCore = SMPCore.getInstance();
+    private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -16,7 +19,7 @@ public class GMSPCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (!player.getGameMode().equals(GameMode.SPECTATOR)) {
                     player.setGameMode(GameMode.SPECTATOR);
-                    Message.send(player, "&6You changed gamemode to&f spectator");
+                    message.send(player, "&6You changed gamemode to&f spectator");
                 }
             }
             if (args.length == 1) {
@@ -26,15 +29,17 @@ public class GMSPCommand implements CommandExecutor, TabCompleter {
                     if (target == sender) {
                         if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
                             target.setGameMode(GameMode.SPECTATOR);
-                            Message.send(target, player.getName() + "&6 changed your gamemode to&f spectator");
-                            Message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f spectator");
+                            message.send(target, player.getName() + "&6 changed your gamemode to&f spectator");
+                            message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f spectator");
                         }
                     } else {
                         if (target != null) {
-                            if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
-                                target.setGameMode(GameMode.SPECTATOR);
-                                Message.send(target, player.getName() + "&6 changed your gamemode to&f spectator");
-                                Message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f spectator");
+                            if (!target.hasPermission("smpcore.command.gamemode.others")) {
+                                if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
+                                    target.setGameMode(GameMode.SPECTATOR);
+                                    message.send(target, player.getName() + "&6 changed your gamemode to&f spectator");
+                                    message.send(player, "&6You changed&f " + target.getName() + "&6 gamemode to&f spectator");
+                                }
                             }
                         }
                     }
@@ -47,8 +52,8 @@ public class GMSPCommand implements CommandExecutor, TabCompleter {
                 if (target != null) {
                     if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
                         target.setGameMode(GameMode.SPECTATOR);
-                        Message.send(target, sender.getName() + "&6 changed your gamemode to&f spectator");
-                        Message.send(sender, "You changed " + target.getName() + " gamemode to spectator");
+                        message.send(target, sender.getName() + "&6 changed your gamemode to&f spectator");
+                        message.send(sender, "You changed " + target.getName() + " gamemode to spectator");
                     }
                 }
             }

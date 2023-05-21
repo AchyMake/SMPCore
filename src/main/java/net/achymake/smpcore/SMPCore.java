@@ -22,13 +22,14 @@ public final class SMPCore extends JavaPlugin {
     private static SMPCore instance;
     private static JailConfig jailConfig;
     private static KitConfig kitConfig;
+    private static Message message;
     private static MotdConfig motdConfig;
     private static PlayerConfig playerConfig;
     private static PlayerData playerData;
     private static SpawnConfig spawnConfig;
     private static WarpConfig warpConfig;
     private static EconomyProvider economyProvider;
-    private final File file = new File(getDataFolder(), "config.yml");
+    private final File configFile = new File(getDataFolder(), "config.yml");
     @Override
     public void onEnable() {
         instance = this;
@@ -36,6 +37,7 @@ public final class SMPCore extends JavaPlugin {
         setupPlaceholderAPI();
         jailConfig = new JailConfig(this);
         kitConfig = new KitConfig(this);
+        message = new Message(this);
         motdConfig = new MotdConfig(this);
         playerConfig = new PlayerConfig(this);
         playerData = new PlayerData(this);
@@ -44,7 +46,7 @@ public final class SMPCore extends JavaPlugin {
         reload();
         setupCommands();
         Events.setup();
-        Message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
+        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
         new UpdateChecker(this, 108685).getUpdate();
     }
     @Override
@@ -55,24 +57,24 @@ public final class SMPCore extends JavaPlugin {
         if (!getPlayerConfig().getCommandCooldown().isEmpty()) {
             getPlayerConfig().getCommandCooldown().clear();
         }
-        Message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
+        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     private void setupVault() {
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
-            Message.sendLog("hooked to Vault");
+            message.sendLog("hooked to Vault");
             getServer().getServicesManager().register(Economy.class, new EconomyProvider(this), this, ServicePriority.Normal);
             economyProvider = new EconomyProvider(this);
         } else {
-            Message.sendLog("You have to install 'Vault'");
+            message.sendLog("You have to install 'Vault'");
             getServer().getPluginManager().disablePlugin(this);
         }
     }
     private void setupPlaceholderAPI() {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlaceholderProvider().register();
-            Message.sendLog("hooked to PlaceholderAPI");
+            message.sendLog("hooked to PlaceholderAPI");
         } else {
-            Message.sendLog("You have to install 'PlaceholderAPI'");
+            message.sendLog("You have to install 'PlaceholderAPI'");
             getServer().getPluginManager().disablePlugin(this);
         }
     }
@@ -132,6 +134,9 @@ public final class SMPCore extends JavaPlugin {
     public KitConfig getKitConfig() {
         return kitConfig;
     }
+    public Message getMessage() {
+        return message;
+    }
     public MotdConfig getMotdConfig() {
         return motdConfig;
     }
@@ -179,28 +184,28 @@ public final class SMPCore extends JavaPlugin {
         } else {
             warpConfig.setup();
         }
-        if (file.exists()) {
+        if (configFile.exists()) {
             try {
-                getConfig().load(file);
+                getConfig().load(configFile);
                 getConfig().options().copyDefaults(true);
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
-                Message.sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         } else {
             getConfig().options().copyDefaults(true);
             saveConfig();
         }
         for (OfflinePlayer offlinePlayer : getServer().getOfflinePlayers()) {
-            File file = new File(getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
-            if (file.exists()) {
-                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+            File playerFiles = new File(getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
+            if (playerFiles.exists()) {
+                FileConfiguration config = YamlConfiguration.loadConfiguration(playerFiles);
                 try {
-                    config.load(file);
+                    config.load(playerFiles);
                     config.options().copyDefaults(true);
-                    config.save(file);
+                    config.save(playerFiles);
                 } catch (IOException | InvalidConfigurationException e) {
-                    Message.sendLog(e.getMessage());
+                    message.sendLog(e.getMessage());
                 }
             }
         }
