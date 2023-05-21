@@ -40,7 +40,7 @@ public class QuitMessage implements Listener {
                     }
                 }
             } else {
-                if (event.getPlayer().hasPermission("players.quit-message")) {
+                if (event.getPlayer().hasPermission("smpcore.quit-message")) {
                     event.setQuitMessage(message.color(MessageFormat.format(config.getString("connection.quit.message"), event.getPlayer().getName())));
                     if (config.getBoolean("connection.quit.sound.enable")) {
                         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {

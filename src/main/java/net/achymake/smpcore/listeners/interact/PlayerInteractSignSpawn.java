@@ -25,9 +25,9 @@ public class PlayerInteractSignSpawn implements Listener {
         if (!Tag.SIGNS.isTagged(event.getClickedBlock().getType()))return;
         Sign sign = (Sign) event.getClickedBlock().getState();
         if (!sign.getLine(0).equalsIgnoreCase("[spawn]"))return;
-        if (!event.getPlayer().hasPermission("players.command.spawn.signs"))return;
+        if (!event.getPlayer().hasPermission("smpcore.command.spawn.signs"))return;
         if (!spawnConfig.spawnExist())return;
-        if (!event.getPlayer().hasPermission("players.command.spawn"))return;
+        if (!event.getPlayer().hasPermission("smpcore.command.spawn"))return;
         spawnConfig.getSpawn().getChunk().load();
         event.getPlayer().teleport(spawnConfig.getSpawn());
         message.send(event.getPlayer(), "&6Teleporting to&f spawn");

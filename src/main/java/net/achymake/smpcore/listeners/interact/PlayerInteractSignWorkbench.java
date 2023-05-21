@@ -21,7 +21,7 @@ public class PlayerInteractSignWorkbench implements Listener {
         if (!Tag.SIGNS.isTagged(event.getClickedBlock().getType()))return;
         Sign sign = (Sign) event.getClickedBlock().getState();
         if (!sign.getLine(0).equalsIgnoreCase("[workbench]"))return;
-        if (!event.getPlayer().hasPermission("players.command.workbench.signs"))return;
+        if (!event.getPlayer().hasPermission("smpcore.command.workbench.signs"))return;
         event.getPlayer().openWorkbench(event.getPlayer().getLocation(), true);
     }
 }

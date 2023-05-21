@@ -27,8 +27,8 @@ public class PlayerInteractSignWarp implements Listener {
         for (String warpName : warpConfig.getWarps()) {
             if (!sign.getLine(0).equalsIgnoreCase("[warp " + warpName + "]"))return;
             if (!warpConfig.warpExist(warpName))return;
-            if (!event.getPlayer().hasPermission("players.command.warp.signs"))return;
-            if (!event.getPlayer().hasPermission("players.command.warp." + warpName))return;
+            if (!event.getPlayer().hasPermission("smpcore.command.warp.signs"))return;
+            if (!event.getPlayer().hasPermission("smpcore.command.warp." + warpName))return;
             warpConfig.getWarp(warpName).getChunk().load();
             event.getPlayer().teleport(warpConfig.getWarp(warpName));
             message.send(event.getPlayer(), "&6Teleporting to&f "+warpName);

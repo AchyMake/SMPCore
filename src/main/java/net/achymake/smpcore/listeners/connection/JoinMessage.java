@@ -37,7 +37,7 @@ public class JoinMessage implements Listener {
                     players.playSound(players, Sound.valueOf(config.getString("connection.join.sound.type")), Float.valueOf(config.getString("connection.join.sound.volume")), Float.valueOf(config.getString("connection.join.sound.pitch")));
                 }
             } else {
-                if (event.getPlayer().hasPermission("players.join-message")) {
+                if (event.getPlayer().hasPermission("smpcore.join-message")) {
                     if (config.getBoolean("connection.join.sound.enable")) {
                         event.setJoinMessage(message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
                         sendMotd(event.getPlayer());
@@ -51,7 +51,7 @@ public class JoinMessage implements Listener {
                 }
             }
         }
-        if (event.getPlayer().hasPermission("players.command.reload")) {
+        if (event.getPlayer().hasPermission("smpcore.command.reload")) {
             new UpdateChecker(SMPCore.getInstance(), 108685).sendMessage(event.getPlayer());
         }
     }

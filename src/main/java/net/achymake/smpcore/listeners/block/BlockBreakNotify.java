@@ -23,7 +23,7 @@ public class BlockBreakNotify implements Listener {
         if (!config.getBoolean("notification.enable"))return;
         if (!config.getStringList("notification.block-break").contains(event.getBlock().getType().toString()))return;
         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
-            if (players.hasPermission("players.notify.block-break")) {
+            if (players.hasPermission("smpcore.notify.block-break")) {
                 for (String messages : config.getStringList("notification.message")) {
                     players.sendMessage(message.color(MessageFormat.format(messages, event.getPlayer().getName(), event.getBlock().getType().toString(), event.getBlock().getWorld().getName(), event.getBlock().getLocation().getBlockX(), event.getBlock().getLocation().getBlockY(), event.getBlock().getLocation().getBlockZ())));
                 }

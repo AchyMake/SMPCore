@@ -23,7 +23,7 @@ public class PlayerBucketEmptyNotify implements Listener {
         if (!config.getBoolean("notification.enable"))return;
         if (!config.getStringList("notification.bucket-empty").contains(event.getBucket().toString()))return;
         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
-            if (players.hasPermission("players.notify.bucket-empty")) {
+            if (players.hasPermission("smpcore.notify.bucket-empty")) {
                 for (String messages : config.getStringList("notification.message")) {
                     players.sendMessage(message.color(MessageFormat.format(messages, event.getPlayer().getName(), event.getBucket().toString(), event.getBlock().getWorld().getName(), event.getBlock().getLocation().getBlockX(), event.getBlock().getLocation().getBlockY(), event.getBlock().getLocation().getBlockZ())));
                 }

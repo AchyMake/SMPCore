@@ -17,7 +17,7 @@ public class PrepareAnvil implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPrepareAnvil(PrepareAnvilEvent event) {
-        if (!event.getView().getPlayer().hasPermission("players.chatcolor.anvil"))return;
+        if (!event.getView().getPlayer().hasPermission("smpcore.chatcolor.anvil"))return;
         ItemStack itemStack = event.getResult();
         if (itemStack == null)return;
         if (!itemStack.hasItemMeta())return;

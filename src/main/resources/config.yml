@@ -26,7 +26,7 @@ deaths:
     chance: 30
 connection:
   join:
-    # if false permission: players.join-message
+    # if false permission: smpcore.join-message
     enable: true
     message: '{0}&e has joined the server [&a+&e]'
     sound:
@@ -35,7 +35,7 @@ connection:
       volume: 0.75F
       pitch: 1.0F
   quit:
-    # if false permission: players.quit-message
+    # if false permission: smpcore.quit-message
     enable: true
     message: '{0}&e has left the server [&c-&e]'
     sound:
@@ -59,9 +59,9 @@ commands:
     - reload
 notification:
   # Permissions
-  # players.notify.block-break
-  # players.notify.bucket-empty
-  # players.notify.block-place
+  # smpcore.notify.block-break
+  # smpcore.notify.bucket-empty
+  # smpcore.notify.block-place
   #
   # Placeholders
   # {0} Player, {1} Material
