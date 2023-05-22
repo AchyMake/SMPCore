@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 
 public class PlayerCommandPreprocess implements Listener {
     private final SMPCore smpCore = SMPCore.getInstance();
@@ -17,7 +18,7 @@ public class PlayerCommandPreprocess implements Listener {
     public void onPlayerCommandPreprocess (PlayerCommandPreprocessEvent event) {
         if (event.getPlayer().hasPermission("smpcore.exempt.commands"))return;
         for (String disabled : config.getStringList("commands.disable")) {
-            if (event.getMessage().toLowerCase().contains(disabled)) {
+            if (event.getMessage().startsWith("/"+disabled)) {
                 event.setCancelled(true);
             }
         }

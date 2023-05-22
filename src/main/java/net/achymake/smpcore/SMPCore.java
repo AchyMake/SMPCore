@@ -51,11 +51,11 @@ public final class SMPCore extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-        if (!getVanished().isEmpty()) {
-            getVanished().clear();
+        if (!playerConfig.getVanished().isEmpty()) {
+            playerConfig.getVanished().clear();
         }
-        if (!getPlayerConfig().getCommandCooldown().isEmpty()) {
-            getPlayerConfig().getCommandCooldown().clear();
+        if (!playerConfig.getCommandCooldown().isEmpty()) {
+            playerConfig.getCommandCooldown().clear();
         }
         message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
@@ -199,11 +199,11 @@ public final class SMPCore extends JavaPlugin {
         for (OfflinePlayer offlinePlayer : getServer().getOfflinePlayers()) {
             File playerFiles = new File(getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
             if (playerFiles.exists()) {
-                FileConfiguration config = YamlConfiguration.loadConfiguration(playerFiles);
+                FileConfiguration playerConfigs = YamlConfiguration.loadConfiguration(playerFiles);
                 try {
-                    config.load(playerFiles);
-                    config.options().copyDefaults(true);
-                    config.save(playerFiles);
+                    playerConfigs.load(playerFiles);
+                    playerConfigs.options().copyDefaults(true);
+                    playerConfigs.save(playerFiles);
                 } catch (IOException | InvalidConfigurationException e) {
                     message.sendLog(e.getMessage());
                 }

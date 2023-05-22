@@ -456,7 +456,7 @@ permissions:
     description: drops skull
     default: op
   smpcore.command.reload:
-    description: reload files
+    description: main command
     default: op
   smpcore.command.spawn:
     description: teleport to spawn
