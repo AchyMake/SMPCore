@@ -38,20 +38,20 @@ public class PlaceholderProvider extends PlaceholderExpansion {
             return "";
         }
         if (params.equals("name")) {
-            if (SMPCore.getInstance().getPlayerConfig().get(player).getKeys(false).contains("display-name")){
-                return SMPCore.getInstance().getMessage().color(SMPCore.getInstance().getPlayerConfig().get(player).getString("display-name"));
+            if (SMPCore.getPlayerConfig().get(player).getKeys(false).contains("display-name")){
+                return SMPCore.getMessage().color(SMPCore.getPlayerConfig().get(player).getString("display-name"));
             }else{
-                return SMPCore.getInstance().getMessage().color(SMPCore.getInstance().getPlayerConfig().get(player).getString("name"));
+                return SMPCore.getMessage().color(SMPCore.getPlayerConfig().get(player).getString("name"));
             }
         }
         if (params.equals("vanished")) {
-            return String.valueOf(SMPCore.getInstance().getPlayerConfig().get(player).getBoolean("is-Vanished"));
+            return String.valueOf(SMPCore.getPlayerConfig().get(player).getBoolean("is-Vanished"));
         }
         if (params.equals("online_players")) {
-            return String.valueOf(player.getServer().getOnlinePlayers().size() - SMPCore.getInstance().getPlayerConfig().getVanished().size());
+            return String.valueOf(player.getServer().getOnlinePlayers().size() - SMPCore.getPlayerConfig().getVanished().size());
         }
         if (params.equals("account")) {
-            return SMPCore.getInstance().getEconomyProvider().format(SMPCore.getInstance().getPlayerConfig().getEconomy(player));
+            return SMPCore.getEconomyProvider().format(SMPCore.getPlayerConfig().getEconomy(player));
         }
         return super.onPlaceholderRequest(player, params);
     }
