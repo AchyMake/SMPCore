@@ -162,11 +162,10 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 } else {
                     if (target != null) {
                         if (playerConfig.isVanished(target)) {
-
+                            playerConfig.setVanish(target, false);
+                            message.send(target,"&6You are no longer vanished");
+                            message.send(sender, target.getName() + " is no longer vanished");
                         }
-                        playerConfig.setVanish(target, false);
-                        message.send(target,"&6You are no longer vanished");
-                        message.send(sender, target.getName() + " is no longer vanished");
                     } else {
                         OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
                         if (playerConfig.exist(offlinePlayer)) {
