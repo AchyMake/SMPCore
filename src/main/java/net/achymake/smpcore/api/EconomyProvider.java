@@ -36,18 +36,18 @@ public class EconomyProvider implements Economy {
         return smpCore.getConfig().getString("economy.currency");
     }
     public boolean hasAccount(OfflinePlayer offlinePlayer) {
-        if (smpCore.getPlayerConfig().exist(offlinePlayer)){
+        if (SMPCore.getPlayerConfig().exist(offlinePlayer)){
             return true;
         }else{
-            smpCore.getPlayerConfig().setup(offlinePlayer);
+            SMPCore.getPlayerConfig().setup(offlinePlayer);
         }
         return true;
     }
     public boolean hasAccount(String playerName) {
-        if (smpCore.getPlayerConfig().exist(smpCore.getServer().getOfflinePlayer(playerName))){
+        if (SMPCore.getPlayerConfig().exist(smpCore.getServer().getOfflinePlayer(playerName))){
             return true;
         }else{
-            smpCore.getPlayerConfig().setup(smpCore.getServer().getOfflinePlayer(playerName));
+            SMPCore.getPlayerConfig().setup(smpCore.getServer().getOfflinePlayer(playerName));
         }
         return true;
     }
@@ -58,10 +58,10 @@ public class EconomyProvider implements Economy {
         return this.hasAccount(player);
     }
     public double getBalance(OfflinePlayer offlinePlayer) {
-        return smpCore.getPlayerConfig().get(offlinePlayer).getDouble("account");
+        return SMPCore.getPlayerConfig().get(offlinePlayer).getDouble("account");
     }
     public double getBalance(String playerName) {
-        return smpCore.getPlayerConfig().get(smpCore.getServer().getOfflinePlayer(playerName)).getDouble("account");
+        return SMPCore.getPlayerConfig().get(smpCore.getServer().getOfflinePlayer(playerName)).getDouble("account");
     }
     public double getBalance(String playerName, String world) {
         return this.getBalance(playerName);
@@ -70,10 +70,10 @@ public class EconomyProvider implements Economy {
         return this.getBalance(player);
     }
     public boolean has(OfflinePlayer offlinePlayer, double amount) {
-        return smpCore.getPlayerConfig().get(offlinePlayer).getDouble("account") >= amount;
+        return SMPCore.getPlayerConfig().get(offlinePlayer).getDouble("account") >= amount;
     }
     public boolean has(String playerName, double amount) {
-        return smpCore.getPlayerConfig().get(smpCore.getServer().getOfflinePlayer(playerName)).getDouble("account") >= amount;
+        return SMPCore.getPlayerConfig().get(smpCore.getServer().getOfflinePlayer(playerName)).getDouble("account") >= amount;
     }
     public boolean has(String playerName, String worldName, double amount) {
         return this.has(playerName, amount);
@@ -88,7 +88,7 @@ public class EconomyProvider implements Economy {
         } else if (amount < 0.0) {
             return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds!");
         } else {
-            smpCore.getPlayerConfig().removeEconomy(offlinePlayer,amount);
+            SMPCore.getPlayerConfig().removeEconomy(offlinePlayer,amount);
             return new EconomyResponse(amount, this.getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, null);
         }
     }
@@ -98,7 +98,7 @@ public class EconomyProvider implements Economy {
         } else if (amount < 0.0) {
             return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds!");
         } else {
-            smpCore.getPlayerConfig().removeEconomy(smpCore.getServer().getOfflinePlayer(playerName),amount);
+            SMPCore.getPlayerConfig().removeEconomy(smpCore.getServer().getOfflinePlayer(playerName),amount);
             return new EconomyResponse(amount, this.getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, null);
         }
     }
@@ -117,7 +117,7 @@ public class EconomyProvider implements Economy {
         } else if (amount < 0.0) {
             return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
         } else {
-            smpCore.getPlayerConfig().addEconomy(offlinePlayer,amount);
+            SMPCore.getPlayerConfig().addEconomy(offlinePlayer,amount);
             return new EconomyResponse(amount, this.getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, null);
         }
     }
@@ -128,7 +128,7 @@ public class EconomyProvider implements Economy {
         } else if (amount < 0.0) {
             return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
         } else {
-            smpCore.getPlayerConfig().addEconomy(smpCore.getServer().getOfflinePlayer(playerName),amount);
+            SMPCore.getPlayerConfig().addEconomy(smpCore.getServer().getOfflinePlayer(playerName),amount);
             return new EconomyResponse(amount, this.getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, null);
         }
     }
@@ -141,11 +141,11 @@ public class EconomyProvider implements Economy {
         return this.depositPlayer(player, amount);
     }
     public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
-        smpCore.getPlayerConfig().setup(offlinePlayer);
+        SMPCore.getPlayerConfig().setup(offlinePlayer);
         return true;
     }
     public boolean createPlayerAccount(String playerName) {
-        smpCore.getPlayerConfig().setup(smpCore.getServer().getOfflinePlayer(playerName));
+        SMPCore.getPlayerConfig().setup(smpCore.getServer().getOfflinePlayer(playerName));
         return true;
     }
     public boolean createPlayerAccount(String playerName, String worldName) {
