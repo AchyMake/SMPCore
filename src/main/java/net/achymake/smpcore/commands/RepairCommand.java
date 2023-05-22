@@ -3,10 +3,7 @@ package net.achymake.smpcore.commands;
 import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import net.achymake.smpcore.files.PlayerConfig;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.Damageable;
 
@@ -63,14 +60,32 @@ public class RepairCommand implements CommandExecutor, TabCompleter {
                 }
             }
         }
+        if (sender instanceof ConsoleCommandSender) {
+            if (args.length == 1) {
+                Player target = sender.getServer().getPlayerExact(args[0]);
+                if (target != null) {
+                    if (target.getInventory().getItemInMainHand().getType().isAir()) {
+                        message.send(target,"&cYou have to hold an item");
+                    } else {
+                        Damageable damageable = (Damageable) target.getInventory().getItemInMainHand().getItemMeta();
+                        damageable.setDamage(0);
+                        target.getInventory().getItemInMainHand().setItemMeta(damageable);
+                        message.send(sender, "&6You repaired&f " + target.getInventory().getItemInMainHand().getType());
+                    }
+                }
+            }
+        }
         return true;
     }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.repair.force")){
-                commands.add("force");
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.repair.force")) {
+                    commands.add("force");
+                }
             }
         }
         return commands;

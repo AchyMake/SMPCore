@@ -55,8 +55,9 @@ public class BalanceCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         if (sender instanceof Player) {
             if (args.length == 1) {
-                if (sender.hasPermission("smpcore.command.balance.others")) {
-                    for (OfflinePlayer offlinePlayer : sender.getServer().getOfflinePlayers()) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.balance.others")) {
+                    for (OfflinePlayer offlinePlayer : player.getServer().getOfflinePlayers()) {
                         commands.add(offlinePlayer.getName());
                     }
                 }

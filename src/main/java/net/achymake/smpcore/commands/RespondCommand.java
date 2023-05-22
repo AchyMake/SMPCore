@@ -22,6 +22,10 @@ public class RespondCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /r message");
+            }
             Player player = (Player) sender;
             if (!playerConfig.isMuted(player)){
                 if (args.length > 0) {

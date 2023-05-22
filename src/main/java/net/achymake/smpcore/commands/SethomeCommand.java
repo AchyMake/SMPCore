@@ -32,7 +32,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 }
             }
             if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("buy")){
+                if (args[0].equalsIgnoreCase("buy")) {
                     message.send(player, "&cYou can't set home for&f " + args[0]);
 
                 } else if (args[0].equalsIgnoreCase("bed")) {
@@ -55,9 +55,10 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender instanceof Player) {
-                for (String homes : playerConfig.getHomes((Player) sender)) {
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (String homes : playerConfig.getHomes(player)) {
                     commands.add(homes);
                 }
             }

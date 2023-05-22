@@ -79,31 +79,36 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.homes.delete")) {
-                commands.add("delete");
-            }
-            if (sender.hasPermission("smpcore.command.homes.teleport")) {
-                commands.add("teleport");
-            }
-        }
-        if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("teleport")) {
-                for (OfflinePlayer offlinePlayers : sender.getServer().getOfflinePlayers()) {
-                    commands.add(offlinePlayers.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.homes.delete")) {
+                    commands.add("delete");
                 }
-            } else if (args[0].equalsIgnoreCase("delete")) {
-                for (OfflinePlayer offlinePlayers : sender.getServer().getOfflinePlayers()) {
-                    commands.add(offlinePlayers.getName());
+                if (player.hasPermission("smpcore.command.homes.teleport")) {
+                    commands.add("teleport");
                 }
             }
-        }
-        if (args.length == 3) {
-            if (sender.hasPermission("smpcore.command.homes.teleport")) {
-                OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[1]);
-                if (playerConfig.exist(offlinePlayer)) {
-                    for (String home : playerConfig.getHomes(offlinePlayer)) {
-                        commands.add(home);
+            if (args.length == 2) {
+                Player player = (Player) sender;
+                if (args[0].equalsIgnoreCase("teleport")) {
+                    for (OfflinePlayer offlinePlayers : player.getServer().getOfflinePlayers()) {
+                        commands.add(offlinePlayers.getName());
+                    }
+                } else if (args[0].equalsIgnoreCase("delete")) {
+                    for (OfflinePlayer offlinePlayers : player.getServer().getOfflinePlayers()) {
+                        commands.add(offlinePlayers.getName());
+                    }
+                }
+            }
+            if (args.length == 3) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.homes.teleport")) {
+                    OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[1]);
+                    if (playerConfig.exist(offlinePlayer)) {
+                        for (String home : playerConfig.getHomes(offlinePlayer)) {
+                            commands.add(home);
+                        }
                     }
                 }
             }

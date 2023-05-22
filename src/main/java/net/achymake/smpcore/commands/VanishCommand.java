@@ -108,29 +108,27 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
         }
         if (sender instanceof ConsoleCommandSender) {
             if (args.length == 1) {
-                if (sender.hasPermission("smpcore.command.vanish.others")) {
-                    Player target = sender.getServer().getPlayerExact(args[0]);
-                    if (target != null) {
-                        playerConfig.setVanish(target, !playerConfig.isVanished(target));
-                        if (playerConfig.isVanished(target)) {
-                            message.send(target,"&6You are now vanished");
-                            message.send(sender, target.getName() + " is now vanished");
+                Player target = sender.getServer().getPlayerExact(args[0]);
+                if (target != null) {
+                    playerConfig.setVanish(target, !playerConfig.isVanished(target));
+                    if (playerConfig.isVanished(target)) {
+                        message.send(target,"&6You are now vanished");
+                        message.send(sender, target.getName() + " is now vanished");
+                    } else {
+                        message.send(target,"&6You are no longer vanished");
+                        message.send(sender, target.getName() + " is no longer vanished");
+                    }
+                } else {
+                    OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
+                    if (playerConfig.exist(offlinePlayer)) {
+                        playerConfig.setVanish(offlinePlayer, !playerConfig.isVanished(offlinePlayer));
+                        if (playerConfig.isVanished(offlinePlayer)) {
+                            message.send(sender, offlinePlayer.getName() + " is now vanished");
                         } else {
-                            message.send(target,"&6You are no longer vanished");
-                            message.send(sender, target.getName() + " is no longer vanished");
+                            message.send(sender, offlinePlayer.getName() + " is no longer vanished");
                         }
                     } else {
-                        OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
-                        if (playerConfig.exist(offlinePlayer)) {
-                            playerConfig.setVanish(offlinePlayer, !playerConfig.isVanished(offlinePlayer));
-                            if (playerConfig.isVanished(offlinePlayer)) {
-                                message.send(sender, offlinePlayer.getName() + " is now vanished");
-                            } else {
-                                message.send(sender, offlinePlayer.getName() + " is no longer vanished");
-                            }
-                        } else {
-                            message.send(sender, offlinePlayer.getName() + " has never joined");
-                        }
+                        message.send(sender, offlinePlayer.getName() + " has never joined");
                     }
                 }
             }
@@ -189,17 +187,21 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.vanish.others")) {
-                for (OfflinePlayer offlinePlayer : sender.getServer().getOfflinePlayers()) {
-                    commands.add(offlinePlayer.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.vanish.others")) {
+                    for (OfflinePlayer offlinePlayer : player.getServer().getOfflinePlayers()) {
+                        commands.add(offlinePlayer.getName());
+                    }
                 }
             }
-        }
-        if (args.length == 2) {
-            if (sender.hasPermission("smpcore.command.vanish.others")) {
-                commands.add("true");
-                commands.add("false");
+            if (args.length == 2) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.vanish.others")) {
+                    commands.add("true");
+                    commands.add("false");
+                }
             }
         }
         return commands;

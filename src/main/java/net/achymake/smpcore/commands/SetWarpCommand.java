@@ -19,15 +19,18 @@ public class SetWarpCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /setwarp warpName");
+            }
             if (args.length == 1) {
                 Player player = (Player) sender;
-                String warpName = args[0];
-                if (warpConfig.warpExist(warpName)) {
-                    warpConfig.setWarp(player.getLocation(), warpName);
-                    message.send(sender, warpName + "&6 has been relocated");
+                if (warpConfig.warpExist(args[0])) {
+                    warpConfig.setWarp(player.getLocation(), args[0]);
+                    message.send(sender, args[0] + "&6 has been relocated");
                 } else {
-                    warpConfig.setWarp(player.getLocation(), warpName);
-                    message.send(sender, warpName + "&6 has been set");
+                    warpConfig.setWarp(player.getLocation(), args[0]);
+                    message.send(sender, args[0] + "&6 has been set");
                 }
             }
         }
@@ -36,8 +39,10 @@ public class SetWarpCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            commands.addAll(warpConfig.getWarps());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                commands.addAll(warpConfig.getWarps());
+            }
         }
         return commands;
     }

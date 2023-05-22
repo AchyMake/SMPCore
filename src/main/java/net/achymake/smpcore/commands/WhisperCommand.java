@@ -24,6 +24,10 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
             if (playerConfig.isMuted((Player) sender) || playerConfig.isJailed((Player) sender)) {
                 return false;
             } else {
+                if (args.length == 0) {
+                    Player player = (Player) sender;
+                    message.send(player, "&cUsage:&f /whisper target message");
+                }
                 if (args.length > 1) {
                     Player player = (Player) sender;
                     Player target = player.getServer().getPlayerExact(args[0]);
@@ -36,7 +40,7 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
                         message.send(player, "&7You > " + target.getName() + ": " + stringBuilder);
                         message.send(target, "&7" + player.getName() + " > You: " + stringBuilder);
                         playerData.setString(player, "last-whisper", target.getUniqueId().toString());
-                        player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder),"players.notify.whisper");
+                        player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder),"smpcore.notify.whisper");
                     }
                 }
             }
@@ -46,9 +50,12 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            for (Player players : sender.getServer().getOnlinePlayers()) {
-                commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (Player players : player.getServer().getOnlinePlayers()) {
+                    commands.add(players.getName());
+                }
             }
         }
         return commands;

@@ -19,6 +19,9 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                message.send(sender, "&cUsage:&f /enchant enchantmentName amount");
+            }
             if (args.length == 1) {
                 Player player = (Player) sender;
                 if (player.getInventory().getItemInMainHand().getType().isAir()) {
@@ -35,7 +38,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                     }
                 }
             }
-            if (args.length == 2){
+            if (args.length == 2) {
                 Player player = (Player) sender;
                 if (player.getInventory().getItemInMainHand().getType().isAir()) {
                     message.send(sender, "&cYou have to hold an item");
@@ -56,13 +59,15 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1){
-            for (Enchantment enchantment : Enchantment.values()) {
-                commands.add(enchantment.getName().toLowerCase());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                for (Enchantment enchantment : Enchantment.values()) {
+                    commands.add(enchantment.getName().toLowerCase());
+                }
             }
-        }
-        if (args.length == 2) {
-            commands.add(String.valueOf(Enchantment.getByName(args[0].toUpperCase()).getMaxLevel()));
+            if (args.length == 2) {
+                commands.add(String.valueOf(Enchantment.getByName(args[0].toUpperCase()).getMaxLevel()));
+            }
         }
         return commands;
     }

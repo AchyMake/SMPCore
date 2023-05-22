@@ -195,7 +195,7 @@ commands:
     usage: /skull player
     permission-message: You do not have the permission to execute the command
   smpcore:
-    description: players command
+    description: smpcore command
     permission: smpcore.command.reload
     usage: /smpcore reload
     permission-message: You do not have the permission to execute the command
@@ -404,9 +404,6 @@ permissions:
   smpcore.command.kit.[kitName]:
     description: kit permission
     default: op
-  smpcore.command.kit.cooldown-exempt:
-    description: exempt cooldown
-    default: op
   smpcore.command.motd:
     description: message of the days
     default: op
@@ -440,6 +437,9 @@ permissions:
   smpcore.command.rules:
     description: check player rules
     default: op
+  smpcore.command.rules.others:
+    description: check player rules
+    default: op
   smpcore.command.sethome:
     description: sets home
     default: op
@@ -459,6 +459,9 @@ permissions:
     description: reload files
     default: op
   smpcore.command.spawn:
+    description: teleport to spawn
+    default: op
+  smpcore.command.spawn.others:
     description: teleport to spawn
     default: op
   smpcore.command.spawn.signs:
@@ -496,6 +499,9 @@ permissions:
     default: op
   smpcore.command.warp.[warpName]:
     description: allows to use warp
+    default: op
+  smpcore.command.warp.others:
+    description: teleport warp
     default: op
   smpcore.command.warp.signs:
     description: teleport warp

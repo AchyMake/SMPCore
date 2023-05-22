@@ -17,6 +17,10 @@ public class TPCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /tp target target");
+            }
             Player player = (Player) sender;
             if (args.length == 1) {
                 Player target = player.getServer().getPlayerExact(args[0]);
@@ -31,9 +35,12 @@ public class TPCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            for (Player players : sender.getServer().getOnlinePlayers()) {
-                commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (Player players : player.getServer().getOnlinePlayers()) {
+                    commands.add(players.getName());
+                }
             }
         }
         return commands;

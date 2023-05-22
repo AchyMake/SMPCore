@@ -22,7 +22,7 @@ public class AsyncPlayerChat implements Listener {
         if (playerConfig.isMuted(event.getPlayer())) {
             event.setCancelled(true);
         } else {
-            if (event.getPlayer().hasPermission("players.chatcolor.chat")) {
+            if (event.getPlayer().hasPermission("smpcore.chatcolor.chat")) {
                 event.setMessage(message.color(event.getMessage()));
             }
             event.setFormat(message.color(prefix(event.getPlayer()) + event.getPlayer().getName() + "&r"  + suffix(event.getPlayer()) + "&r") + ": " + event.getMessage());

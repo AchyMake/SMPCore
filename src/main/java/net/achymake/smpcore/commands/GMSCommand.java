@@ -34,7 +34,7 @@ public class GMSCommand implements CommandExecutor, TabCompleter {
                         }
                     } else {
                         if (target != null) {
-                            if (!target.hasPermission("smpcore.command.gamemode.others")) {
+                            if (!target.hasPermission("smpcore.command.gamemode.exempt")) {
                                 if (!target.getGameMode().equals(GameMode.SURVIVAL)) {
                                     target.setGameMode(GameMode.SURVIVAL);
                                     message.send(target, player.getName() + "&6 changed your gamemode to&f survival");
@@ -63,10 +63,15 @@ public class GMSCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.gamemode.others")) {
-                for (Player players : sender.getServer().getOnlinePlayers()) {
-                    commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.gamemode.others")) {
+                    for (Player players : player.getServer().getOnlinePlayers()) {
+                        if (!players.hasPermission("smpcore.command.gamemode.exempt")) {
+                            commands.add(players.getName());
+                        }
+                    }
                 }
             }
         }

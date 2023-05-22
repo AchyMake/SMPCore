@@ -43,20 +43,18 @@ public class FeedCommand implements CommandExecutor, TabCompleter {
                     if (target != null) {
                         target.setFoodLevel(20);
                         message.send(target, "&6Your starvation has been satisfied by&f " + player.getName());
-                        message.send(player, "&6You satisfied&f " + target.getName() + "&6 starvation");
+                        message.send(player, "&6You satisfied&f " + target.getName() + "&6's starvation");
                     }
                 }
             }
         }
         if (sender instanceof ConsoleCommandSender) {
             if (args.length == 1) {
-                if (sender.hasPermission("smpcore.command.feed.others")) {
-                    Player target = sender.getServer().getPlayerExact(args[0]);
-                    if (target != null) {
-                        target.setFoodLevel(20);
-                        message.send(target, "&6Your starvation has been satisfied");
-                        message.send(sender, "You satisfied " + target.getName() + " starvation");
-                    }
+                Player target = sender.getServer().getPlayerExact(args[0]);
+                if (target != null) {
+                    target.setFoodLevel(20);
+                    message.send(target, "&6Your starvation has been satisfied");
+                    message.send(sender, "You satisfied " + target.getName() + "'s starvation");
                 }
             }
         }
@@ -65,10 +63,13 @@ public class FeedCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1){
-            if (sender.hasPermission("smpcore.command.feed.others")) {
-                for (Player players : sender.getServer().getOnlinePlayers()) {
-                    commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1){
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.feed.others")) {
+                    for (Player players : player.getServer().getOnlinePlayers()) {
+                        commands.add(players.getName());
+                    }
                 }
             }
         }

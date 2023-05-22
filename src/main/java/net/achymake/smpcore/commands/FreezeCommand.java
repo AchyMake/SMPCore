@@ -5,10 +5,7 @@ import net.achymake.smpcore.files.Message;
 import net.achymake.smpcore.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -20,37 +17,88 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
     private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 1) {
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
-            if (playerConfig.exist(offlinePlayer)) {
-                if (offlinePlayer.isOnline()) {
-                    Player target = offlinePlayer.getPlayer();
-                    if (target == sender) {
-                        execute(sender, target);
-                    } else if (!target.hasPermission("smpcore.command.freeze.exempt")) {
-                        execute(sender, target);
+        if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /freeze target");
+            }
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                Player target = player.getServer().getPlayerExact(args[0]);
+                if (target == sender) {
+                    playerConfig.setBoolean(target, "is-Frozen", !playerConfig.isFrozen(target));
+                    if (playerConfig.isFrozen(target)) {
+                        message.send(sender, "&6You froze&f " + target.getName());
+                    } else {
+                        message.send(sender, "&6You unfroze&f " + target.getName());
                     }
                 } else {
-                    execute(sender, offlinePlayer);
+                    if (target != null) {
+                        if (!target.hasPermission("smpcore.command.freeze.exempt")) {
+                            playerConfig.setBoolean(target, "is-Frozen", !playerConfig.isFrozen(target));
+                            if (playerConfig.isFrozen(target)) {
+                                message.send(sender, "&6You froze&f " + target.getName());
+                            } else {
+                                message.send(sender, "&6You unfroze&f " + target.getName());
+                            }
+                        }
+                    } else {
+                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+                        if (playerConfig.exist(offlinePlayer)) {
+                            playerConfig.setBoolean(offlinePlayer, "is-Frozen", !playerConfig.isFrozen(offlinePlayer));
+                            if (playerConfig.isFrozen(offlinePlayer)) {
+                                message.send(sender, "&6You froze&f " + offlinePlayer.getName());
+                            } else {
+                                message.send(sender, "&6You unfroze&f " + offlinePlayer.getName());
+                            }
+                        } else {
+                            message.send(player, offlinePlayer.getName() + "&c has never joined");
+                        }
+                    }
+                }
+            }
+        }
+        if (sender instanceof ConsoleCommandSender) {
+            if (args.length == 0) {
+                message.send(sender, "Usage: /freeze target - which toggle freeze on target");
+            }
+            if (args.length == 1) {
+                Player target = sender.getServer().getPlayerExact(args[0]);
+                if (target != null) {
+                    playerConfig.setBoolean(target, "is-Frozen", !playerConfig.isFrozen(target));
+                    if (playerConfig.isFrozen(target)) {
+                        message.send(sender, "You froze " + target.getName());
+                    } else {
+                        message.send(sender, "You unfroze " + target.getName());
+                    }
+                } else {
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+                    if (playerConfig.exist(offlinePlayer)) {
+                        playerConfig.setBoolean(offlinePlayer, "is-Frozen", !playerConfig.isFrozen(offlinePlayer));
+                        if (playerConfig.isFrozen(offlinePlayer)) {
+                            message.send(sender, "You froze " + offlinePlayer.getName());
+                        } else {
+                            message.send(sender, "You unfroze " + offlinePlayer.getName());
+                        }
+                    } else {
+                        message.send(sender, offlinePlayer.getName() + " has never joined");
+                    }
                 }
             }
         }
         return true;
     }
-    private void execute(CommandSender sender, OfflinePlayer target){
-        playerConfig.setBoolean(target, "is-Frozen", !playerConfig.isFrozen(target));
-        if (playerConfig.isFrozen(target)) {
-            message.send(sender, "&6You froze&f " + target.getName());
-        } else {
-            message.send(sender, "&6You unfroze&f " + target.getName());
-        }
-    }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            for (Player players : sender.getServer().getOnlinePlayers()) {
-                commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (Player players : player.getServer().getOnlinePlayers()) {
+                    if (!players.hasPermission("smpcore.command.freeze.exempt")) {
+                        commands.add(players.getName());
+                    }
+                }
             }
         }
         return commands;

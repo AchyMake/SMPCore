@@ -20,6 +20,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                message.send(sender, "&cUsage:&f /eco add target amount");
+            }
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("reset")) {
                     if (sender.hasPermission("smpcore.command.eco.reset")) {
@@ -70,6 +73,9 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
             }
         }
         if (sender instanceof ConsoleCommandSender) {
+            if (args.length == 0) {
+                message.send(sender, "Usage: /eco add target amount");
+            }
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("reset")) {
                     if (sender.hasPermission("smpcore.command.eco.reset")) {
@@ -124,39 +130,43 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.eco.add")) {
-                commands.add("add");
-            }
-            if (sender.hasPermission("smpcore.command.eco.remove")) {
-                commands.add("remove");
-            }
-            if (sender.hasPermission("smpcore.command.eco.reset")) {
-                commands.add("reset");
-            }
-            if (sender.hasPermission("smpcore.command.eco.set")) {
-                commands.add("set");
-            }
-        }
-        if (args.length == 2) {
-            if (sender.hasPermission("smpcore.command.eco.add")) {
-                for (OfflinePlayer players : sender.getServer().getOfflinePlayers()) {
-                    commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.eco.add")) {
+                    commands.add("add");
+                }
+                if (player.hasPermission("smpcore.command.eco.remove")) {
+                    commands.add("remove");
+                }
+                if (player.hasPermission("smpcore.command.eco.reset")) {
+                    commands.add("reset");
+                }
+                if (player.hasPermission("smpcore.command.eco.set")) {
+                    commands.add("set");
                 }
             }
-            if (sender.hasPermission("smpcore.command.eco.remove")) {
-                for (OfflinePlayer players : sender.getServer().getOfflinePlayers()) {
-                    commands.add(players.getName());
+            if (args.length == 2) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.eco.add")) {
+                    for (OfflinePlayer players : player.getServer().getOfflinePlayers()) {
+                        commands.add(players.getName());
+                    }
                 }
-            }
-            if (sender.hasPermission("smpcore.command.eco.reset")) {
-                for (OfflinePlayer players : sender.getServer().getOfflinePlayers()) {
-                    commands.add(players.getName());
+                if (player.hasPermission("smpcore.command.eco.remove")) {
+                    for (OfflinePlayer players : player.getServer().getOfflinePlayers()) {
+                        commands.add(players.getName());
+                    }
                 }
-            }
-            if (sender.hasPermission("smpcore.command.eco.set")) {
-                for (OfflinePlayer players : sender.getServer().getOfflinePlayers()) {
-                    commands.add(players.getName());
+                if (player.hasPermission("smpcore.command.eco.reset")) {
+                    for (OfflinePlayer players : player.getServer().getOfflinePlayers()) {
+                        commands.add(players.getName());
+                    }
+                }
+                if (player.hasPermission("smpcore.command.eco.set")) {
+                    for (OfflinePlayer players : player.getServer().getOfflinePlayers()) {
+                        commands.add(players.getName());
+                    }
                 }
             }
         }

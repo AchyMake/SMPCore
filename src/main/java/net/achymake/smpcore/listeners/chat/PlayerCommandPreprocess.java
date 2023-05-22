@@ -15,7 +15,7 @@ public class PlayerCommandPreprocess implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerCommandPreprocess (PlayerCommandPreprocessEvent event) {
-        if (event.getPlayer().hasPermission("players.exempt.commands"))return;
+        if (event.getPlayer().hasPermission("smpcore.exempt.commands"))return;
         for (String disabled : config.getStringList("commands.disable")) {
             if (event.getMessage().toLowerCase().contains(disabled)) {
                 event.setCancelled(true);

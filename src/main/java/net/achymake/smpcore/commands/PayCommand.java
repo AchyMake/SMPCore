@@ -23,6 +23,10 @@ public class PayCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /pay target amount");
+            }
             if (args.length == 2) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
                 if (playerConfig.exist(offlinePlayer)) {
@@ -43,9 +47,12 @@ public class PayCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            for (Player players : sender.getServer().getOnlinePlayers()) {
-                commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (Player players : player.getServer().getOnlinePlayers()) {
+                    commands.add(players.getName());
+                }
             }
         }
         return commands;

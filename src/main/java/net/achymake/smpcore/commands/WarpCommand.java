@@ -21,6 +21,10 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             if (playerConfig.isFrozen((Player) sender) || playerConfig.isJailed((Player) sender)) {
                 return false;
             } else {
+                if (args.length == 0) {
+                    Player player = (Player) sender;
+                    message.send(player, "&cUsage:&f /warp warpName");
+                }
                 if (args.length == 1) {
                     Player player = (Player) sender;
                     if (player.hasPermission("smpcore.command.warp." + args[0])) {
@@ -34,7 +38,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                 if (args.length == 2) {
                     Player player = (Player) sender;
                     if (player.hasPermission("smpcore.command.warp.others")) {
-                        if (player.hasPermission("players.command.warp." + args[0])) {
+                        if (player.hasPermission("smpcore.command.warp." + args[0])) {
                             Player target = player.getServer().getPlayerExact(args[1]);
                             if (target != null) {
                                 if (playerConfig.isFrozen(target) || playerConfig.isJailed(target)) {
@@ -54,19 +58,15 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
         }
         if (sender instanceof ConsoleCommandSender) {
             if (args.length == 2) {
-                if (sender.hasPermission("smpcore.command.warp.others")) {
-                    if (sender.hasPermission("smpcore.command.warp." + args[0])) {
-                        Player target = sender.getServer().getPlayerExact(args[1]);
-                        if (target != null) {
-                            if (playerConfig.isFrozen(target) || playerConfig.isJailed(target)) {
-                                return false;
-                            } else {
-                                if (warpConfig.warpExist(args[0])) {
-                                    warpConfig.getWarp(args[0]).getChunk().load();
-                                    message.send(target, "&6Teleporting to&f " + args[0]);
-                                    target.teleport(warpConfig.getWarp(args[0]));
-                                }
-                            }
+                Player target = sender.getServer().getPlayerExact(args[1]);
+                if (target != null) {
+                    if (playerConfig.isFrozen(target) || playerConfig.isJailed(target)) {
+                        return false;
+                    } else {
+                        if (warpConfig.warpExist(args[0])) {
+                            warpConfig.getWarp(args[0]).getChunk().load();
+                            message.send(target, "&6Teleporting to&f " + args[0]);
+                            target.teleport(warpConfig.getWarp(args[0]));
                         }
                     }
                 }
@@ -77,17 +77,21 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            for (String warps : warpConfig.getWarps()) {
-                if (sender.hasPermission("smpcore.command.warp." + warps)) {
-                    commands.add(warps);
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (String warps : warpConfig.getWarps()) {
+                    if (player.hasPermission("smpcore.command.warp." + warps)) {
+                        commands.add(warps);
+                    }
                 }
             }
-        }
-        if (args.length == 2) {
-            if (sender.hasPermission("smpcore.command.warp.others")) {
-                for (Player players : sender.getServer().getOnlinePlayers()) {
-                    commands.add(players.getName());
+            if (args.length == 2) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.warp.others")) {
+                    for (Player players : player.getServer().getOnlinePlayers()) {
+                        commands.add(players.getName());
+                    }
                 }
             }
         }

@@ -78,10 +78,13 @@ public class BackCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.back.others")) {
-                for (Player players : sender.getServer().getOnlinePlayers()) {
-                    commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.back.others")) {
+                    for (Player players : player.getServer().getOnlinePlayers()) {
+                        commands.add(players.getName());
+                    }
                 }
             }
         }

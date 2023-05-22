@@ -20,6 +20,9 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            if (args.length == 0) {
+                message.send(player, "&cUsage:&f /delhome homeName");
+            }
             if (args.length == 1) {
                 if (playerConfig.locationExist(player, "homes." + args[0])) {
                     playerConfig.setString(player,"homes." + args[0], null);
@@ -34,9 +37,10 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender instanceof Player) {
-                for (String homes : playerConfig.getHomes((Player) sender)){
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (String homes : playerConfig.getHomes(player)) {
                     commands.add(homes);
                 }
             }

@@ -16,9 +16,13 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
     private final Message message = smpCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player){
-            Player player = (Player) sender;
+        if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /inventory target");
+            }
             if (args.length == 1) {
+                Player player = (Player) sender;
                 Player target = player.getServer().getPlayerExact(args[0]);
                 if (target != null) {
                     if (target != player) {
@@ -35,10 +39,15 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.command.inventory")) {
-                for (Player players : sender.getServer().getOnlinePlayers()) {
-                    commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.command.inventory")) {
+                    for (Player players : player.getServer().getOnlinePlayers()) {
+                        if (!players.hasPermission("smpcore.command.inventory.exempt")) {
+                            commands.add(players.getName());
+                        }
+                    }
                 }
             }
         }

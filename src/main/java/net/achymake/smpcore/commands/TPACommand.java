@@ -21,6 +21,10 @@ public class TPACommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                message.send(player, "&cUsage:&f /tpa target");
+            }
             if (args.length == 1) {
                 Player player = (Player) sender;
                 if (playerConfig.isFrozen(player) || playerConfig.isJailed(player)) {
@@ -61,9 +65,12 @@ public class TPACommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            for (Player players : sender.getServer().getOnlinePlayers()) {
-                commands.add(players.getName());
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                for (Player players : player.getServer().getOnlinePlayers()) {
+                    commands.add(players.getName());
+                }
             }
         }
         return commands;

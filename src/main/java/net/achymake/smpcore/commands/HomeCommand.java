@@ -39,20 +39,22 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("bed")) {
-                        if (player.getBedSpawnLocation() != null){
-                            if (player.hasPermission("smpcore.command.home.bed")) {
+                        if (player.hasPermission("smpcore.command.home.bed")) {
+                            if (player.getBedSpawnLocation() != null){
                                 Location location = player.getBedSpawnLocation();
                                 location.setPitch(player.getLocation().getPitch());
                                 location.setYaw(player.getLocation().getYaw());
                                 player.getBedSpawnLocation().getChunk().load();
                                 message.send(player, "&6Teleporting to&f " + args[0]);
                                 player.teleport(location);
+                            } else {
+                                message.send(player, args[0] + "&c does not exist");
                             }
-                        } else {
-                            message.send(player, args[0] + "&c does not exist");
                         }
                     } else if (args[0].equalsIgnoreCase("buy")) {
-                        message.send(player, "&6Homes costs&a " + economyProvider.format(config.getDouble("homes.cost")));
+                        if (player.hasPermission("smpcore.command.home.buy")) {
+                            message.send(player, "&6Homes costs&a " + economyProvider.format(config.getDouble("homes.cost")));
+                        }
                     } else {
                         if (playerConfig.locationExist(player, "homes." + args[0])) {
                             playerConfig.getLocation(player, "homes." + args[0]).getChunk().load();
@@ -84,25 +86,27 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
-        if (args.length == 1) {
-            if (sender.hasPermission("smpcore.commands.home.buy")) {
-                commands.add("buy");
-            }
-            if (sender.hasPermission("smpcore.commands.home.bed")) {
-                commands.add("bed");
-            }
-            if (sender instanceof Player) {
-                for (String homes : playerConfig.getHomes((Player) sender)) {
+        if (sender instanceof Player) {
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.commands.home.buy")) {
+                    commands.add("buy");
+                }
+                if (player.hasPermission("smpcore.commands.home.bed")) {
+                    commands.add("bed");
+                }
+                for (String homes : playerConfig.getHomes(player)) {
                     commands.add(homes);
                 }
             }
-        }
-        if (args.length == 2){
-            if (sender.hasPermission("smpcore.commands.home.buy")) {
-                if (args[0].equalsIgnoreCase("buy")) {
-                    commands.add("1");
-                    commands.add("2");
-                    commands.add("3");
+            if (args.length == 2) {
+                Player player = (Player) sender;
+                if (player.hasPermission("smpcore.commands.home.buy")) {
+                    if (args[0].equalsIgnoreCase("buy")) {
+                        commands.add("1");
+                        commands.add("2");
+                        commands.add("3");
+                    }
                 }
             }
         }
