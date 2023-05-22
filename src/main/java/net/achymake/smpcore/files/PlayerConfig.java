@@ -94,6 +94,16 @@ public class PlayerConfig {
             message.sendLog(e.getMessage());
         }
     }
+    public void setStringList(OfflinePlayer offlinePlayer, String path, List<String> value) {
+        File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set(path, value);
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            message.sendLog(e.getMessage());
+        }
+    }
     public void setBoolean(OfflinePlayer offlinePlayer, String path, boolean value) {
         File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
