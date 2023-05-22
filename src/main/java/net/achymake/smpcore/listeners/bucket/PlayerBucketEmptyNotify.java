@@ -12,11 +12,10 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import java.text.MessageFormat;
 
 public class PlayerBucketEmptyNotify implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final FileConfiguration config = smpCore.getConfig();
-    private final Message message = smpCore.getMessage();
+    private final FileConfiguration config = SMPCore.getInstance().getConfig();
+    private final Message message = SMPCore.getMessage();
     public PlayerBucketEmptyNotify() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketEmptyNotify(PlayerBucketEmptyEvent event){

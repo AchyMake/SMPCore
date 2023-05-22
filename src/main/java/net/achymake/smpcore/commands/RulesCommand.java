@@ -10,8 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class RulesCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final MotdConfig motdConfig = smpCore.getMotdConfig();
+    private final MotdConfig motdConfig = SMPCore.getMotdConfig();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

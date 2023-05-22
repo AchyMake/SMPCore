@@ -29,7 +29,7 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                smpCore.getMessage().sendLog(e.getMessage());
+                SMPCore.getMessage().sendLog(e.getMessage());
             }
         });
     }
@@ -37,10 +37,10 @@ public class UpdateChecker {
         if (smpCore.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(smpCore, resourceId)).getVersion((latest) -> {
                 if (smpCore.getDescription().getVersion().equals(latest)) {
-                    smpCore.getMessage().sendLog("You are using the latest version");
+                    SMPCore.getMessage().sendLog("You are using the latest version");
                 } else {
-                    smpCore.getMessage().sendLog("New Update: " + latest);
-                    smpCore.getMessage().sendLog("Current Version: " + smpCore.getDescription().getVersion());
+                    SMPCore.getMessage().sendLog("New Update: " + latest);
+                    SMPCore.getMessage().sendLog("Current Version: " + smpCore.getDescription().getVersion());
                 }
             });
         }
@@ -49,8 +49,8 @@ public class UpdateChecker {
         if (smpCore.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(smpCore, resourceId)).getVersion((latest) -> {
                 if (!smpCore.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    smpCore.getMessage().send(player,"&6" + smpCore.getName() + " Update:&f "+ latest);
-                    smpCore.getMessage().send(player,"&6Current Version: &f" + smpCore.getDescription().getVersion());
+                    SMPCore.getMessage().send(player,"&6" + smpCore.getName() + " Update:&f "+ latest);
+                    SMPCore.getMessage().send(player,"&6Current Version: &f" + smpCore.getDescription().getVersion());
                 }
             });
         }

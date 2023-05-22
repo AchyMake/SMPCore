@@ -10,10 +10,9 @@ import org.bukkit.event.Listener;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 public class PlayerMount implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     public PlayerMount() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onMountFrozen(EntityMountEvent event){

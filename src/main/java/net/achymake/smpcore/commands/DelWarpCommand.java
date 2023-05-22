@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DelWarpCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final WarpConfig warpConfig = smpCore.getWarpConfig();
-    private final Message message = smpCore.getMessage();
+    private final WarpConfig warpConfig = SMPCore.getWarpConfig();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

@@ -9,8 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AnnouncementCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final Message message = smpCore.getMessage();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

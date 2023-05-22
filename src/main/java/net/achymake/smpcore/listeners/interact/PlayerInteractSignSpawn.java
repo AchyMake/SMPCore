@@ -12,11 +12,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PlayerInteractSignSpawn implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final SpawnConfig spawnConfig = smpCore.getSpawnConfig();
-    private final Message message = smpCore.getMessage();
+    private final SpawnConfig spawnConfig = SMPCore.getSpawnConfig();
+    private final Message message = SMPCore.getMessage();
     public PlayerInteractSignSpawn() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSignSpawn(PlayerInteractEvent event) {

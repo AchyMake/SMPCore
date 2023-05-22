@@ -9,10 +9,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PlayerInteractPhysical implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     public PlayerInteractPhysical() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteractFrozen(PlayerInteractEvent event) {

@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BackCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final PlayerData playerData = smpCore.getPlayerData();
-    private final Message message = smpCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final PlayerData playerData = SMPCore.getPlayerData();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {

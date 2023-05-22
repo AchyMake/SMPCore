@@ -13,9 +13,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class SetJailCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final JailConfig jailConfig = smpCore.getJailConfig();
-    private final Message message = smpCore.getMessage();
+    private final JailConfig jailConfig = SMPCore.getJailConfig();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

@@ -13,9 +13,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class SetSpawnCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final SpawnConfig spawnConfig = smpCore.getSpawnConfig();
-    private final Message message = smpCore.getMessage();
+    private final SpawnConfig spawnConfig = SMPCore.getSpawnConfig();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepairCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final Message message = smpCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -24,7 +23,7 @@ public class RepairCommand implements CommandExecutor, TabCompleter {
                 } else {
                     if (playerConfig.getCommandCooldown().containsKey("repair-" + player.getUniqueId())) {
                         Long timeElapsed = System.currentTimeMillis() - playerConfig.getCommandCooldown().get("repair-" + player.getUniqueId());
-                        String cooldownTimer = smpCore.getConfig().getString("commands.cooldown.repair");
+                        String cooldownTimer = SMPCore.getInstance().getConfig().getString("commands.cooldown.repair");
                         Integer integer = Integer.valueOf(cooldownTimer.replace(cooldownTimer, cooldownTimer + "000"));
                         if (timeElapsed > integer) {
                             playerConfig.getCommandCooldown().put("repair-" + player.getUniqueId(), System.currentTimeMillis());

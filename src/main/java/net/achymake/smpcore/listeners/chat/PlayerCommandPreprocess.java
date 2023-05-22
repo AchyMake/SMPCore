@@ -6,13 +6,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerCommandSendEvent;
 
 public class PlayerCommandPreprocess implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final FileConfiguration config = smpCore.getConfig();
+    private final FileConfiguration config = SMPCore.getInstance().getConfig();
     public PlayerCommandPreprocess () {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerCommandPreprocess (PlayerCommandPreprocessEvent event) {

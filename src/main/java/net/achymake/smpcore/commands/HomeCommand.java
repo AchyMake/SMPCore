@@ -16,11 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final EconomyProvider economyProvider = smpCore.getEconomyProvider();
-    private final FileConfiguration config = smpCore.getConfig();
-    private final Message message = smpCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final EconomyProvider economyProvider = SMPCore.getEconomyProvider();
+    private final FileConfiguration config = SMPCore.getInstance().getConfig();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

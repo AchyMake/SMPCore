@@ -13,12 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamagePlayerWithTrident implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final FileConfiguration config = smpCore.getConfig();
-    private final Message message = smpCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final FileConfiguration config = SMPCore.getInstance().getConfig();
+    private final Message message = SMPCore.getMessage();
     public DamagePlayerWithTrident() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayerWithTrident(EntityDamageByEntityEvent event) {

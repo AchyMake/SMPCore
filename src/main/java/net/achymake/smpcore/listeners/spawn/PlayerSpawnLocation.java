@@ -9,11 +9,10 @@ import org.bukkit.event.Listener;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 public class PlayerSpawnLocation implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final SpawnConfig spawnConfig = smpCore.getSpawnConfig();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final SpawnConfig spawnConfig = SMPCore.getSpawnConfig();
     public PlayerSpawnLocation() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerSpawnLocation(PlayerSpawnLocationEvent event) {

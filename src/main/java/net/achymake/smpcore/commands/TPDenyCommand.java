@@ -14,9 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class TPDenyCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerData playerData = smpCore.getPlayerData();
-    private final Message message = smpCore.getMessage();
+    private final PlayerData playerData = SMPCore.getPlayerData();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

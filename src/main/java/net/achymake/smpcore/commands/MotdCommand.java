@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotdCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final MotdConfig motdConfig = smpCore.getMotdConfig();
+    private final MotdConfig motdConfig = SMPCore.getMotdConfig();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

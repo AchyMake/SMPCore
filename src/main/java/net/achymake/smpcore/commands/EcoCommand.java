@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EcoCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final EconomyProvider economyProvider = smpCore.getEconomyProvider();
-    private final Message message = smpCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final EconomyProvider economyProvider = SMPCore.getEconomyProvider();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -29,7 +28,7 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.resetEconomy(offlinePlayer);
-                            message.send(sender, "&6You reset&f " + offlinePlayer.getName() + "&6 account to&a " + economyProvider.currencyNameSingular() + economyProvider.format(smpCore.getConfig().getDouble("economy.starting-balance")));
+                            message.send(sender, "&6You reset&f " + offlinePlayer.getName() + "&6 account to&a " + economyProvider.currencyNameSingular() + economyProvider.format(SMPCore.getInstance().getConfig().getDouble("economy.starting-balance")));
                         } else {
                             message.send(sender, offlinePlayer.getName() + "&c has never joined");
                         }
@@ -82,7 +81,7 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                         if (playerConfig.exist(offlinePlayer)) {
                             playerConfig.resetEconomy(offlinePlayer);
-                            message.send(sender, "You reset " + offlinePlayer.getName() + " account to " + economyProvider.currencyNameSingular() + economyProvider.format(smpCore.getConfig().getDouble("economy.starting-balance")));
+                            message.send(sender, "You reset " + offlinePlayer.getName() + " account to " + economyProvider.currencyNameSingular() + economyProvider.format(SMPCore.getInstance().getConfig().getDouble("economy.starting-balance")));
                         } else {
                             message.send(sender, offlinePlayer.getName() + " has never joined");
                         }

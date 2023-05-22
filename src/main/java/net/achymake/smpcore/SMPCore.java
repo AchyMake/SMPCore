@@ -183,31 +183,31 @@ public final class SMPCore extends JavaPlugin {
         }
         message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
-    public JailConfig getJailConfig() {
+    public static JailConfig getJailConfig() {
         return jailConfig;
     }
-    public KitConfig getKitConfig() {
+    public static KitConfig getKitConfig() {
         return kitConfig;
     }
-    public Message getMessage() {
+    public static Message getMessage() {
         return message;
     }
-    public MotdConfig getMotdConfig() {
+    public static MotdConfig getMotdConfig() {
         return motdConfig;
     }
-    public PlayerConfig getPlayerConfig() {
+    public static PlayerConfig getPlayerConfig() {
         return playerConfig;
     }
-    public PlayerData getPlayerData() {
+    public static PlayerData getPlayerData() {
         return playerData;
     }
-    public SpawnConfig getSpawnConfig() {
+    public static SpawnConfig getSpawnConfig() {
         return spawnConfig;
     }
-    public WarpConfig getWarpConfig() {
+    public static WarpConfig getWarpConfig() {
         return warpConfig;
     }
-    public EconomyProvider getEconomyProvider() {
+    public static EconomyProvider getEconomyProvider() {
         return economyProvider;
     }
     public void reload() {

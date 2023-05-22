@@ -8,10 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 public class SignChange implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final Message message = smpCore.getMessage();
+    private final Message message = SMPCore.getMessage();
     public SignChange() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSignChange(SignChangeEvent event) {

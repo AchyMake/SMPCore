@@ -11,8 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PlayerInteractSignWorkbench implements Listener {
     public PlayerInteractSignWorkbench() {
-        SMPCore smpCore = SMPCore.getInstance();
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSignWorkbench(PlayerInteractEvent event) {

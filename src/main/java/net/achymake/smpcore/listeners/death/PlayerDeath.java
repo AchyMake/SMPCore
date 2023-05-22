@@ -14,11 +14,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.Random;
 
 public class PlayerDeath implements Listener {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final FileConfiguration config = smpCore.getConfig();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final FileConfiguration config = SMPCore.getInstance().getConfig();
     public PlayerDeath() {
-        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
+        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDeath(PlayerDeathEvent event) {

@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HealCommand implements CommandExecutor, TabCompleter {
-    private final SMPCore smpCore = SMPCore.getInstance();
-    private final PlayerConfig playerConfig = smpCore.getPlayerConfig();
-    private final Message message = smpCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
+    private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -20,7 +19,7 @@ public class HealCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (playerConfig.getCommandCooldown().containsKey("heal-" + player.getUniqueId())) {
                     Long timeElapsed = System.currentTimeMillis() - playerConfig.getCommandCooldown().get("heal-" + player.getUniqueId());
-                    String cooldownTimer = smpCore.getConfig().getString("commands.cooldown.heal");
+                    String cooldownTimer = SMPCore.getInstance().getConfig().getString("commands.cooldown.heal");
                     Integer integer = Integer.valueOf(cooldownTimer.replace(cooldownTimer, cooldownTimer + "000"));
                     if (timeElapsed > integer) {
                         playerConfig.getCommandCooldown().put("heal-" + player.getUniqueId(),System.currentTimeMillis());
