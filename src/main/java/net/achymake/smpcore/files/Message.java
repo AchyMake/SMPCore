@@ -27,4 +27,7 @@ public class Message {
     public String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
+    public SMPCore getSmpCore() {
+        return smpCore;
+    }
 }

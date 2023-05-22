@@ -78,4 +78,7 @@ public class WarpConfig {
             message.sendLog(e.getMessage());
         }
     }
+    public SMPCore getSmpCore() {
+        return smpCore;
+    }
 }

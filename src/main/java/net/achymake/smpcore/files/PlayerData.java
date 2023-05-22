@@ -79,4 +79,7 @@ public class PlayerData {
     public void removeData(Player player, String type) {
         data(player).remove(NamespacedKey.minecraft(type));
     }
+    public SMPCore getSmpCore() {
+        return smpCore;
+    }
 }

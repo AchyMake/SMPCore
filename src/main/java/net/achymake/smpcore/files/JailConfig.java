@@ -65,4 +65,7 @@ public class JailConfig {
             message.sendLog(e.getMessage());
         }
     }
+    public SMPCore getSmpCore() {
+        return smpCore;
+    }
 }

@@ -133,4 +133,7 @@ public class KitConfig {
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
     }
+    public SMPCore getSmpCore() {
+        return smpCore;
+    }
 }

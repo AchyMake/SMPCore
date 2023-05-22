@@ -227,4 +227,7 @@ public class PlayerConfig {
     public List<Player> getVanished() {
         return vanished;
     }
+    public SMPCore getSmpCore() {
+        return smpCore;
+    }
 }

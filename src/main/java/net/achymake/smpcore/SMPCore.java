@@ -35,13 +35,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public final class SMPCore extends JavaPlugin {
     private static SMPCore instance;
@@ -211,9 +209,6 @@ public final class SMPCore extends JavaPlugin {
     }
     public EconomyProvider getEconomyProvider() {
         return economyProvider;
-    }
-    public List<Player> getVanished() {
-        return playerConfig.getVanished();
     }
     public void reload() {
         if (jailConfig.exist()) {
