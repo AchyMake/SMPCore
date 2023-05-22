@@ -79,6 +79,7 @@ public final class SMPCore extends JavaPlugin {
         playerData = new PlayerData(this);
         spawnConfig = new SpawnConfig(this);
         warpConfig = new WarpConfig(this);
+        reload();
         getCommand("announcement").setExecutor(new AnnouncementCommand());
         getCommand("back").setExecutor(new BackCommand());
         getCommand("balance").setExecutor(new BalanceCommand());
@@ -127,7 +128,6 @@ public final class SMPCore extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("whisper").setExecutor(new WhisperCommand());
         getCommand("workbench").setExecutor(new WorkbenchCommand());
-        reload();
         new PrepareAnvil(this);
         new BlockBreak(this);
         new BlockBreakNotify(this);
