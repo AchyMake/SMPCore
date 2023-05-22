@@ -3,7 +3,32 @@ package net.achymake.smpcore;
 import net.achymake.smpcore.api.*;
 import net.achymake.smpcore.commands.*;
 import net.achymake.smpcore.files.*;
-import net.achymake.smpcore.listeners.Events;
+import net.achymake.smpcore.listeners.anvil.PrepareAnvil;
+import net.achymake.smpcore.listeners.block.*;
+import net.achymake.smpcore.listeners.bucket.PlayerBucketEmpty;
+import net.achymake.smpcore.listeners.bucket.PlayerBucketEmptyNotify;
+import net.achymake.smpcore.listeners.bucket.PlayerBucketEntity;
+import net.achymake.smpcore.listeners.bucket.PlayerBucketFill;
+import net.achymake.smpcore.listeners.chat.AsyncPlayerChat;
+import net.achymake.smpcore.listeners.chat.PlayerCommandPreprocess;
+import net.achymake.smpcore.listeners.connection.JoinMessage;
+import net.achymake.smpcore.listeners.connection.PlayerLogin;
+import net.achymake.smpcore.listeners.connection.QuitMessage;
+import net.achymake.smpcore.listeners.damage.*;
+import net.achymake.smpcore.listeners.death.PlayerDeath;
+import net.achymake.smpcore.listeners.interact.PlayerInteractPhysical;
+import net.achymake.smpcore.listeners.interact.PlayerInteractSignSpawn;
+import net.achymake.smpcore.listeners.interact.PlayerInteractSignWarp;
+import net.achymake.smpcore.listeners.interact.PlayerInteractSignWorkbench;
+import net.achymake.smpcore.listeners.leash.PlayerLeashEntity;
+import net.achymake.smpcore.listeners.mount.PlayerMount;
+import net.achymake.smpcore.listeners.move.PlayerMoveFrozen;
+import net.achymake.smpcore.listeners.move.PlayerMoveVanished;
+import net.achymake.smpcore.listeners.respawn.PlayerRespawn;
+import net.achymake.smpcore.listeners.shear.PlayerShearEntity;
+import net.achymake.smpcore.listeners.sign.SignChange;
+import net.achymake.smpcore.listeners.spawn.PlayerSpawnLocation;
+import net.achymake.smpcore.listeners.teleport.PlayerTeleport;
 import net.achymake.smpcore.version.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
@@ -34,32 +59,6 @@ public final class SMPCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
         message = new Message(this);
-        setupVault();
-        setupPlaceholderAPI();
-        jailConfig = new JailConfig(this);
-        kitConfig = new KitConfig(this);
-        motdConfig = new MotdConfig(this);
-        playerConfig = new PlayerConfig(this);
-        playerData = new PlayerData(this);
-        spawnConfig = new SpawnConfig(this);
-        warpConfig = new WarpConfig(this);
-        reload();
-        setupCommands();
-        Events.setup();
-        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
-        new UpdateChecker(this, 108685).getUpdate();
-    }
-    @Override
-    public void onDisable() {
-        if (!playerConfig.getVanished().isEmpty()) {
-            playerConfig.getVanished().clear();
-        }
-        if (!playerConfig.getCommandCooldown().isEmpty()) {
-            playerConfig.getCommandCooldown().clear();
-        }
-        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
-    }
-    private void setupVault() {
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
             message.sendLog("hooked to Vault");
             getServer().getServicesManager().register(Economy.class, new EconomyProvider(this), this, ServicePriority.Normal);
@@ -68,8 +67,6 @@ public final class SMPCore extends JavaPlugin {
             message.sendLog("You have to install 'Vault'");
             getServer().getPluginManager().disablePlugin(this);
         }
-    }
-    private void setupPlaceholderAPI() {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlaceholderProvider().register();
             message.sendLog("hooked to PlaceholderAPI");
@@ -77,8 +74,13 @@ public final class SMPCore extends JavaPlugin {
             message.sendLog("You have to install 'PlaceholderAPI'");
             getServer().getPluginManager().disablePlugin(this);
         }
-    }
-    private void setupCommands() {
+        jailConfig = new JailConfig(this);
+        kitConfig = new KitConfig(this);
+        motdConfig = new MotdConfig(this);
+        playerConfig = new PlayerConfig(this);
+        playerData = new PlayerData(this);
+        spawnConfig = new SpawnConfig(this);
+        warpConfig = new WarpConfig(this);
         getCommand("announcement").setExecutor(new AnnouncementCommand());
         getCommand("back").setExecutor(new BackCommand());
         getCommand("balance").setExecutor(new BalanceCommand());
@@ -127,6 +129,61 @@ public final class SMPCore extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("whisper").setExecutor(new WhisperCommand());
         getCommand("workbench").setExecutor(new WorkbenchCommand());
+        reload();
+        new PrepareAnvil();
+        new BlockBreak();
+        new BlockBreakNotify();
+        new BlockFertilize();
+        new BlockPlace();
+        new BlockPlaceNotify();
+        new PlayerHarvestBlock();
+        new PlayerBucketEmpty();
+        new PlayerBucketEmptyNotify();
+        new PlayerBucketEntity();
+        new PlayerBucketFill();
+        new AsyncPlayerChat();
+        new PlayerCommandPreprocess();
+        new JoinMessage();
+        new PlayerLogin();
+        new QuitMessage();
+        new DamageEntityJailed();
+        new DamageEntityWithArrowJailed();
+        new DamageEntityWithSnowballJailed();
+        new DamageEntityWithSpectralArrowJailed();
+        new DamageEntityWithThrownPotionJailed();
+        new DamageEntityWithTridentJailed();
+        new DamagePlayer();
+        new DamagePlayerWithArrow();
+        new DamagePlayerWithSnowball();
+        new DamagePlayerWithSpectralArrow();
+        new DamagePlayerWithThrownPotion();
+        new DamagePlayerWithTrident();
+        new PlayerDeath();
+        new PlayerInteractPhysical();
+        new PlayerLeashEntity();
+        new PlayerMount();
+        new PlayerMoveFrozen();
+        new PlayerMoveVanished();
+        new PlayerRespawn();
+        new PlayerShearEntity();
+        new PlayerInteractSignSpawn();
+        new PlayerInteractSignWarp();
+        new PlayerInteractSignWorkbench();
+        new SignChange();
+        new PlayerSpawnLocation();
+        new PlayerTeleport();
+        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
+        new UpdateChecker(this, 108685).getUpdate();
+    }
+    @Override
+    public void onDisable() {
+        if (!playerConfig.getVanished().isEmpty()) {
+            playerConfig.getVanished().clear();
+        }
+        if (!playerConfig.getCommandCooldown().isEmpty()) {
+            playerConfig.getCommandCooldown().clear();
+        }
+        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public JailConfig getJailConfig() {
         return jailConfig;
