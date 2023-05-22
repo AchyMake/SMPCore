@@ -11,8 +11,8 @@ import org.spigotmc.event.entity.EntityMountEvent;
 
 public class PlayerMount implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerMount() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerMount(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onMountFrozen(EntityMountEvent event){

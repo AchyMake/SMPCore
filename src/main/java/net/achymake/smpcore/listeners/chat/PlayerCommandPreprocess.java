@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class PlayerCommandPreprocess implements Listener {
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
-    public PlayerCommandPreprocess () {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerCommandPreprocess (SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerCommandPreprocess (PlayerCommandPreprocessEvent event) {

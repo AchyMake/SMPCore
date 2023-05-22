@@ -12,8 +12,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class PlayerRespawn implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final Message message = SMPCore.getMessage();
-    public PlayerRespawn() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerRespawn(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onRespawn(PlayerRespawnEvent event) {

@@ -20,8 +20,8 @@ public class QuitMessage implements Listener {
     private final PlayerData playerData = SMPCore.getPlayerData();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public QuitMessage() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public QuitMessage(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onQuitMessage (PlayerQuitEvent event) {

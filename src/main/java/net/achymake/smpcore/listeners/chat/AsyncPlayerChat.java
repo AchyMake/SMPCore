@@ -13,8 +13,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class AsyncPlayerChat implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final Message message = SMPCore.getMessage();
-    public AsyncPlayerChat() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public AsyncPlayerChat(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onAsyncPlayerChat (AsyncPlayerChatEvent event) {

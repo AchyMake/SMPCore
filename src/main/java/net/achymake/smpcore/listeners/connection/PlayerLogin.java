@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 public class PlayerLogin implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerLogin() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerLogin(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerLogin(PlayerLoginEvent event) {

@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerShearEntityEvent;
 
 public class PlayerShearEntity implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerShearEntity() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerShearEntity(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onShearEntityFrozen(PlayerShearEntityEvent event) {

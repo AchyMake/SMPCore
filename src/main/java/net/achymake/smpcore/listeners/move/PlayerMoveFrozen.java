@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerMoveFrozen implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerMoveFrozen() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerMoveFrozen(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onMoveWhileFrozen(PlayerMoveEvent event) {

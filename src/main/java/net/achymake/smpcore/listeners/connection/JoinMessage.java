@@ -18,8 +18,8 @@ public class JoinMessage implements Listener {
     private final MotdConfig motdConfig = SMPCore.getMotdConfig();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public JoinMessage() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public JoinMessage(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onJoinMessage (PlayerJoinEvent event) {

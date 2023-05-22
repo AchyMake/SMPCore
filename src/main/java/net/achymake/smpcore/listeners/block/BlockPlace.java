@@ -9,8 +9,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockPlace implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public BlockPlace() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public BlockPlace(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockPlaceFrozen(BlockPlaceEvent event) {

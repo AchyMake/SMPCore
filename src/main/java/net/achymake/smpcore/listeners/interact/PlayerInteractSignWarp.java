@@ -14,8 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class PlayerInteractSignWarp implements Listener {
     private final WarpConfig warpConfig = SMPCore.getWarpConfig();
     private final Message message = SMPCore.getMessage();
-    public PlayerInteractSignWarp() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerInteractSignWarp(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSignWarp(PlayerInteractEvent event) {

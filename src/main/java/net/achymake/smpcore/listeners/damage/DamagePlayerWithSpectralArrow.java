@@ -16,8 +16,8 @@ public class DamagePlayerWithSpectralArrow implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public DamagePlayerWithSpectralArrow() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public DamagePlayerWithSpectralArrow(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayerWithSpectralArrow(EntityDamageByEntityEvent event) {

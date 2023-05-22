@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class PlayerTeleport implements Listener {
     private final PlayerData playerData = SMPCore.getPlayerData();
-    public PlayerTeleport() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerTeleport(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onTest(PlayerTeleportEvent event) {

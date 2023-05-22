@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 
 public class PlayerBucketFill implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerBucketFill() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerBucketFill(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketFillFrozen (PlayerBucketFillEvent event) {

@@ -11,8 +11,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class PrepareAnvil implements Listener {
     private final Message message = SMPCore.getMessage();
-    public PrepareAnvil() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PrepareAnvil(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPrepareAnvil(PrepareAnvilEvent event) {

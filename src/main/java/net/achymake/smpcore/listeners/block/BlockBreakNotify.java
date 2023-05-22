@@ -14,8 +14,8 @@ import java.text.MessageFormat;
 public class BlockBreakNotify implements Listener {
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public BlockBreakNotify() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public BlockBreakNotify(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreakNotify(BlockBreakEvent event) {

@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerBucketEntityEvent;
 
 public class PlayerBucketEntity implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerBucketEntity() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerBucketEntity(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketEntityFrozen(PlayerBucketEntityEvent event) {

@@ -9,8 +9,8 @@ import org.bukkit.event.block.BlockFertilizeEvent;
 
 public class BlockFertilize implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public BlockFertilize() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public BlockFertilize(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockFertilizeFrozen(BlockFertilizeEvent event) {

@@ -16,8 +16,8 @@ public class DamagePlayerWithTrident implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public DamagePlayerWithTrident() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public DamagePlayerWithTrident(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayerWithTrident(EntityDamageByEntityEvent event) {

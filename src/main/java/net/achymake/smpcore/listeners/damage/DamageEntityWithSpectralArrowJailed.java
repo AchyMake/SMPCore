@@ -12,8 +12,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamageEntityWithSpectralArrowJailed implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public DamageEntityWithSpectralArrowJailed() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public DamageEntityWithSpectralArrowJailed(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageEntityWithSpectralArrowJailed(EntityDamageByEntityEvent event) {

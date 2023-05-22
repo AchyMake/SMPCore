@@ -14,8 +14,8 @@ import java.text.MessageFormat;
 public class BlockPlaceNotify implements Listener {
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public BlockPlaceNotify() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public BlockPlaceNotify(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockPlaceNotify(BlockPlaceEvent event) {

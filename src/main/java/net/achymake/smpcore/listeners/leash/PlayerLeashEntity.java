@@ -9,8 +9,8 @@ import org.bukkit.event.entity.PlayerLeashEntityEvent;
 
 public class PlayerLeashEntity implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerLeashEntity() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerLeashEntity(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLeashFrozen (PlayerLeashEntityEvent event) {

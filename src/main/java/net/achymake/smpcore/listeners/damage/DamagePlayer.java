@@ -15,8 +15,8 @@ public class DamagePlayer implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public DamagePlayer() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public DamagePlayer(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayer(EntityDamageByEntityEvent event) {

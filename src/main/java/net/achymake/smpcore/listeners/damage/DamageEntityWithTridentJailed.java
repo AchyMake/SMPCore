@@ -12,8 +12,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamageEntityWithTridentJailed implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public DamageEntityWithTridentJailed() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public DamageEntityWithTridentJailed(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageEntityWithTridentJailed(EntityDamageByEntityEvent event) {

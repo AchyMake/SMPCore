@@ -14,8 +14,8 @@ import java.text.MessageFormat;
 public class PlayerBucketEmptyNotify implements Listener {
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public PlayerBucketEmptyNotify() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerBucketEmptyNotify(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketEmptyNotify(PlayerBucketEmptyEvent event){

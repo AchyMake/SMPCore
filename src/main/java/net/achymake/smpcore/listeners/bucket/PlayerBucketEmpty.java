@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 public class PlayerBucketEmpty implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerBucketEmpty() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerBucketEmpty(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketEmptyFrozen(PlayerBucketEmptyEvent event) {

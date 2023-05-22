@@ -16,8 +16,8 @@ import java.util.Random;
 public class PlayerDeath implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
-    public PlayerDeath() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerDeath(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDeath(PlayerDeathEvent event) {

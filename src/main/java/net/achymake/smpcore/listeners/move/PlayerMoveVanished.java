@@ -11,8 +11,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class PlayerMoveVanished implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final Message message = SMPCore.getMessage();
-    public PlayerMoveVanished() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerMoveVanished(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onMoveWhileVanished(PlayerMoveEvent event) {

@@ -9,8 +9,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BlockBreak implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public BlockBreak() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public BlockBreak(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreakFrozen(BlockBreakEvent event) {

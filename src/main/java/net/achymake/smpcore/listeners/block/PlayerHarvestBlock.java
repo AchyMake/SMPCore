@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerHarvestBlockEvent;
 
 public class PlayerHarvestBlock implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    public PlayerHarvestBlock() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerHarvestBlock(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockFertilizeFrozen(PlayerHarvestBlockEvent event) {

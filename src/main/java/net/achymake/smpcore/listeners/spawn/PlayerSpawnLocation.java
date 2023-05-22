@@ -11,8 +11,8 @@ import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 public class PlayerSpawnLocation implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final SpawnConfig spawnConfig = SMPCore.getSpawnConfig();
-    public PlayerSpawnLocation() {
-        SMPCore.getInstance().getServer().getPluginManager().registerEvents(this, SMPCore.getInstance());
+    public PlayerSpawnLocation(SMPCore smpCore) {
+        smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerSpawnLocation(PlayerSpawnLocationEvent event) {
