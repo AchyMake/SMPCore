@@ -14,7 +14,7 @@ public class SpawnConfig {
         this.smpCore = smpCore;
     }
     private final Message message = SMPCore.getMessage();
-    private final File file = new File(getSmpCore().getDataFolder(), "spawn.yml");
+    private final File file = new File(SMPCore.getInstance().getDataFolder(), "spawn.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
         return file.exists();
@@ -55,7 +55,7 @@ public class SpawnConfig {
         double z = config.getDouble("spawn.z");
         float yaw = config.getLong("spawn.yaw");
         float pitch = config.getLong("spawn.pitch");
-        return new Location(getSmpCore().getServer().getWorld(world), x, y, z, yaw, pitch);
+        return new Location(smpCore.getServer().getWorld(world), x, y, z, yaw, pitch);
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
@@ -64,8 +64,5 @@ public class SpawnConfig {
         } catch (IOException e) {
             message.sendLog(e.getMessage());
         }
-    }
-    public SMPCore getSmpCore() {
-        return smpCore;
     }
 }

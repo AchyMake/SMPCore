@@ -22,7 +22,7 @@ public class KitConfig {
     }
     private final Message message = SMPCore.getMessage();
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    private final File file = new File(getSmpCore().getDataFolder(), "kits.yml");
+    private final File file = new File(SMPCore.getInstance().getDataFolder(), "kits.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
         return file.exists();
@@ -132,8 +132,5 @@ public class KitConfig {
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
-    }
-    public SMPCore getSmpCore() {
-        return smpCore;
     }
 }

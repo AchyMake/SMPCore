@@ -17,7 +17,7 @@ public class MotdConfig {
         this.smpCore = smpCore;
     }
     private final Message message = SMPCore.getMessage();
-    private final File file = new File(getSmpCore().getDataFolder(), "motd.yml");
+    private final File file = new File(SMPCore.getInstance().getDataFolder(), "motd.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
         return file.exists();
@@ -67,8 +67,5 @@ public class MotdConfig {
         } catch (IOException e) {
             message.sendLog(e.getMessage());
         }
-    }
-    public SMPCore getSmpCore() {
-        return smpCore;
     }
 }

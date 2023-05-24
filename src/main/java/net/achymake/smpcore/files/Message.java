@@ -5,7 +5,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class Message {
@@ -20,15 +19,12 @@ public class Message {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(color(message)));
     }
     public void sendLog(String message) {
-        getSmpCore().getServer().getConsoleSender().sendMessage("[" + getSmpCore().getName() + "] " + message);
+        smpCore.getServer().getConsoleSender().sendMessage("[" + smpCore.getName() + "] " + message);
     }
     public void sendAnnouncement(String message) {
-        getSmpCore().getServer().getConsoleSender().sendMessage("[Server] " + message);
+        smpCore.getServer().getConsoleSender().sendMessage("[Server] " + message);
     }
     public String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
-    }
-    public SMPCore getSmpCore() {
-        return smpCore;
     }
 }
