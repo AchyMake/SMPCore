@@ -6,7 +6,7 @@
 
     <groupId>net.achymake</groupId>
     <artifactId>SMPCore</artifactId>
-    <version>1.11.2</version>
+    <version>1.11.3</version>
     <packaging>jar</packaging>
 
     <name>SMPCore</name>
