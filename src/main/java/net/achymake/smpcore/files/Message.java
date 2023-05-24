@@ -20,10 +20,10 @@ public class Message {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(color(message)));
     }
     public void sendLog(String message) {
-        smpCore.getServer().getConsoleSender().sendMessage("[" + smpCore.getName() + "] " + message);
+        getSmpCore().getServer().getConsoleSender().sendMessage("[" + getSmpCore().getName() + "] " + message);
     }
     public void sendAnnouncement(String message) {
-        smpCore.getServer().getConsoleSender().sendMessage("[Server] " + message);
+        getSmpCore().getServer().getConsoleSender().sendMessage("[Server] " + message);
     }
     public String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);

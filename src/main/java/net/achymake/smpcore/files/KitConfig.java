@@ -22,7 +22,7 @@ public class KitConfig {
     }
     private final Message message = SMPCore.getMessage();
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
-    private final File file = new File(SMPCore.getInstance().getDataFolder(), "kits.yml");
+    private final File file = new File(getSmpCore().getDataFolder(), "kits.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
         return file.exists();
@@ -75,7 +75,7 @@ public class KitConfig {
         return config;
     }
     public void giveKit(Player player, String kitName) {
-        if (player.hasPermission("players.command.kit.cooldown-exempt")) {
+        if (player.hasPermission("smpcore.command.kit.cooldown-exempt")) {
             dropKit(player,kitName);
             message.send(player, "&6You received &f" + kitName + "&6 kit");
         } else if (!playerConfig.getCommandCooldown().containsKey(kitName + "-" + player.getUniqueId())) {

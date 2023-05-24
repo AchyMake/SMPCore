@@ -16,7 +16,7 @@ public class WarpConfig {
         this.smpCore = smpCore;
     }
     private final Message message = SMPCore.getMessage();
-    private final File file = new File(SMPCore.getInstance().getDataFolder(), "warps.yml");
+    private final File file = new File(getSmpCore().getDataFolder(), "warps.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {
         return file.exists();
@@ -68,7 +68,7 @@ public class WarpConfig {
         double z = config.getDouble(warpName + ".z");
         float yaw = config.getLong(warpName + ".yaw");
         float pitch = config.getLong(warpName + ".pitch");
-        return new Location(SMPCore.getInstance().getServer().getWorld(world), x, y, z, yaw, pitch);
+        return new Location(getSmpCore().getServer().getWorld(world), x, y, z, yaw, pitch);
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);

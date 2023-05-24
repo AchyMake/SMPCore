@@ -66,7 +66,7 @@ public class PlayerData {
         double z = getDouble(player, locationName + ".location.z");
         float yaw = getFloat(player, locationName + ".location.yaw");
         float pitch = getFloat(player, locationName + ".location.pitch");
-        return new Location(player.getServer().getWorld(worldName), x, y, z, yaw, pitch);
+        return new Location(getSmpCore().getServer().getWorld(worldName), x, y, z, yaw, pitch);
     }
     public void removeLocation(Player player, String locationName) {
         removeData(player, locationName + ".location.world");
