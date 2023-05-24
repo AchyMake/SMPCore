@@ -56,8 +56,8 @@ public class JoinMessage implements Listener {
     }
     private void sendMotd(Player player) {
         if (playerConfig.locationExist(player, "quit-location")) {
-            if (motdConfig.motdExist("welcome-back")) {
-                motdConfig.sendMotd(player, "welcome-back");
+            if (motdConfig.motdExist("message-of-the-day")) {
+                motdConfig.sendMotd(player, "message-of-the-day");
             }
         } else {
             if (motdConfig.motdExist("welcome")) {
