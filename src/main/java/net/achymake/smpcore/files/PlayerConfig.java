@@ -18,7 +18,7 @@ public class PlayerConfig {
     public PlayerConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
-    private final Message message = SMPCore.getInstance().getMessage();
+    private final Message message = SMPCore.getMessage();
     private static final HashMap<String, Long> commandCooldown = new HashMap<>();
     private final List<Player> vanished = new ArrayList<>();
     public boolean exist(OfflinePlayer offlinePlayer) {
@@ -144,7 +144,7 @@ public class PlayerConfig {
             }
         }
     }
-    public void setVanish(OfflinePlayer offlinePlayer, boolean value){
+    public void setVanish(OfflinePlayer offlinePlayer, boolean value) {
         if (value) {
             setBoolean(offlinePlayer,"is-Vanished", true);
             if (offlinePlayer.isOnline()) {
@@ -172,7 +172,7 @@ public class PlayerConfig {
                 for (Player players : smpCore.getServer().getOnlinePlayers()) {
                     players.showPlayer(smpCore, player);
                 }
-                if (!player.hasPermission("players.command.fly")) {
+                if (!player.hasPermission("smpcore.command.fly")) {
                     player.setAllowFlight(false);
                 }
                 player.setInvulnerable(false);
@@ -202,9 +202,6 @@ public class PlayerConfig {
     }
     public void resetEconomy(OfflinePlayer offlinePlayer) {
         setDouble(offlinePlayer,"account", smpCore.getConfig().getDouble("economy.starting-balance"));
-    }
-    public double getPoints(OfflinePlayer offlinePlayer) {
-        return get(offlinePlayer).getDouble("points");
     }
     public boolean isPVP(OfflinePlayer offlinePlayer) {
         return get(offlinePlayer).getBoolean("is-PVP");

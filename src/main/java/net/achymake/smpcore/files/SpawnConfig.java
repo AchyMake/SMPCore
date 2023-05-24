@@ -13,7 +13,7 @@ public class SpawnConfig {
     public SpawnConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
-    private final Message message = SMPCore.getInstance().getMessage();
+    private final Message message = SMPCore.getMessage();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "spawn.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {

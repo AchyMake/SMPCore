@@ -3,7 +3,10 @@ package net.achymake.smpcore.commands;
 import net.achymake.smpcore.SMPCore;
 import net.achymake.smpcore.files.Message;
 import net.achymake.smpcore.files.PlayerConfig;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -35,25 +38,14 @@ public class FeedCommand implements CommandExecutor, TabCompleter {
                     message.send(sender, "&6Your starvation has been satisfied");
                 }
             }
-            if (args.length == 1) {
-                Player player = (Player) sender;
-                if (player.hasPermission("smpcore.command.feed.others")) {
-                    Player target = player.getServer().getPlayerExact(args[0]);
-                    if (target != null) {
-                        target.setFoodLevel(20);
-                        message.send(target, "&6Your starvation has been satisfied by&f " + player.getName());
-                        message.send(player, "&6You satisfied&f " + target.getName() + "&6's starvation");
-                    }
-                }
-            }
         }
-        if (sender instanceof ConsoleCommandSender) {
-            if (args.length == 1) {
+        if (args.length == 1) {
+            if (sender.hasPermission("smpcore.command.feed.others")) {
                 Player target = sender.getServer().getPlayerExact(args[0]);
                 if (target != null) {
                     target.setFoodLevel(20);
-                    message.send(target, "&6Your starvation has been satisfied");
-                    message.send(sender, "You satisfied " + target.getName() + "'s starvation");
+                    message.send(target, "&6Your starvation has been satisfied by&f " + sender.getName());
+                    message.send(sender, "&6You satisfied&f " + target.getName() + "&6's starvation");
                 }
             }
         }

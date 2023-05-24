@@ -20,8 +20,8 @@ public class KitConfig {
     public KitConfig (SMPCore smpCore) {
         this.smpCore = smpCore;
     }
-    private final Message message = SMPCore.getInstance().getMessage();
-    private final PlayerConfig playerConfig = SMPCore.getInstance().getPlayerConfig();
+    private final Message message = SMPCore.getMessage();
+    private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final File file = new File(SMPCore.getInstance().getDataFolder(), "kits.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
     public boolean exist() {

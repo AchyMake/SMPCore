@@ -16,67 +16,39 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
     private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (args.length == 0) {
-                Player player = (Player) sender;
-                message.send(player, "&cUsage:&f /mute target");
-            }
-            if (args.length == 1) {
-                Player target = sender.getServer().getPlayerExact(args[0]);
-                if (target == sender) {
-                    playerConfig.setBoolean(target, "is-Muted", !playerConfig.isMuted(target));
-                    if (playerConfig.isMuted(target)) {
-                        message.send(sender, "&6You muted&f " + target.getName());
-                    } else {
-                        message.send(sender, "&6You unmuted&f " + target.getName());
-                    }
-                } else {
-                    if (target != null) {
-                        if (!target.hasPermission("smpcore.command.mute.exempt")) {
-                            playerConfig.setBoolean(target, "is-Muted", !playerConfig.isMuted(target));
-                            if (playerConfig.isMuted(target)) {
-                                message.send(sender, "&6You muted&f " + target.getName());
-                            } else {
-                                message.send(sender, "&6You unmuted&f " + target.getName());
-                            }
-                        }
-                    } else {
-                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
-                        if (playerConfig.exist(offlinePlayer)) {
-                            playerConfig.setBoolean(offlinePlayer, "is-Muted", !playerConfig.isMuted(offlinePlayer));
-                            if (playerConfig.isMuted(offlinePlayer)) {
-                                message.send(sender, "&6You muted&f " + offlinePlayer.getName());
-                            } else {
-                                message.send(sender, "&6You unmuted&f " + offlinePlayer.getName());
-                            }
-                        }else {
-                            message.send(sender,offlinePlayer.getName() + "&c has never joined");
-                        }
-                    }
-                }
-            }
+        if (args.length == 0) {
+            message.send(sender, "&cUsage:&f /mute target");
         }
-        if (sender instanceof ConsoleCommandSender) {
-            if (args.length == 1) {
-                Player target = sender.getServer().getPlayerExact(args[0]);
+        if (args.length == 1) {
+            Player target = sender.getServer().getPlayerExact(args[0]);
+            if (target == sender) {
+                playerConfig.setBoolean(target, "is-Muted", !playerConfig.isMuted(target));
+                if (playerConfig.isMuted(target)) {
+                    message.send(sender, "&6You muted&f " + target.getName());
+                } else {
+                    message.send(sender, "&6You unmuted&f " + target.getName());
+                }
+            } else {
                 if (target != null) {
-                    playerConfig.setBoolean(target, "is-Muted", !playerConfig.isMuted(target));
-                    if (playerConfig.isMuted(target)) {
-                        message.send(sender, "You muted " + target.getName());
-                    } else {
-                        message.send(sender, "You unmuted " + target.getName());
+                    if (!target.hasPermission("smpcore.command.mute.exempt")) {
+                        playerConfig.setBoolean(target, "is-Muted", !playerConfig.isMuted(target));
+                        if (playerConfig.isMuted(target)) {
+                            message.send(sender, "&6You muted&f " + target.getName());
+                        } else {
+                            message.send(sender, "&6You unmuted&f " + target.getName());
+                        }
                     }
                 } else {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
                     if (playerConfig.exist(offlinePlayer)) {
                         playerConfig.setBoolean(offlinePlayer, "is-Muted", !playerConfig.isMuted(offlinePlayer));
                         if (playerConfig.isMuted(offlinePlayer)) {
-                            message.send(sender, "You muted " + offlinePlayer.getName());
+                            message.send(sender, "&6You muted&f " + offlinePlayer.getName());
                         } else {
-                            message.send(sender, "You unmuted " + offlinePlayer.getName());
+                            message.send(sender, "&6You unmuted&f " + offlinePlayer.getName());
                         }
                     }else {
-                        message.send(sender,offlinePlayer.getName() + " has never joined");
+                        message.send(sender,offlinePlayer.getName() + "&c has never joined");
                     }
                 }
             }

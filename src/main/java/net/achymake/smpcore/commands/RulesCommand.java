@@ -13,30 +13,13 @@ public class RulesCommand implements CommandExecutor, TabCompleter {
     private final MotdConfig motdConfig = SMPCore.getMotdConfig();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (args.length == 0) {
-                if (motdConfig.motdExist("rules")) {
-                    motdConfig.sendMotd(sender, "rules");
-                }
-            }
-            if (args.length == 1) {
-                if (sender.hasPermission("smpcore.command.rules.others")) {
-                    Player target = sender.getServer().getPlayerExact(args[0]);
-                    if (target != null) {
-                        if (motdConfig.motdExist("rules")) {
-                            motdConfig.sendMotd(target, "rules");
-                        }
-                    }
-                }
+        if (args.length == 0) {
+            if (motdConfig.motdExist("rules")) {
+                motdConfig.sendMotd(sender, "rules");
             }
         }
-        if (sender instanceof ConsoleCommandSender) {
-            if (args.length == 0) {
-                if (motdConfig.motdExist("rules")) {
-                    motdConfig.sendMotd(sender, "rules");
-                }
-            }
-            if (args.length == 1) {
+        if (args.length == 1) {
+            if (sender.hasPermission("smpcore.command.rules.others")) {
                 Player target = sender.getServer().getPlayerExact(args[0]);
                 if (target != null) {
                     if (motdConfig.motdExist("rules")) {

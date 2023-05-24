@@ -36,10 +36,10 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
                             stringBuilder.append(args[i]);
                             stringBuilder.append(" ");
                         }
-                        message.send(player, "&7You > " + target.getName() + ": " + stringBuilder);
-                        message.send(target, "&7" + player.getName() + " > You: " + stringBuilder);
+                        message.send(player, "&7You > " + target.getName() + ": " + stringBuilder.toString().strip());
+                        message.send(target, "&7" + player.getName() + " > You: " + stringBuilder.toString().strip());
                         playerData.setString(player, "last-whisper", target.getUniqueId().toString());
-                        player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder),"smpcore.notify.whisper");
+                        player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder.toString().strip()),"smpcore.notify.whisper");
                     }
                 }
             }

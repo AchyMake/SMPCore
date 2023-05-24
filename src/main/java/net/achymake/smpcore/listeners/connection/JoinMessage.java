@@ -37,9 +37,9 @@ public class JoinMessage implements Listener {
                 }
             } else {
                 if (event.getPlayer().hasPermission("smpcore.join-message")) {
+                    event.setJoinMessage(message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
+                    sendMotd(event.getPlayer());
                     if (config.getBoolean("connection.join.sound.enable")) {
-                        event.setJoinMessage(message.color(MessageFormat.format(config.getString("connection.join.message"), event.getPlayer().getName())));
-                        sendMotd(event.getPlayer());
                         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {
                             players.playSound(players, Sound.valueOf(config.getString("connection.join.sound.type")), Float.valueOf(config.getString("connection.join.sound.volume")), Float.valueOf(config.getString("connection.join.sound.pitch")));
                         }

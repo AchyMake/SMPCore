@@ -21,21 +21,18 @@ public class JailCommand implements CommandExecutor, TabCompleter {
     private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (args.length == 0) {
-                Player player = (Player) sender;
-                message.send(player, "&cUsage:&f /jail target");
-            }
-            if (args.length == 1) {
-                Player player = (Player) sender;
-                Player target = player.getServer().getPlayerExact(args[0]);
-                if (target != null) {
-                    if (jailConfig.jailExist()) {
-                        if (target == sender) {
-                            execute(player, target);
-                        } else if (!target.hasPermission("smpcore.command.jail.exempt")) {
-                            execute(player, target);
-                        }
+        if (args.length == 0) {
+            Player player = (Player) sender;
+            message.send(player, "&cUsage:&f /jail target");
+        }
+        if (args.length == 1) {
+            Player target = sender.getServer().getPlayerExact(args[0]);
+            if (target != null) {
+                if (jailConfig.jailExist()) {
+                    if (target == sender) {
+                        execute(sender, target);
+                    } else if (!target.hasPermission("smpcore.command.jail.exempt")) {
+                        execute(sender, target);
                     }
                 }
             }

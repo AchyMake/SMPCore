@@ -16,8 +16,8 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
     private final Message message = SMPCore.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (args.length == 0) {
+        if (args.length == 0) {
+            if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (playerConfig.isFrozen(player) || playerConfig.isJailed(player)) {
                     return false;
@@ -29,27 +29,9 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
                     }
                 }
             }
-            if (args.length == 1) {
-                Player player = (Player) sender;
-                if (player.hasPermission("smpcore.command.spawn.others")) {
-                    Player target = player.getServer().getPlayerExact(args[0]);
-                    if (target != null) {
-                        if (playerConfig.isFrozen(target) || playerConfig.isJailed(target)) {
-                            return false;
-                        } else {
-                            if (spawnConfig.spawnExist()) {
-                                spawnConfig.getSpawn().getChunk().load();
-                                message.send(target, "&6Teleporting to&f spawn");
-                                target.teleport(spawnConfig.getSpawn());
-                                message.send(player, "&6You teleported&f " + target.getName() + "&6 to&f spawn");
-                            }
-                        }
-                    }
-                }
-            }
         }
-        if (sender instanceof ConsoleCommandSender) {
-            if (args.length == 1) {
+        if (args.length == 1) {
+            if (sender.hasPermission("smpcore.command.spawn.others")) {
                 Player target = sender.getServer().getPlayerExact(args[0]);
                 if (target != null) {
                     if (playerConfig.isFrozen(target) || playerConfig.isJailed(target)) {
@@ -59,7 +41,7 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
                             spawnConfig.getSpawn().getChunk().load();
                             message.send(target, "&6Teleporting to&f spawn");
                             target.teleport(spawnConfig.getSpawn());
-                            message.send(sender, "You teleported " + target.getName() + " to spawn");
+                            message.send(sender, "&6You teleported&f " + target.getName() + "&6 to&f spawn");
                         }
                     }
                 }

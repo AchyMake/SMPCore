@@ -18,11 +18,12 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
             if (args.length == 0) {
+                Player player = (Player) sender;
                 message.send(player, "&cUsage:&f /delhome homeName");
             }
             if (args.length == 1) {
+                Player player = (Player) sender;
                 if (playerConfig.locationExist(player, "homes." + args[0])) {
                     playerConfig.setString(player,"homes." + args[0], null);
                     message.send(player, args[0] + "&6 has been deleted");

@@ -76,8 +76,8 @@ public class PlayerData {
         removeData(player, locationName + ".location.yaw");
         removeData(player, locationName + ".location.pitch");
     }
-    public void removeData(Player player, String type) {
-        data(player).remove(NamespacedKey.minecraft(type));
+    public void removeData(Player player, String key) {
+        data(player).remove(NamespacedKey.minecraft(key));
     }
     public SMPCore getSmpCore() {
         return smpCore;

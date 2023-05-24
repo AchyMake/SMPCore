@@ -36,10 +36,10 @@ public class RespondCommand implements CommandExecutor, TabCompleter {
                                 stringBuilder.append(words);
                                 stringBuilder.append(" ");
                             }
-                            message.send(player, "&7You > " + target.getName() + ": " + stringBuilder);
-                            message.send(target, "&7" + player.getName() + " > You: " + stringBuilder);
+                            message.send(player, "&7You > " + target.getName() + ": " + stringBuilder.toString().strip());
+                            message.send(target, "&7" + player.getName() + " > You: " + stringBuilder.toString().strip());
                             playerData.setString(target, "last-whisper", player.getUniqueId().toString());
-                            player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder), "players.notify.whisper");
+                            player.getServer().broadcast(message.color("&7" + player.getName() + " > " + target.getName() + ": " + stringBuilder.toString().strip()), "players.notify.whisper");
                         }
                     }
                 }
