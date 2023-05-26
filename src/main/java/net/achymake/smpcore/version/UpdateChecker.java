@@ -1,6 +1,7 @@
 package net.achymake.smpcore.version;
 
 import net.achymake.smpcore.SMPCore;
+import net.achymake.smpcore.files.Message;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class UpdateChecker {
         this.smpCore = smpCore;
         this.resourceId = resourceId;
     }
+    private final Message message = SMPCore.getMessage();
     public void getVersion(Consumer<String> consumer) {
         smpCore.getServer().getScheduler().runTaskAsynchronously(smpCore, () -> {
             try {
@@ -29,7 +31,7 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                SMPCore.getMessage().sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         });
     }
@@ -37,10 +39,10 @@ public class UpdateChecker {
         if (smpCore.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(smpCore, resourceId)).getVersion((latest) -> {
                 if (smpCore.getDescription().getVersion().equals(latest)) {
-                    SMPCore.getMessage().sendLog("You are using the latest version");
+                    message.sendLog("You are using the latest version");
                 } else {
-                    SMPCore.getMessage().sendLog("New Update: " + latest);
-                    SMPCore.getMessage().sendLog("Current Version: " + smpCore.getDescription().getVersion());
+                    message.sendLog("New Update: " + latest);
+                    message.sendLog("Current Version: " + smpCore.getDescription().getVersion());
                 }
             });
         }
@@ -48,9 +50,9 @@ public class UpdateChecker {
     public void sendMessage(Player player) {
         if (smpCore.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(smpCore, resourceId)).getVersion((latest) -> {
-                if (!smpCore.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    SMPCore.getMessage().send(player,"&6" + smpCore.getName() + " Update:&f "+ latest);
-                    SMPCore.getMessage().send(player,"&6Current Version: &f" + smpCore.getDescription().getVersion());
+                if (!smpCore.getDescription().getVersion().equals(latest)) {
+                    message.send(player,"&6" + smpCore.getName() + " Update:&f " + latest);
+                    message.send(player,"&6Current Version: &f" + smpCore.getDescription().getVersion());
                 }
             });
         }

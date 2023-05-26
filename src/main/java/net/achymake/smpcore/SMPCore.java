@@ -53,7 +53,6 @@ public final class SMPCore extends JavaPlugin {
     private static WarpConfig warpConfig;
     private static EconomyProvider economyProvider;
     private static Metrics metrics;
-    private final File configFile = new File(getDataFolder(), "config.yml");
     @Override
     public void onEnable() {
         instance = this;
@@ -242,9 +241,9 @@ public final class SMPCore extends JavaPlugin {
         } else {
             warpConfig.setup();
         }
-        if (configFile.exists()) {
+        if (new File(getDataFolder(), "config.yml").exists()) {
             try {
-                getConfig().load(configFile);
+                getConfig().load(new File(getDataFolder(), "config.yml"));
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
                 message.sendLog(e.getMessage());
