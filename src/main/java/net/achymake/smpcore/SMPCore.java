@@ -52,6 +52,7 @@ public final class SMPCore extends JavaPlugin {
     private static SpawnConfig spawnConfig;
     private static WarpConfig warpConfig;
     private static EconomyProvider economyProvider;
+    private static Metrics metrics;
     private final File configFile = new File(getDataFolder(), "config.yml");
     @Override
     public void onEnable() {
@@ -79,6 +80,7 @@ public final class SMPCore extends JavaPlugin {
         playerData = new PlayerData(this);
         spawnConfig = new SpawnConfig(this);
         warpConfig = new WarpConfig(this);
+        metrics = new Metrics(this, 18570);
         reload();
         getCommand("announcement").setExecutor(new AnnouncementCommand());
         getCommand("back").setExecutor(new BackCommand());
@@ -209,6 +211,9 @@ public final class SMPCore extends JavaPlugin {
     }
     public static EconomyProvider getEconomyProvider() {
         return economyProvider;
+    }
+    public static Metrics getMetrics() {
+        return metrics;
     }
     public void reload() {
         if (jailConfig.exist()) {
