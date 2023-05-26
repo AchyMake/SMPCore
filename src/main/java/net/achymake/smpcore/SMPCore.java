@@ -245,7 +245,6 @@ public final class SMPCore extends JavaPlugin {
         if (configFile.exists()) {
             try {
                 getConfig().load(configFile);
-                getConfig().options().copyDefaults(true);
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
                 message.sendLog(e.getMessage());
@@ -260,7 +259,6 @@ public final class SMPCore extends JavaPlugin {
                 FileConfiguration playerConfigs = YamlConfiguration.loadConfiguration(playerFiles);
                 try {
                     playerConfigs.load(playerFiles);
-                    playerConfigs.options().copyDefaults(true);
                     playerConfigs.save(playerFiles);
                 } catch (IOException | InvalidConfigurationException e) {
                     message.sendLog(e.getMessage());
