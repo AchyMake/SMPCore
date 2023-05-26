@@ -183,6 +183,7 @@ public final class SMPCore extends JavaPlugin {
         if (!playerConfig.getCommandCooldown().isEmpty()) {
             playerConfig.getCommandCooldown().clear();
         }
+        metrics.shutdown();
         message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public static JailConfig getJailConfig() {
