@@ -132,5 +132,10 @@ public class KitConfig {
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            message.sendLog(e.getMessage());
+        }
     }
 }
