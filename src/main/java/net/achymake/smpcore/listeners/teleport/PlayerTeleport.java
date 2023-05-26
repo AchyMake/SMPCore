@@ -16,8 +16,6 @@ public class PlayerTeleport implements Listener {
     public void onTest(PlayerTeleportEvent event) {
         if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.COMMAND)) {
             playerData.setLocation(event.getPlayer(), "recent");
-        } else if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.PLUGIN)) {
-            playerData.setLocation(event.getPlayer(), "recent");
         }
     }
 }
