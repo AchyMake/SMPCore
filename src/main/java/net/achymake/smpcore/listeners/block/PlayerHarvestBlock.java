@@ -13,7 +13,7 @@ public class PlayerHarvestBlock implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBlockFertilizeFrozen(PlayerHarvestBlockEvent event) {
+    public void onPlayerHarvestBlock(PlayerHarvestBlockEvent event) {
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer())) {
             event.setCancelled(true);
         }

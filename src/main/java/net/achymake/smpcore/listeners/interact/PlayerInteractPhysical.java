@@ -14,7 +14,7 @@ public class PlayerInteractPhysical implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onInteractFrozen(PlayerInteractEvent event) {
+    public void onPlayerInteractPhysical(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null)return;
         if (!event.getAction().equals(Action.PHYSICAL))return;
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer()) || playerConfig.isVanished(event.getPlayer())) {

@@ -18,7 +18,7 @@ public class PlayerInteractSignSpawn implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onSignSpawn(PlayerInteractEvent event) {
+    public void onPlayerInteractSignSpawn(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!Tag.SIGNS.isTagged(event.getClickedBlock().getType()))return;
@@ -26,9 +26,8 @@ public class PlayerInteractSignSpawn implements Listener {
         if (!sign.getLine(0).equalsIgnoreCase("[spawn]"))return;
         if (!event.getPlayer().hasPermission("smpcore.command.spawn.signs"))return;
         if (!spawnConfig.spawnExist())return;
-        if (!event.getPlayer().hasPermission("smpcore.command.spawn"))return;
         spawnConfig.getSpawn().getChunk().load();
+        message.send(event.getPlayer(), "&6Teleporting to&f Spawn");
         event.getPlayer().teleport(spawnConfig.getSpawn());
-        message.send(event.getPlayer(), "&6Teleporting to&f spawn");
     }
 }

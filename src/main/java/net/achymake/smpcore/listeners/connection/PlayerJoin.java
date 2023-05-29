@@ -13,16 +13,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.text.MessageFormat;
 
-public class JoinMessage implements Listener {
+public class PlayerJoin implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final MotdConfig motdConfig = SMPCore.getMotdConfig();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public JoinMessage(SMPCore smpCore) {
+    public PlayerJoin(SMPCore smpCore) {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onJoinMessage (PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
         if (playerConfig.isVanished(event.getPlayer())) {
             playerConfig.setVanish(event.getPlayer(), true);
             event.setJoinMessage(null);

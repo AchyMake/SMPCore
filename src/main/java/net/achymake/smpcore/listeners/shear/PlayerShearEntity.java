@@ -13,7 +13,7 @@ public class PlayerShearEntity implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onShearEntityFrozen(PlayerShearEntityEvent event) {
+    public void onPlayerShearEntity(PlayerShearEntityEvent event) {
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer())) {
             event.setCancelled(true);
         }

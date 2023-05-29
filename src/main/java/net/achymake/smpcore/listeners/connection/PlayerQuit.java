@@ -15,16 +15,16 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.text.MessageFormat;
 import java.util.UUID;
 
-public class QuitMessage implements Listener {
+public class PlayerQuit implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final PlayerData playerData = SMPCore.getPlayerData();
     private final FileConfiguration config = SMPCore.getInstance().getConfig();
     private final Message message = SMPCore.getMessage();
-    public QuitMessage(SMPCore smpCore) {
+    public PlayerQuit(SMPCore smpCore) {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onQuitMessage (PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         playerConfig.setLocation(event.getPlayer(), "quit-location");
         playerData.removeData(event.getPlayer(), "last-whisper");
         if (playerConfig.isVanished(event.getPlayer())) {

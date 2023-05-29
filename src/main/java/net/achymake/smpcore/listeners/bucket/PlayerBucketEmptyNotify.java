@@ -18,7 +18,7 @@ public class PlayerBucketEmptyNotify implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBucketEmptyNotify(PlayerBucketEmptyEvent event){
+    public void onPlayerBucketEmptyNotify(PlayerBucketEmptyEvent event){
         if (!config.getBoolean("notification.enable"))return;
         if (!config.getStringList("notification.bucket-empty").contains(event.getBucket().toString()))return;
         for (Player players : event.getPlayer().getServer().getOnlinePlayers()) {

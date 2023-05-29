@@ -13,7 +13,7 @@ public class PlayerLeashEntity implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onLeashFrozen (PlayerLeashEntityEvent event) {
+    public void onPlayerLeashEntity(PlayerLeashEntityEvent event) {
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer())) {
             event.setCancelled(true);
         }

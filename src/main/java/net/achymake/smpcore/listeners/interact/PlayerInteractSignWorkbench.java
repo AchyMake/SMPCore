@@ -14,7 +14,7 @@ public class PlayerInteractSignWorkbench implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onSignWorkbench(PlayerInteractEvent event) {
+    public void onPlayerInteractSignWorkbench(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!Tag.SIGNS.isTagged(event.getClickedBlock().getType()))return;

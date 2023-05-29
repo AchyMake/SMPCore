@@ -8,15 +8,19 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class PlayerMoveVanished implements Listener {
+public class PlayerMove implements Listener {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final Message message = SMPCore.getMessage();
-    public PlayerMoveVanished(SMPCore smpCore) {
+    public PlayerMove(SMPCore smpCore) {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onMoveWhileVanished(PlayerMoveEvent event) {
-        if (!playerConfig.get(event.getPlayer()).getBoolean("is-Vanished"))return;
-        message.sendActionBar(event.getPlayer(),"&6&lVanish:&a Enabled");
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (playerConfig.get(event.getPlayer()).getBoolean("is-Frozen")) {
+            event.setCancelled(true);
+        }
+        if (playerConfig.get(event.getPlayer()).getBoolean("is-Vanished")) {
+            message.sendActionBar(event.getPlayer(),"&6&lVanish:&a Enabled");
+        }
     }
 }

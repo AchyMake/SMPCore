@@ -34,13 +34,13 @@ public class PlaceholderProvider extends PlaceholderExpansion {
     }
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
-        if (player == null){
+        if (player == null) {
             return "";
         }
         if (params.equals("name")) {
-            if (SMPCore.getPlayerConfig().get(player).getKeys(false).contains("display-name")){
+            if (SMPCore.getPlayerConfig().get(player).getKeys(false).contains("display-name")) {
                 return SMPCore.getMessage().color(SMPCore.getPlayerConfig().get(player).getString("display-name"));
-            }else{
+            } else {
                 return SMPCore.getMessage().color(SMPCore.getPlayerConfig().get(player).getString("name"));
             }
         }

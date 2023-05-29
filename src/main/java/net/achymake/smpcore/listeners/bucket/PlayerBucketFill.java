@@ -13,7 +13,7 @@ public class PlayerBucketFill implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBucketFillFrozen (PlayerBucketFillEvent event) {
+    public void onPlayerBucketFill(PlayerBucketFillEvent event) {
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer())) {
             event.setCancelled(true);
         }

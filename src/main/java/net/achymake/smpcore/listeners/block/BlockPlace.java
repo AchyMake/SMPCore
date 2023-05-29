@@ -13,7 +13,7 @@ public class BlockPlace implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBlockPlaceFrozen(BlockPlaceEvent event) {
+    public void onBlockPlace(BlockPlaceEvent event) {
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer())) {
             event.setCancelled(true);
         }

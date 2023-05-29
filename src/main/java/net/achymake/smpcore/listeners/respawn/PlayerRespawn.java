@@ -16,7 +16,7 @@ public class PlayerRespawn implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onRespawn(PlayerRespawnEvent event) {
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (!playerConfig.get(event.getPlayer()).getBoolean("is-Dead"))return;
         playerConfig.setBoolean(event.getPlayer(), "is-Dead", false);
         if (event.getPlayer().hasPermission("smpcore.death-location")) {

@@ -20,7 +20,7 @@ public class PlayerDeath implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDeath(PlayerDeathEvent event) {
+    public void onPlayerDeath(PlayerDeathEvent event) {
         playerConfig.setLocation(event.getEntity(),"death-location");
         playerConfig.setBoolean(event.getEntity(),"is-Dead", true);
         if (config.getBoolean("deaths.drop-player-head.enable")) {

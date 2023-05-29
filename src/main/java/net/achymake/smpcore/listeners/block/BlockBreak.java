@@ -13,7 +13,7 @@ public class BlockBreak implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBlockBreakFrozen(BlockBreakEvent event) {
+    public void onBlockBreak(BlockBreakEvent event) {
         if (playerConfig.isFrozen(event.getPlayer()) || playerConfig.isJailed(event.getPlayer())) {
             event.setCancelled(true);
         }

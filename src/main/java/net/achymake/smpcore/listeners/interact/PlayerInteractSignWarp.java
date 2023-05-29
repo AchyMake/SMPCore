@@ -18,7 +18,7 @@ public class PlayerInteractSignWarp implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onSignWarp(PlayerInteractEvent event) {
+    public void onPlayerInteractSignWarp(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!Tag.SIGNS.isTagged(event.getClickedBlock().getType()))return;
@@ -30,7 +30,7 @@ public class PlayerInteractSignWarp implements Listener {
             if (!event.getPlayer().hasPermission("smpcore.command.warp." + warpName))return;
             warpConfig.getWarp(warpName).getChunk().load();
             event.getPlayer().teleport(warpConfig.getWarp(warpName));
-            message.send(event.getPlayer(), "&6Teleporting to&f "+warpName);
+            message.send(event.getPlayer(), "&6Teleporting to&f " + warpName);
         }
     }
 }

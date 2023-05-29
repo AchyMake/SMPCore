@@ -13,7 +13,7 @@ public class PlayerTeleport implements Listener {
         smpCore.getServer().getPluginManager().registerEvents(this, smpCore);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onTest(PlayerTeleportEvent event) {
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
         if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.COMMAND)) {
             playerData.setLocation(event.getPlayer(), "recent");
         }
