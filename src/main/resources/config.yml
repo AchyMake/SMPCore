@@ -1,10 +1,6 @@
 notify-update:
   # Notifies Plugin Updates
   enable: true
-tablist:
-  enable: false
-  header: '&6Server'
-  footer: '&6{0}&7/&6{1}'
 pvp:
   # true = '/pvp' is ignored
   # false = '/pvp' allowed if permission is set
@@ -13,6 +9,10 @@ pvp:
   world_the_end: false
   other_world: false
   pvp_world: true
+tablist:
+  enable: false
+  header: '&6Server'
+  footer: '&6{0}&7/&6{1}'
 economy:
   currency: $
   format: '#,##0.00'
