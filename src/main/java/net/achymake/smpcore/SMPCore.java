@@ -214,6 +214,18 @@ public final class SMPCore extends JavaPlugin {
         return metrics;
     }
     public void reload() {
+        if (new File(getDataFolder(), "config.yml").exists()) {
+            try {
+                getConfig().load(new File(getDataFolder(), "config.yml"));
+                saveConfig();
+            } catch (IOException | InvalidConfigurationException e) {
+                message.sendLog(e.getMessage());
+            }
+        } else {
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+        }
+        playerConfig.resetTabList();
         if (jailConfig.exist()) {
             jailConfig.reload();
         } else {
@@ -238,17 +250,6 @@ public final class SMPCore extends JavaPlugin {
             warpConfig.reload();
         } else {
             warpConfig.setup();
-        }
-        if (new File(getDataFolder(), "config.yml").exists()) {
-            try {
-                getConfig().load(new File(getDataFolder(), "config.yml"));
-                saveConfig();
-            } catch (IOException | InvalidConfigurationException e) {
-                message.sendLog(e.getMessage());
-            }
-        } else {
-            getConfig().options().copyDefaults(true);
-            saveConfig();
         }
         for (OfflinePlayer offlinePlayer : getServer().getOfflinePlayers()) {
             File playerFiles = new File(getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");

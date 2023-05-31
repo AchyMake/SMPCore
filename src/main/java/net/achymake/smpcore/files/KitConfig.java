@@ -47,28 +47,30 @@ public class KitConfig {
             config.addDefault("starter.materials.pickaxe.enchantments.unbreaking.amount",1);
             config.addDefault("starter.materials.axe.type","STONE_AXE");
             config.addDefault("starter.materials.axe.amount",1);
-            config.addDefault("starter.materials.axe.name","&6Stone Axe");
-            config.addDefault("starter.materials.axe.lore",lore);
-            config.addDefault("starter.materials.axe.enchantments.unbreaking.type","DURABILITY");
-            config.addDefault("starter.materials.axe.enchantments.unbreaking.amount",1);
-            config.addDefault("starter.materials.shovel.type","STONE_SHOVEL");
-            config.addDefault("starter.materials.shovel.amount",1);
-            config.addDefault("starter.materials.shovel.name","&6Stone Shovel");
-            config.addDefault("starter.materials.shovel.lore",lore);
-            config.addDefault("starter.materials.shovel.enchantments.unbreaking.type","DURABILITY");
-            config.addDefault("starter.materials.shovel.enchantments.unbreaking.amount",1);
-            config.addDefault("starter.materials.food.type","COOKED_BEEF");
-            config.addDefault("starter.materials.food.amount",16);
-            config.addDefault("food.cooldown",1800);
-            config.addDefault("food.materials.food.type","COOKED_BEEF");
-            config.addDefault("food.materials.food.amount",16);
+            config.addDefault("starter.materials.axe.name", "&6Stone Axe");
+            config.addDefault("starter.materials.axe.lore", lore);
+            config.addDefault("starter.materials.axe.enchantments.unbreaking.type", "DURABILITY");
+            config.addDefault("starter.materials.axe.enchantments.unbreaking.amount", 1);
+            config.addDefault("starter.materials.shovel.type", "STONE_SHOVEL");
+            config.addDefault("starter.materials.shovel.amount", 1);
+            config.addDefault("starter.materials.shovel.name", "&6Stone Shovel");
+            config.addDefault("starter.materials.shovel.lore", lore);
+            config.addDefault("starter.materials.shovel.enchantments.unbreaking.type", "DURABILITY");
+            config.addDefault("starter.materials.shovel.enchantments.unbreaking.amount", 1);
+            config.addDefault("starter.materials.food.type", "COOKED_BEEF");
+            config.addDefault("starter.materials.food.amount", 16);
+            config.addDefault("food.cooldown", 1800);
+            config.addDefault("food.materials.food.type", "COOKED_BEEF");
+            config.addDefault("food.materials.food.amount", 16);
             config.options().copyDefaults(true);
-            config.options().copyDefaults(true);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                message.sendLog(e.getMessage());
-            }
+            save();
+        }
+    }
+    public void save() {
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            message.sendLog(e.getMessage());
         }
     }
     public FileConfiguration get() {
@@ -76,23 +78,23 @@ public class KitConfig {
     }
     public void giveKit(Player player, String kitName) {
         if (player.hasPermission("smpcore.command.kit.cooldown-exempt")) {
-            dropKit(player,kitName);
+            dropKit(player, kitName);
             message.send(player, "&6You received &f" + kitName + "&6 kit");
         } else if (!playerConfig.getCommandCooldown().containsKey(kitName + "-" + player.getUniqueId())) {
-            playerConfig.getCommandCooldown().put(kitName + "-" + player.getUniqueId(),System.currentTimeMillis());
-            dropKit(player,kitName);
+            playerConfig.getCommandCooldown().put(kitName + "-" + player.getUniqueId(), System.currentTimeMillis());
+            dropKit(player, kitName);
             message.send(player, "&6You received &f" + kitName + "&6 kit");
         } else {
             Long timeElapsed = System.currentTimeMillis() - playerConfig.getCommandCooldown().get(kitName + "-" + player.getUniqueId());
             String cooldownTimer = config.getString(kitName+".cooldown");
             Integer integer = Integer.valueOf(cooldownTimer.replace(cooldownTimer, cooldownTimer + "000"));
             if (timeElapsed > integer) {
-                playerConfig.getCommandCooldown().put(kitName + "-" + player.getUniqueId(),System.currentTimeMillis());
+                playerConfig.getCommandCooldown().put(kitName + "-" + player.getUniqueId(), System.currentTimeMillis());
                 dropKit(player, kitName);
                 message.send(player, "&6You received &f" + kitName + "&6 kit");
             } else {
                 long timer = (integer-timeElapsed);
-                message.sendActionBar(player, "&cYou have to wait&f "+String.valueOf(timer).substring(0,String.valueOf(timer).length()-3) + "&c seconds");
+                message.sendActionBar(player, "&cYou have to wait&f " + String.valueOf(timer).substring(0, String.valueOf(timer).length()-3) + "&c seconds");
             }
         }
     }
@@ -132,10 +134,6 @@ public class KitConfig {
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        save();
     }
 }

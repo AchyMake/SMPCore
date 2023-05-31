@@ -20,7 +20,7 @@ public class JailConfig {
         return file.exists();
     }
     public void setup() {
-        if (!file.exists()) {
+        if (!exist()) {
             config.options().copyDefaults(true);
             try {
                 config.save(file);
@@ -48,7 +48,7 @@ public class JailConfig {
     public boolean jailExist() {
         return config.isConfigurationSection("jail");
     }
-    public Location getJail(){
+    public Location getJail() {
         String world = config.getString("jail.world");
         double x = config.getDouble("jail.x");
         double y = config.getDouble("jail.y");

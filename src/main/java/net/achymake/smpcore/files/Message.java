@@ -16,7 +16,7 @@ public class Message {
         sender.sendMessage(color(message));
     }
     public void sendActionBar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(color(message)));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(color(message)));
     }
     public void sendLog(String message) {
         smpCore.getServer().getConsoleSender().sendMessage("[" + smpCore.getName() + "] " + message);

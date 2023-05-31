@@ -23,6 +23,7 @@ public class PlayerJoin implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {
+        playerConfig.resetTabList();
         if (playerConfig.isVanished(event.getPlayer())) {
             playerConfig.setVanish(event.getPlayer(), true);
             event.setJoinMessage(null);

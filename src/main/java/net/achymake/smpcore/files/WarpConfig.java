@@ -22,13 +22,16 @@ public class WarpConfig {
         return file.exists();
     }
     public void setup() {
-        if (!file.exists()) {
+        if (!exist()) {
             config.options().copyDefaults(true);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                message.sendLog(e.getMessage());
-            }
+            save();
+        }
+    }
+    public void save() {
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            message.sendLog(e.getMessage());
         }
     }
     public FileConfiguration get() {
@@ -47,19 +50,11 @@ public class WarpConfig {
         config.set(warpName + ".z", location.getZ());
         config.set(warpName + ".yaw", location.getYaw());
         config.set(warpName + ".pitch", location.getPitch());
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        save();
     }
     public void delWarp(String warpName) {
         config.set(warpName, null);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        save();
     }
     public Location getWarp(String warpName) {
         String world = config.getString(warpName + ".world");
@@ -72,10 +67,6 @@ public class WarpConfig {
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        save();
     }
 }

@@ -1,5 +1,6 @@
 package net.achymake.smpcore.files;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.achymake.smpcore.SMPCore;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +27,9 @@ public class PlayerConfig {
         return new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml").exists();
     }
     public void setup(OfflinePlayer offlinePlayer) {
-        File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (file.exists()) {
+        if (exist(offlinePlayer)) {
+            File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             if (!config.getString("name").equals(offlinePlayer.getName())) {
                 config.set("name", offlinePlayer.getName());
                 try {
@@ -37,6 +39,8 @@ public class PlayerConfig {
                 }
             }
         } else {
+            File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             config.set("name", offlinePlayer.getName());
             config.set("display-name", offlinePlayer.getName());
             config.set("account", smpCore.getConfig().getDouble("economy.starting-balance"));
@@ -51,8 +55,7 @@ public class PlayerConfig {
         }
     }
     public FileConfiguration get(OfflinePlayer offlinePlayer) {
-        File file = new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml");
-        return YamlConfiguration.loadConfiguration(file);
+        return YamlConfiguration.loadConfiguration(new File(smpCore.getDataFolder(), "userdata/" + offlinePlayer.getUniqueId() + ".yml"));
     }
     public void setInt(OfflinePlayer offlinePlayer, String path, int amount) {
         File file = new File(smpCore.getDataFolder(),"userdata/" + offlinePlayer.getUniqueId() + ".yml");
@@ -203,6 +206,35 @@ public class PlayerConfig {
     public void resetEconomy(OfflinePlayer offlinePlayer) {
         setDouble(offlinePlayer,"account", smpCore.getConfig().getDouble("economy.starting-balance"));
     }
+    public String prefix(Player player) {
+        if (PlaceholderAPI.isRegistered("vault")) {
+            return PlaceholderAPI.setPlaceholders(player, "%vault_prefix%");
+        } else {
+            return "";
+        }
+    }
+    public String suffix(Player player) {
+        if (PlaceholderAPI.isRegistered("vault")) {
+            return PlaceholderAPI.setPlaceholders(player, "%vault_suffix%");
+        } else {
+            return "";
+        }
+    }
+    public void resetTabList() {
+        if (smpCore.getConfig().getBoolean("tablist.enable")) {
+            for (Player players : smpCore.getServer().getOnlinePlayers()) {
+                players.setPlayerListHeader(message.color(smpCore.getConfig().getString("tablist.header")));
+                players.setPlayerListName(message.color(prefix(players) + players.getName() + suffix(players)));
+                players.setPlayerListFooter(message.color(MessageFormat.format(smpCore.getConfig().getString("tablist.footer"), smpCore.getServer().getOnlinePlayers().size() - vanished.size(), smpCore.getServer().getMaxPlayers())));
+            }
+        } else {
+            for (Player players : smpCore.getServer().getOnlinePlayers()) {
+                players.setPlayerListHeader(null);
+                players.setPlayerListName(players.getName());
+                players.setPlayerListFooter(null);
+            }
+        }
+    }
     public boolean isPVP(OfflinePlayer offlinePlayer) {
         return get(offlinePlayer).getBoolean("is-PVP");
     }
@@ -223,8 +255,5 @@ public class PlayerConfig {
     }
     public List<Player> getVanished() {
         return vanished;
-    }
-    public SMPCore getSmpCore() {
-        return smpCore;
     }
 }

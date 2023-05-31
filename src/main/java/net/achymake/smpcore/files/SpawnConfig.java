@@ -20,30 +20,29 @@ public class SpawnConfig {
         return file.exists();
     }
     public void setup() {
-        if (!file.exists()) {
+        if (!exist()) {
             config.options().copyDefaults(true);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                message.sendLog(e.getMessage());
-            }
+            save();
+        }
+    }
+    public void save() {
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            message.sendLog(e.getMessage());
         }
     }
     public FileConfiguration get() {
         return config;
     }
     public void setSpawn(Location location) {
-        config.set("spawn.world",location.getWorld().getName());
-        config.set("spawn.x",location.getX());
-        config.set("spawn.y",location.getY());
-        config.set("spawn.z",location.getZ());
-        config.set("spawn.yaw",location.getYaw());
-        config.set("spawn.pitch",location.getPitch());
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        config.set("spawn.world", location.getWorld().getName());
+        config.set("spawn.x", location.getX());
+        config.set("spawn.y", location.getY());
+        config.set("spawn.z", location.getZ());
+        config.set("spawn.yaw", location.getYaw());
+        config.set("spawn.pitch", location.getPitch());
+        save();
     }
     public boolean spawnExist() {
         return config.isConfigurationSection("spawn");
@@ -59,10 +58,6 @@ public class SpawnConfig {
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        save();
     }
 }

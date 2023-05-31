@@ -19,6 +19,7 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 playerConfig.setVanish(player, !playerConfig.isVanished(player));
+                playerConfig.resetTabList();
                 if (playerConfig.isVanished(player)) {
                     message.send(player,"&6You are now vanished");
                 } else {
@@ -32,6 +33,7 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 Player target = sender.getServer().getPlayerExact(args[0]);
                 if (target != null) {
                     playerConfig.setVanish(target, !playerConfig.isVanished(target));
+                    playerConfig.resetTabList();
                     if (playerConfig.isVanished(target)) {
                         message.send(target, sender.getName() + "&6 made you vanish");
                         message.send(sender, target.getName() + "&6 is now vanished");
@@ -61,6 +63,7 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 if (target != null) {
                     if (!playerConfig.isVanished(target)) {
                         playerConfig.setVanish(target, true);
+                        playerConfig.resetTabList();
                         message.send(target, sender.getName() + "&6 made you vanish");
                         message.send(sender, target.getName() + "&6 is now vanished");
                     }
@@ -83,6 +86,7 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 if (target != null) {
                     if (playerConfig.isVanished(target)) {
                         playerConfig.setVanish(target, false);
+                        playerConfig.resetTabList();
                         message.send(target, sender.getName() + "&6 made you no longer vanish");
                         message.send(sender, target.getName() + "&6 is no longer vanished");
                     }

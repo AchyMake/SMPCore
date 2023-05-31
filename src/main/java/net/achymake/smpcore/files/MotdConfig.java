@@ -42,11 +42,14 @@ public class MotdConfig {
             help.add("- www.your-server.net/help");
             config.addDefault("help", help);
             config.options().copyDefaults(true);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                message.sendLog(e.getMessage());
-            }
+            save();
+        }
+    }
+    public void save() {
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            message.sendLog(e.getMessage());
         }
     }
     public FileConfiguration get() {
@@ -62,10 +65,6 @@ public class MotdConfig {
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            message.sendLog(e.getMessage());
-        }
+        save();
     }
 }

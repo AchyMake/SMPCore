@@ -25,6 +25,7 @@ public class PlayerQuit implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuit(PlayerQuitEvent event) {
+        playerConfig.resetTabList();
         playerConfig.setLocation(event.getPlayer(), "quit-location");
         playerData.removeData(event.getPlayer(), "last-whisper");
         if (playerConfig.isVanished(event.getPlayer())) {
