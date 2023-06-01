@@ -21,7 +21,7 @@ public class PlayerDeath implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        playerConfig.setLocation(event.getEntity(),"locations.death");
+        playerConfig.setLocation(event.getEntity(),"death");
         playerConfig.setBoolean(event.getEntity(),"is-Dead", true);
         if (config.getBoolean("deaths.drop-player-head.enable")) {
             if (config.getInt("deaths.drop-player-head.chance") > new Random().nextInt(100)) {
