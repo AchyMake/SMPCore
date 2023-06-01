@@ -19,9 +19,11 @@ public class PlayerRespawn implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (!playerConfig.get(event.getPlayer()).getBoolean("is-Dead"))return;
         playerConfig.setBoolean(event.getPlayer(), "is-Dead", false);
-        event.setRespawnLocation(playerConfig.getLocation(event.getPlayer(), "locations.spawn"));
+        if (event.getPlayer().getBedSpawnLocation() == null) {
+            event.setRespawnLocation(playerConfig.getLocation(event.getPlayer(), "spawn"));
+        }
         if (event.getPlayer().hasPermission("smpcore.death-location")) {
-            Location location = playerConfig.getLocation(event.getPlayer(),"locations.death");
+            Location location = playerConfig.getLocation(event.getPlayer(),"death");
             String world = location.getWorld().getEnvironment().toString().toLowerCase();
             int x = location.getBlockX();
             int y = location.getBlockY();
