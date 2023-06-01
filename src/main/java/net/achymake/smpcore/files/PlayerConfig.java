@@ -47,6 +47,7 @@ public class PlayerConfig {
             config.set("is-PVP", true);
             config.set("max-homes", smpCore.getConfig().getInt("homes.default"));
             config.createSection("homes");
+            config.createSection("locations");
             try {
                 config.save(file);
             } catch (IOException e) {
@@ -117,27 +118,47 @@ public class PlayerConfig {
             message.sendLog(e.getMessage());
         }
     }
-    public boolean locationExist(OfflinePlayer offlinePlayer, String locationName) {
-       return get(offlinePlayer).isConfigurationSection(locationName);
+    public boolean homeExist(OfflinePlayer offlinePlayer, String homeName) {
+        return get(offlinePlayer).isConfigurationSection("homes." + homeName);
     }
     public List<String> getHomes(OfflinePlayer offlinePlayer) {
         return new ArrayList<>(get(offlinePlayer).getConfigurationSection("homes").getKeys(false));
     }
+    public void setHome(Player player, String homeName) {
+        setString(player, "homes." + homeName + ".world", player.getWorld().getName());
+        setDouble(player, "homes." + homeName + ".x", player.getLocation().getX());
+        setDouble(player, "homes." + homeName + ".y", player.getLocation().getY());
+        setDouble(player, "homes." + homeName + ".z", player.getLocation().getZ());
+        setFloat(player, "homes." + homeName + ".yaw", player.getLocation().getYaw());
+        setFloat(player, "homes." + homeName + ".pitch", player.getLocation().getPitch());
+    }
+    public Location getHome(OfflinePlayer offlinePlayer, String homeName) {
+        String worldName = get(offlinePlayer).getString("homes." + homeName + ".world");
+        double x = get(offlinePlayer).getDouble("homes." + homeName + ".x");
+        double y = get(offlinePlayer).getDouble("homes." + homeName + ".y");
+        double z = get(offlinePlayer).getDouble("homes." + homeName + ".z");
+        float yaw = get(offlinePlayer).getLong("homes." + homeName + ".yaw");
+        float pitch = get(offlinePlayer).getLong("homes." + homeName + ".pitch");
+        return new Location(smpCore.getServer().getWorld(worldName), x, y, z, yaw, pitch);
+    }
+    public boolean locationExist(OfflinePlayer offlinePlayer, String locationName) {
+        return get(offlinePlayer).isConfigurationSection("locations." + locationName);
+    }
     public void setLocation(Player player, String locationName) {
-        setString(player, locationName + ".world", player.getWorld().getName());
-        setDouble(player, locationName + ".x", player.getLocation().getX());
-        setDouble(player, locationName + ".y", player.getLocation().getY());
-        setDouble(player, locationName + ".z", player.getLocation().getZ());
-        setFloat(player, locationName + ".yaw", player.getLocation().getYaw());
-        setFloat(player, locationName + ".pitch", player.getLocation().getPitch());
+        setString(player, "locations." + locationName + ".world", player.getWorld().getName());
+        setDouble(player, "locations." + locationName + ".x", player.getLocation().getX());
+        setDouble(player, "locations." + locationName + ".y", player.getLocation().getY());
+        setDouble(player, "locations." + locationName + ".z", player.getLocation().getZ());
+        setFloat(player, "locations." + locationName + ".yaw", player.getLocation().getYaw());
+        setFloat(player, "locations." + locationName + ".pitch", player.getLocation().getPitch());
     }
     public Location getLocation(OfflinePlayer offlinePlayer, String locationName) {
-        String worldName = get(offlinePlayer).getString(locationName + ".world");
-        double x = get(offlinePlayer).getDouble(locationName + ".x");
-        double y = get(offlinePlayer).getDouble(locationName + ".y");
-        double z = get(offlinePlayer).getDouble(locationName + ".z");
-        float yaw = get(offlinePlayer).getLong(locationName + ".yaw");
-        float pitch = get(offlinePlayer).getLong(locationName + ".pitch");
+        String worldName = get(offlinePlayer).getString("locations." + locationName + ".world");
+        double x = get(offlinePlayer).getDouble("locations." + locationName + ".x");
+        double y = get(offlinePlayer).getDouble("locations." + locationName + ".y");
+        double z = get(offlinePlayer).getDouble("locations." + locationName + ".z");
+        float yaw = get(offlinePlayer).getLong("locations." + locationName + ".yaw");
+        float pitch = get(offlinePlayer).getLong("locations." + locationName + ".pitch");
         return new Location(smpCore.getServer().getWorld(worldName), x, y, z, yaw, pitch);
     }
     public void hideVanished(Player player) {

@@ -59,8 +59,8 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
                                 }
                             } else {
                                 if (playerConfig.getHomes(offlinePlayer).contains(args[2])) {
-                                    playerConfig.getLocation(offlinePlayer,"homes." + args[2]).getChunk().load();
-                                    player.teleport(playerConfig.getLocation(offlinePlayer,"homes." + args[2]));
+                                    playerConfig.getHome(offlinePlayer, args[2]).getChunk().load();
+                                    player.teleport(playerConfig.getHome(offlinePlayer, args[2]));
                                     message.send(player, "&6Teleporting&f " + args[2] + "&6 of&f " + args[1]);
                                 } else {
                                     message.send(player, args[1] + "&c doesn't have&f " + args[2]);
@@ -105,9 +105,7 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("smpcore.command.homes.teleport")) {
                     OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[1]);
                     if (playerConfig.exist(offlinePlayer)) {
-                        for (String home : playerConfig.getHomes(offlinePlayer)) {
-                            commands.add(home);
-                        }
+                        commands.addAll(playerConfig.getHomes(offlinePlayer));
                     }
                 }
             }

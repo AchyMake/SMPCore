@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SethomeCommand implements CommandExecutor, TabCompleter {
+public class SetHomeCommand implements CommandExecutor, TabCompleter {
     private final PlayerConfig playerConfig = SMPCore.getPlayerConfig();
     private final Message message = SMPCore.getMessage();
     @Override
@@ -20,11 +20,11 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 0) {
-                if (playerConfig.locationExist(player, "homes.home")) {
-                    playerConfig.setLocation(player, "homes.home");
+                if (playerConfig.homeExist(player, "home")) {
+                    playerConfig.setHome(player, "home");
                     message.send(player, "home&6 has been set");
-                } else if (playerConfig.get(player).getInt("max-homes") > playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
-                    playerConfig.setLocation(player, "homes.home");
+                } else if (playerConfig.get(player).getInt("max-homes") > playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()) {
+                    playerConfig.setHome(player, "home");
                     message.send(player, "home&6 has been set");
                 } else {
                     message.send(player, "&cYou have reach your limit of&f " + playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size() + "&c homes");
@@ -37,12 +37,12 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 } else if (args[0].equalsIgnoreCase("bed")) {
                     message.send(player, "&cYou can't set home for&f "+args[0]);
                 } else {
-                    if (playerConfig.locationExist(player, "homes." + args[0])) {
-                        playerConfig.setLocation(player, "homes." + args[0]);
-                        message.send(player, args[0]+"&6 has been set");
+                    if (playerConfig.homeExist(player, args[0])) {
+                        playerConfig.setHome(player, args[0]);
+                        message.send(player, args[0] + "&6 has been set");
                     } else if (playerConfig.get(player).getInt("max-homes") > playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
-                        playerConfig.setLocation(player,"homes." + args[0]);
-                        message.send(player, args[0]+"&6 has been set");
+                        playerConfig.setHome(player, args[0]);
+                        message.send(player, args[0] + "&6 has been set");
                     } else {
                         message.send(player, "&cYou have reach your limit of&f " + playerConfig.get(player).getConfigurationSection("homes").getKeys(false).size() + "&c homes");
                     }
@@ -57,9 +57,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             if (args.length == 1) {
                 Player player = (Player) sender;
-                for (String homes : playerConfig.getHomes(player)) {
-                    commands.add(homes);
-                }
+                commands.addAll(playerConfig.getHomes(player));
             }
         }
         return commands;

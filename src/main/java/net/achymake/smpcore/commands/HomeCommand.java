@@ -28,9 +28,9 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 return false;
             } else {
                 if (args.length == 0) {
-                    if (playerConfig.locationExist(player, "homes.home")) {
-                        playerConfig.getLocation(player, "homes.home").getChunk().load();
-                        player.teleport(playerConfig.getLocation(player, "homes.home"));
+                    if (playerConfig.homeExist(player, "home")) {
+                        playerConfig.getHome(player, "home").getChunk().load();
+                        player.teleport(playerConfig.getHome(player, "home"));
                         message.send(player, "&6Teleporting to&f home");
                     } else {
                         message.send(player, "home&c does not exist");
@@ -55,9 +55,9 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                             message.send(player, "&6Homes costs&a " + economyProvider.format(config.getDouble("homes.cost")));
                         }
                     } else {
-                        if (playerConfig.locationExist(player, "homes." + args[0])) {
-                            playerConfig.getLocation(player, "homes." + args[0]).getChunk().load();
-                            player.teleport(playerConfig.getLocation(player, "homes." + args[0]));
+                        if (playerConfig.homeExist(player, args[0])) {
+                            playerConfig.getHome(player, args[0]).getChunk().load();
+                            player.teleport(playerConfig.getHome(player, args[0]));
                             message.send(player, "&6Teleporting to&f " + args[0]);
                         } else {
                             message.send(player, args[0] + "&c does not exist");
@@ -94,9 +94,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("smpcore.commands.home.bed")) {
                     commands.add("bed");
                 }
-                for (String homes : playerConfig.getHomes(player)) {
-                    commands.add(homes);
-                }
+                commands.addAll(playerConfig.getHomes(player));
             }
             if (args.length == 2) {
                 Player player = (Player) sender;

@@ -17,8 +17,13 @@ public class PlayerSpawnLocation implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerSpawnLocation(PlayerSpawnLocationEvent event) {
         if (playerConfig.locationExist(event.getPlayer(), "quit-location"))return;
-        if (!spawnConfig.spawnExist())return;
-        spawnConfig.getSpawn().getChunk().load();
-        event.setSpawnLocation(spawnConfig.getSpawn());
+        if (spawnConfig.spawnExist()) {
+            spawnConfig.getSpawn().getChunk().load();
+            event.setSpawnLocation(spawnConfig.getSpawn());
+            playerConfig.setLocation(event.getPlayer(), "locations.spawn");
+        } else {
+            event.setSpawnLocation(spawnConfig.randomSpawn());
+            playerConfig.setLocation(event.getPlayer(), "locations.spawn");
+        }
     }
 }

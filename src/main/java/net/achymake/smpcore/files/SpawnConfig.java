@@ -1,12 +1,15 @@
 package net.achymake.smpcore.files;
 
 import net.achymake.smpcore.SMPCore;
-import org.bukkit.Location;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class SpawnConfig {
     private final SMPCore smpCore;
@@ -47,7 +50,7 @@ public class SpawnConfig {
     public boolean spawnExist() {
         return config.isConfigurationSection("spawn");
     }
-    public Location getSpawn(){
+    public Location getSpawn() {
         String world = config.getString("spawn.world");
         double x = config.getDouble("spawn.x");
         double y = config.getDouble("spawn.y");
@@ -55,6 +58,26 @@ public class SpawnConfig {
         float yaw = config.getLong("spawn.yaw");
         float pitch = config.getLong("spawn.pitch");
         return new Location(smpCore.getServer().getWorld(world), x, y, z, yaw, pitch);
+    }
+    public Block highestRandomBlock() {
+        return smpCore.getServer().getWorlds().get(0).getHighestBlockAt(new Random().nextInt(0, 1250), new Random().nextInt(0, 1250));
+    }
+    public void random(Player player) {
+        Block block = highestRandomBlock();
+        if (block.isLiquid()) {
+            random(player);
+        } else {
+            block.getChunk().load();
+            player.teleport(block.getLocation().add(0.5, 1.0, 0.5));
+        }
+    }
+    public Location randomSpawn() {
+        Block block = highestRandomBlock();
+        if (block.isLiquid()) {
+            return randomSpawn();
+        } else {
+            return block.getLocation().add(0.5, 1, 0.5);
+        }
     }
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);

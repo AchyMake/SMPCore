@@ -164,6 +164,11 @@ commands:
     permission-message: You do not have the permission to execute the command
     aliases:
       - r
+  rtp:
+    description: random teleport
+    permission: smpcore.command.rtp
+    usage: /rtp
+    permission-message: You do not have the permission to execute the command
   rules:
     description: check player rules
     permission: smpcore.command.rules
@@ -432,6 +437,9 @@ permissions:
     description: ignores cooldown
     default: op
   smpcore.command.respond:
+    description: respond to last whisper
+    default: op
+  smpcore.command.rtp:
     description: respond to last whisper
     default: op
   smpcore.command.rules:

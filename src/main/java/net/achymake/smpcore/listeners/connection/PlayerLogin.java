@@ -17,6 +17,7 @@ public class PlayerLogin implements Listener {
         playerConfig.setup(event.getPlayer());
         if (event.getPlayer().getServer().getOnlinePlayers().size() >= event.getPlayer().getServer().getMaxPlayers()) {
             if (event.getPlayer().hasPermission("smpcore.join-full-server")) {
+                event.setResult(PlayerLoginEvent.Result.ALLOWED);
                 event.allow();
             }
         }

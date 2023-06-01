@@ -110,8 +110,9 @@ public final class SMPCore extends JavaPlugin {
         getCommand("pvp").setExecutor(new PVPCommand());
         getCommand("repair").setExecutor(new RepairCommand());
         getCommand("respond").setExecutor(new RespondCommand());
+        getCommand("rtp").setExecutor(new RTPCommand());
         getCommand("rules").setExecutor(new RulesCommand());
-        getCommand("sethome").setExecutor(new SethomeCommand());
+        getCommand("sethome").setExecutor(new SetHomeCommand());
         getCommand("setjail").setExecutor(new SetJailCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("setwarp").setExecutor(new SetWarpCommand());
