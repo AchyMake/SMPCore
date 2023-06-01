@@ -60,10 +60,7 @@ public class BackCommand implements CommandExecutor, TabCompleter {
         return true;
     }
     private void back(Player player) {
-        if (playerConfig.locationExist(player, "locations.recent")) {
-            playerConfig.getLocation(player, "locations.recent");
-        }
-        if (playerData.hasString(player,"recent.location.world")) {
+        if (playerConfig.locationExist(player, "recent")) {
             playerData.getLocation(player, "recent").getChunk().load();
             message.send(player, "&6Teleporting to&f recent location");
             player.teleport(playerData.getLocation(player, "recent"));
