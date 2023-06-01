@@ -4,6 +4,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.achymake.smpcore.SMPCore;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class PlayerConfig {
     private final SMPCore smpCore;
@@ -47,7 +49,19 @@ public class PlayerConfig {
             config.set("is-PVP", true);
             config.set("max-homes", smpCore.getConfig().getInt("homes.default"));
             config.createSection("homes");
-            config.createSection("locations");
+            Location location = randomLocation();
+            config.set("locations.spawn.world", location.getWorld().getName());
+            config.set("locations.spawn.x", location.getX());
+            config.set("locations.spawn.y", location.getY());
+            config.set("locations.spawn.z", location.getZ());
+            config.set("locations.spawn.yaw", location.getYaw());
+            config.set("locations.spawn.pitch", location.getPitch());
+            config.set("locations.recent.world", location.getWorld().getName());
+            config.set("locations.recent.x", location.getX());
+            config.set("locations.recent.y", location.getY());
+            config.set("locations.recent.z", location.getZ());
+            config.set("locations.recent.yaw", location.getYaw());
+            config.set("locations.recent.pitch", location.getPitch());
             try {
                 config.save(file);
             } catch (IOException e) {
@@ -254,6 +268,26 @@ public class PlayerConfig {
                 players.setPlayerListName(players.getName());
                 players.setPlayerListFooter(null);
             }
+        }
+    }
+    public Block highestRandomBlock() {
+        return smpCore.getServer().getWorlds().get(0).getHighestBlockAt(new Random().nextInt(0, 1250), new Random().nextInt(0, 1250));
+    }
+    public void randomTeleport(Player player) {
+        Block block = highestRandomBlock();
+        if (block.isLiquid()) {
+            randomTeleport(player);
+        } else {
+            block.getChunk().load();
+            player.teleport(block.getLocation().add(0.5, 1.0, 0.5));
+        }
+    }
+    public Location randomLocation() {
+        Block block = highestRandomBlock();
+        if (block.isLiquid()) {
+            return randomLocation();
+        } else {
+            return block.getLocation().add(0.5, 1, 0.5);
         }
     }
     public boolean isPVP(OfflinePlayer offlinePlayer) {

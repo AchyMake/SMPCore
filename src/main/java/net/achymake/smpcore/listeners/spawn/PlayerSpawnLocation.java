@@ -22,10 +22,7 @@ public class PlayerSpawnLocation implements Listener {
             event.setSpawnLocation(spawnConfig.getSpawn());
             playerConfig.setLocation(event.getPlayer(), "spawn");
         } else {
-            if (!playerConfig.locationExist(event.getPlayer(), "spawn")) {
-                event.setSpawnLocation(spawnConfig.randomSpawn());
-                playerConfig.setLocation(event.getPlayer(), "spawn");
-            }
+            event.setSpawnLocation(playerConfig.getLocation(event.getPlayer(), "spawn"));
         }
     }
 }
